@@ -24,10 +24,19 @@ class App extends Component {
     storeTasks(tasks)
     this.setState({ tasks })
   }
+  deleteTask = index => {
+    const tasks = [...this.state.tasks]
+    tasks.splice(index)
+    storeTasks(tasks)
+    this.setState({ tasks })
+  }
   render() {
     return (
       <Container>
-        <TaskList tasks={this.state.tasks} toggleDone={this.toggleDone} />
+        <TaskList
+          tasks={this.state.tasks}
+          toggleDone={this.toggleDone}
+          deleteTask={this.deleteTask} />
         <TaskEdit onTaskSubmit={this.addTask} />
       </Container>
     )
