@@ -18,7 +18,9 @@ class App extends Component {
   addTask = title => {
     const tasks = [...this.state.tasks]
     tasks.push({
-      title, done: false
+      title,
+      done: false,
+      timeSlices: []
     })
     storeTasks(tasks)
     this.setState({ tasks })
@@ -44,7 +46,6 @@ class App extends Component {
       interval,
       remainingTime: TIMER_SLICE_DURATION,
       datetimeStart: new Date(),
-      datetimeEnd: null,
       taskIndex
     }
     this.setState({
@@ -59,7 +60,19 @@ class App extends Component {
         return { timer }
       }
       clearInterval(timer.interval)
-      return { timer: null }
+      const { datetimeStart, taskIndex } = timer
+      const datetimeEnd = new Date()
+      const tasks = [...this.state.tasks]
+      const task = {...tasks[taskIndex]}
+      if (!task.timeSlices) {
+        task.timeSlices = []
+      }
+      task.timeSlices.push({
+        datetimeStart, datetimeEnd
+      })
+      tasks.splice(taskIndex, 1, task)
+      storeTasks(tasks)
+      return { tasks, timer: null }
     })
   }
   render() {
