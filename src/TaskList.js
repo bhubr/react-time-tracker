@@ -1,25 +1,10 @@
 import React from 'react'
 import { List } from 'semantic-ui-react'
 
-const tasks = [
-  {
-    title: 'Créer une appli de gestion de tâches',
-    done: false
-  },
-  {
-    title: 'Faire le tri dans mes dépôts GitHub',
-    done: false
-  },
-  {
-    title: 'Faire le tri dans mes backups',
-    done: false
-  }
-]
-
-const TaskList = () => (
+const TaskList = props => (
   <List divided verticalAlign='middle'>
     {
-      tasks.map(
+      props.tasks.map(
         (task, index) =>
         <List.Item key={index}>
           <List.Content>
