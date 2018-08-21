@@ -2,31 +2,20 @@ import React, { Component } from 'react'
 import { Container } from 'semantic-ui-react'
 import TaskList from './TaskList'
 import TaskEdit from './TaskEdit'
-
-const tasks = [
-  {
-    title: 'Créer une appli de gestion de tâches',
-    done: false
-  },
-  {
-    title: 'Faire le tri dans mes dépôts GitHub',
-    done: false
-  },
-  {
-    title: 'Faire le tri dans mes backups',
-    done: false
-  }
-]
+import { getStoredTasks, storeTasks } from './storage'
+// Useful links
+// https://www.alsacreations.com/article/lire/1402-web-storage-localstorage-sessionstorage.html
 
 class App extends Component {
   state = {
-    tasks: tasks
+    tasks: getStoredTasks()
   }
   addTask = title => {
     const tasks = [...this.state.tasks]
     tasks.push({
       title, done: false
     })
+    storeTasks(tasks)
     this.setState({ tasks })
   }
   render() {
