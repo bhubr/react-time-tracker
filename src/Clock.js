@@ -4,7 +4,10 @@ import formatTime from './formatTime'
 
 const Clock = props => (
   <Statistic>
-    <Statistic.Value>{ formatTime(props.remainingTime) }</Statistic.Value>
+    { props.timer
+      ? <Statistic.Value>{ formatTime(props.timer.remainingTime) }</Statistic.Value>
+      : <Statistic.Value>00:00</Statistic.Value>
+    }
   </Statistic>
 )
 

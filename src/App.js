@@ -13,7 +13,7 @@ const TIMER_SLICE_DURATION = 5 * 60
 class App extends Component {
   state = {
     tasks: getStoredTasks(),
-    remainingTime: -1
+    timer: null
   }
   addTask = title => {
     const tasks = [...this.state.tasks]
@@ -35,23 +35,32 @@ class App extends Component {
     storeTasks(tasks)
     this.setState({ tasks })
   }
-  startTimeSlice = index => {
-    setInterval(this.timerTick, 1000)
+  startTimeSlice = taskIndex => {
+    const interval = setInterval(this.timerTick, 1000)
+    const timer = {
+      interval,
+      remainingTime: TIMER_SLICE_DURATION,
+      datetimeStart: new Date(),
+      datetimeEnd: null,
+      taskIndex
+    }
     this.setState({
-      remainingTime: TIMER_SLICE_DURATION
+      timer
     })
   }
   timerTick = () => {
-    this.setState(prevState => ({
-      remainingTime: prevState.remainingTime - 1
-    }))
+    this.setState(prevState => {
+      const timer = { ...prevState.timer }
+      timer.remainingTime -= 1
+      return { timer }
+    })
   }
   render() {
     return (
       <Container>
         <div style={{ display: 'flex' }}>
           <h1 style={{ flexGrow: 1 }}>Time Tracker</h1>
-          <Clock remainingTime={this.state.remainingTime} />
+          <Clock timer={this.state.timer} />
         </div>
         <TaskList
           tasks={this.state.tasks}
