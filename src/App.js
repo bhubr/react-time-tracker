@@ -36,6 +36,9 @@ class App extends Component {
     this.setState({ tasks })
   }
   startTimeSlice = taskIndex => {
+    if (this.state.tasks[taskIndex].done) {
+      return
+    }
     const interval = setInterval(this.timerTick, 1000)
     const timer = {
       interval,
@@ -52,7 +55,11 @@ class App extends Component {
     this.setState(prevState => {
       const timer = { ...prevState.timer }
       timer.remainingTime -= 1
-      return { timer }
+      if(timer.remainingTime > 0) {
+        return { timer }
+      }
+      clearInterval(timer.interval)
+      return { timer: null }
     })
   }
   render() {
