@@ -8,7 +8,7 @@ const TaskList = props => (
         (task, index) =>
         <List.Item key={index}>
           <List.Content floated='right'>
-            <Icon name='stopwatch' />
+            <Icon onClick={() => props.startTimeSlice(index)} name='stopwatch' />
             <Icon onClick={() => props.deleteTask(index)} name='trash alternate' />
             <Radio toggle checked={task.done} onChange={() => props.toggleDone(index)} />
           </List.Content>
