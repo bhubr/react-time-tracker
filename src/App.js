@@ -18,10 +18,16 @@ class App extends Component {
     storeTasks(tasks)
     this.setState({ tasks })
   }
+  toggleDone = index => {
+    const tasks = [...this.state.tasks]
+    tasks[index].done = !tasks[index].done
+    storeTasks(tasks)
+    this.setState({ tasks })
+  }
   render() {
     return (
       <Container>
-        <TaskList tasks={this.state.tasks} />
+        <TaskList tasks={this.state.tasks} toggleDone={this.toggleDone} />
         <TaskEdit onTaskSubmit={this.addTask} />
       </Container>
     )

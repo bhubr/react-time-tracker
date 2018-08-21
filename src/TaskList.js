@@ -1,5 +1,5 @@
 import React from 'react'
-import { List } from 'semantic-ui-react'
+import { List, Radio } from 'semantic-ui-react'
 
 const TaskList = props => (
   <List divided verticalAlign='middle'>
@@ -7,6 +7,9 @@ const TaskList = props => (
       props.tasks.map(
         (task, index) =>
         <List.Item key={index}>
+          <List.Content floated='right'>
+            <Radio toggle checked={task.done} onChange={() => props.toggleDone(index)} />
+          </List.Content>
           <List.Content>
             <List.Header as='a'>{task.title}</List.Header>
           </List.Content>
