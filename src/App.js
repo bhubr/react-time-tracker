@@ -4,11 +4,12 @@ import Clock from './Clock'
 import TaskList from './TaskList'
 import TaskEdit from './TaskEdit'
 import { getStoredTasks, storeTasks } from './storage'
+import notifyMe from './notifyMe'
 
 // Useful links
 // https://www.alsacreations.com/article/lire/1402-web-storage-localstorage-sessionstorage.html
 
-const TIMER_SLICE_DURATION = 5 * 60
+const TIMER_SLICE_DURATION = 5 //* 60
 
 class App extends Component {
   state = {
@@ -59,6 +60,7 @@ class App extends Component {
       if(timer.remainingTime > 0) {
         return { timer }
       }
+      notifyMe()
       clearInterval(timer.interval)
       const { datetimeStart, taskIndex } = timer
       const datetimeEnd = new Date()
