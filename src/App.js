@@ -3,18 +3,20 @@ import { Container } from 'semantic-ui-react'
 import Clock from './Clock'
 import TaskList from './TaskList'
 import TaskEdit from './TaskEdit'
+import TimeSliceCommentModal from './TimeSliceCommentModal'
 import { getStoredTasks, storeTasks } from './storage'
 import notifyMe from './notifyMe'
 
 // Useful links
 // https://www.alsacreations.com/article/lire/1402-web-storage-localstorage-sessionstorage.html
 
-const TIMER_SLICE_DURATION = 5 //* 60
+const TIMER_SLICE_DURATION = 15 //* 60
 
 class App extends Component {
   state = {
     tasks: getStoredTasks(),
-    timer: null
+    timer: null,
+    modalOpen: false
   }
   addTask = title => {
     const tasks = [...this.state.tasks]
@@ -45,12 +47,14 @@ class App extends Component {
     const interval = setInterval(this.timerTick, 1000)
     const timer = {
       interval,
+      comment: '',
       remainingTime: TIMER_SLICE_DURATION,
       datetimeStart: new Date(),
       taskIndex
     }
     this.setState({
-      timer
+      timer,
+      modalOpen: true
     })
   }
   timerTick = () => {
@@ -62,7 +66,7 @@ class App extends Component {
       }
       notifyMe()
       clearInterval(timer.interval)
-      const { datetimeStart, taskIndex } = timer
+      const { datetimeStart, taskIndex, comment } = timer
       const datetimeEnd = new Date()
       const tasks = [...this.state.tasks]
       const task = {...tasks[taskIndex]}
@@ -70,12 +74,20 @@ class App extends Component {
         task.timeSlices = []
       }
       task.timeSlices.push({
-        datetimeStart, datetimeEnd
+        datetimeStart, datetimeEnd, comment
       })
       tasks.splice(taskIndex, 1, task)
       storeTasks(tasks)
       return { tasks, timer: null }
     })
+  }
+  onCommentSubmit = comment => {
+    const timer = { ...this.state.timer }
+    if (!timer) {
+      return
+    }
+    timer.comment = comment
+    this.setState({ timer, modalOpen: false })
   }
   render() {
     return (
@@ -90,6 +102,9 @@ class App extends Component {
           deleteTask={this.deleteTask}
           startTimeSlice={this.startTimeSlice} />
         <TaskEdit onTaskSubmit={this.addTask} />
+        <TimeSliceCommentModal
+          modalOpen={this.state.modalOpen}
+          onCommentSubmit={this.onCommentSubmit} />
       </Container>
     )
   }
