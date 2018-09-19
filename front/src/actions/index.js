@@ -24,6 +24,7 @@ export const CREATE_TIME_SLICE_FAILURE = 'CREATE_TIME_SLICE_FAILURE'
 export const TOGGLE_TASK_TITLE_EDITING = 'TOGGLE_TASK_TITLE_EDITING'
 
 export const TIMER_STARTED = 'TIMER_STARTED'
+export const TIMER_STOPPED = 'TIMER_STOPPED'
 export const TIMER_TICK = 'TIMER_TICK'
 
 // Toggle inline task title editing
@@ -157,6 +158,10 @@ export const timerStarted = (startedAt, interval) => ({
   type: TIMER_STARTED,
   startedAt,
   interval
+})
+
+export const timerStopped = () => ({
+  type: TIMER_STOPPED
 })
 
 export const timerTick = () => ({

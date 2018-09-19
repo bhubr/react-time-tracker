@@ -3,6 +3,7 @@ import {
   CREATE_TIME_SLICE_SUCCESS,
   CREATE_TIME_SLICE_FAILURE,
   TIMER_STARTED,
+  TIMER_STOPPED,
   TIMER_TICK
 } from '../actions'
 
@@ -13,6 +14,7 @@ import {
   TIMER_LONG_BREAK
 } from '../constants'
 
+const DURATION = 10
 
 const initialState = {
   loading: false,
@@ -37,15 +39,17 @@ const timerReducer = (state = initialState, action) => {
     }
 
     case TIMER_STARTED: {
-      const { startedAt,interval } = action
-      return { ...state, startedAt, interval }
+      const { startedAt, interval } = action
+      return { ...state, startedAt, interval, remaining: DURATION }
+    }
+
+    case TIMER_STOPPED: {
+      return { ...state, startedAt: 0, interval: null, remaining: 0, status: TIMER_IDLE, taskId: 0, timerSliceId: 0 }
     }
 
     case TIMER_TICK: {
       const { timestamp } = action
-      console.log(state.startedAt)
-      console.log(timestamp)
-      const remaining = 120 - (timestamp - state.startedAt)
+      const remaining = DURATION - (timestamp - state.startedAt)
       return { ...state, remaining }
     }
 

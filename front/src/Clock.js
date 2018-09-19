@@ -2,15 +2,21 @@ import React from 'react'
 import { connect } from 'react-redux'
 import formatTime from './helpers/formatTime'
 import getNowSeconds from './helpers/getNowSeconds'
-import { timerStarted, timerTick } from './actions'
+import { timerStarted, timerStopped, timerTick } from './actions'
 
 class Clock extends React.Component {
   componentDidMount() {
     const { timerStarted, timerTick } = this.props
     const startedAt = getNowSeconds()
     const interval = setInterval(timerTick, 1000)
-    console.log('mount clock', Date.now(), startedAt, interval)
     timerStarted(startedAt, interval)
+  }
+  componentDidUpdate() {
+    const { timer, timerStopped } = this.props
+    if (timer.remaining === 0 && timer.startedAt) {
+      clearInterval(timer.interval)
+      timerStopped()
+    }
   }
   render () {
     const { timer } = this.props
@@ -28,6 +34,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   timerStarted: (startedAt, interval) => dispatch(timerStarted(startedAt, interval)),
+  timerStopped: () => dispatch(timerStopped()),
   timerTick: () => dispatch(timerTick())
 })
 
