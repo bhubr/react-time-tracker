@@ -12,6 +12,10 @@ export const UPDATE_TASK_REQUEST = 'UPDATE_TASK_REQUEST'
 export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS'
 export const UPDATE_TASK_FAILURE = 'UPDATE_TASK_FAILURE'
 
+export const DELETE_TASK_REQUEST = 'DELETE_TASK_REQUEST'
+export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS'
+export const DELETE_TASK_FAILURE = 'DELETE_TASK_FAILURE'
+
 export const TOGGLE_TASK_TITLE_EDITING = 'TOGGLE_TASK_TITLE_EDITING'
 
 // ----- Create -----
@@ -43,6 +47,22 @@ const onTaskUpdateSuccess = task => ({
 
 const onTaskUpdateFailure = error => ({
   type: UPDATE_TASK_FAILURE,
+  error
+})
+
+// ----- Delete -----
+const requestDeleteTask = taskId => ({
+  type: DELETE_TASK_REQUEST,
+  taskId
+})
+
+const onTaskDeleteSuccess = taskId => ({
+  type: DELETE_TASK_SUCCESS,
+  taskId
+})
+
+const onTaskDeleteFailure = error => ({
+  type: DELETE_TASK_FAILURE,
   error
 })
 
@@ -85,6 +105,14 @@ export const updateTask = task => dispatch => {
   .then(response => response.data)
   .then(task => dispatch(onTaskUpdateSuccess(task)))
   .catch(error => dispatch(onTaskUpdateFailure(error)))
+}
+
+export const deleteTask = taskId => dispatch => {
+  dispatch(requestDeleteTask(taskId))
+  return axios.delete(`/api/tasks/${taskId}`)
+  .then(response => response.data)
+  .then(({ taskId }) => dispatch(onTaskDeleteSuccess(taskId)))
+  .catch(error => dispatch(onTaskDeleteFailure(error)))
 }
 
 export const toggleTaskTitleEditing = id => ({

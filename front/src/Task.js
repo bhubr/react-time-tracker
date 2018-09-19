@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Icon from './Icon'
 import Checkbox from './Checkbox'
 import TaskInlineEdit from './TaskInlineEdit'
-import { updateTask, toggleTaskTitleEditing } from './actions'
+import { updateTask, toggleTaskTitleEditing, deleteTask } from './actions'
 
 const formatDatetime = datetime => {
   const date = datetime.substr(0, 10)
@@ -39,7 +39,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleTitleEditing: id => dispatch(toggleTaskTitleEditing(id)),
-  updateTask: task => dispatch(updateTask(task))
+  updateTask: task => dispatch(updateTask(task)),
+  deleteTask: taskId => dispatch(deleteTask(taskId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task)

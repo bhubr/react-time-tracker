@@ -25,9 +25,11 @@ const update = (id, payload) => {
     .then(tasks => tasks[0])
 }
 
+const deleteTask = id => query('delete from tasks where id = ?', [id])
 
 module.exports = {
   findAll,
   create,
-  update
+  update,
+  delete: deleteTask
 }

@@ -14,4 +14,8 @@ router.put('/:id', (req, res) => taskModel.update(req.params.id, req.body)
   .then(task => res.json(task))
 )
 
+router.delete('/:id', (req, res) => taskModel.delete(req.params.id)
+  .then(() => res.json({ taskId: req.params.id }))
+)
+
 module.exports = router

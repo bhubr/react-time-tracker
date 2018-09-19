@@ -16,13 +16,6 @@ class App extends Component {
     timer: null,
     modalOpen: false
   }
-  deleteTask = taskId => {
-    const tasks = [...this.state.tasks]
-    const taskIndex = tasks.findIndex(task => task.id === taskId)
-    tasks.splice(taskIndex, 1)
-    storeTasks(tasks)
-    this.setState({ tasks })
-  }
   startTimeSlice = taskId => {
     const task = this.state.tasks.find(task => task.id === taskId)
     if (task.done) {
@@ -88,7 +81,6 @@ class App extends Component {
             <Clock timer={this.state.timer} />
           </div>
           <TaskList
-            deleteTask={this.deleteTask}
             startTimeSlice={this.startTimeSlice} />
           <TaskEdit />
           <TimeSliceCommentModal
