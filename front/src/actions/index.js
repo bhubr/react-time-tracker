@@ -1,4 +1,5 @@
 import axios from 'axios'
+import getNowSeconds from '../helpers/getNowSeconds'
 
 export const FETCH_TASKS_REQUEST = 'FETCH_TASKS_REQUEST'
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS'
@@ -16,7 +17,20 @@ export const DELETE_TASK_REQUEST = 'DELETE_TASK_REQUEST'
 export const DELETE_TASK_SUCCESS = 'DELETE_TASK_SUCCESS'
 export const DELETE_TASK_FAILURE = 'DELETE_TASK_FAILURE'
 
+export const CREATE_TIME_SLICE_REQUEST = 'CREATE_TIME_SLICE_REQUEST'
+export const CREATE_TIME_SLICE_SUCCESS = 'CREATE_TIME_SLICE_SUCCESS'
+export const CREATE_TIME_SLICE_FAILURE = 'CREATE_TIME_SLICE_FAILURE'
+
 export const TOGGLE_TASK_TITLE_EDITING = 'TOGGLE_TASK_TITLE_EDITING'
+
+export const TIMER_STARTED = 'TIMER_STARTED'
+export const TIMER_TICK = 'TIMER_TICK'
+
+// Toggle inline task title editing
+export const toggleTaskTitleEditing = id => ({
+  type: TOGGLE_TASK_TITLE_EDITING,
+  id
+})
 
 // ----- Create -----
 const requestCreateTask = title => ({
@@ -66,7 +80,7 @@ const onTaskDeleteFailure = error => ({
   error
 })
 
-// ----- Fetch all -----
+// ----- Fetch all tasks -----
 const requestFetchTasks = () => ({
   type: FETCH_TASKS_REQUEST
 })
@@ -78,6 +92,22 @@ const onTasksFetchSuccess = tasks => ({
 
 const onTasksFetchFailure = error => ({
   type: FETCH_TASKS_FAILURE,
+  error
+})
+
+// ----- Create time slice -----
+const requestCreateTimeSlice = taskId => ({
+  type: CREATE_TIME_SLICE_REQUEST,
+  taskId
+})
+
+const onTimeSliceCreationSuccess = timeSlice => ({
+  type: CREATE_TIME_SLICE_SUCCESS,
+  timeSlice
+})
+
+const onTimeSliceCreationFailure = error => ({
+  type: CREATE_TIME_SLICE_FAILURE,
   error
 })
 
@@ -115,7 +145,21 @@ export const deleteTask = taskId => dispatch => {
   .catch(error => dispatch(onTaskDeleteFailure(error)))
 }
 
-export const toggleTaskTitleEditing = id => ({
-  type: TOGGLE_TASK_TITLE_EDITING,
-  id
+export const startTimeSlice = payload => dispatch => {
+  dispatch(requestCreateTimeSlice(payload.taskId))
+  return axios.post(`/api/time-slices`, payload)
+  .then(response => response.data)
+  .then(timeSlice => dispatch(onTimeSliceCreationSuccess(timeSlice)))
+  .catch(error => dispatch(onTimeSliceCreationFailure(error)))
+}
+
+export const timerStarted = (startedAt, interval) => ({
+  type: TIMER_STARTED,
+  startedAt,
+  interval
+})
+
+export const timerTick = () => ({
+  type: TIMER_TICK,
+  timestamp: getNowSeconds()
 })

@@ -43,8 +43,9 @@ nav li {
 }
 
 .container {
-  max-width: 960px;
+  max-width: 880px;
   margin: 0 auto;
+  padding: 20px;
 }
 .timer {
   font-size: 36px;

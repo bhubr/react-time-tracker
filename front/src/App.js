@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import Clock from './Clock'
 import TaskList from './TaskList'
 import TaskEdit from './TaskEdit'
+import PageHeader from './PageHeader'
 import TimeSliceCommentModal from './TimeSliceCommentModal'
 import { getStoredTasks, storeTasks } from './storage'
 import notifyMe from './notifyMe'
@@ -76,10 +76,7 @@ class App extends Component {
           </ul>
         </nav>
         <div className="container">
-          <div className="page-header">
-            <h1 className="page-title">Time Tracker</h1>
-            <Clock timer={this.state.timer} />
-          </div>
+          <PageHeader />
           <TaskList
             startTimeSlice={this.startTimeSlice} />
           <TaskEdit />

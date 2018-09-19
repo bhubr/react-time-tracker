@@ -14,9 +14,7 @@ class TaskList extends React.Component {
         this.props.tasks.map(
           (task, index) => <Task
             key={index}
-            task={task}
-            deleteTask={this.props.deleteTask}
-            startTimeSlice={this.props.startTimeSlice} />
+            task={task} />
         )
       }
       </div>

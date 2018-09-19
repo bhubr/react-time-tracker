@@ -3,7 +3,14 @@ import { connect } from 'react-redux'
 import Icon from './Icon'
 import Checkbox from './Checkbox'
 import TaskInlineEdit from './TaskInlineEdit'
-import { updateTask, toggleTaskTitleEditing, deleteTask } from './actions'
+import getMySQLTimestamp from './helpers/getMySQLTimestamp'
+
+import {
+  updateTask,
+  toggleTaskTitleEditing,
+  deleteTask,
+  startTimeSlice
+} from './actions'
 
 const formatDatetime = datetime => {
   const date = datetime.substr(0, 10)
@@ -39,6 +46,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleTitleEditing: id => dispatch(toggleTaskTitleEditing(id)),
+  startTimeSlice: taskId => dispatch(startTimeSlice({
+    taskId, start: getMySQLTimestamp(), comment: '', type: 'POMODORO'
+  })),
   updateTask: task => dispatch(updateTask(task)),
   deleteTask: taskId => dispatch(deleteTask(taskId))
 })

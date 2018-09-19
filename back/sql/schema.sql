@@ -1,12 +1,15 @@
-create table tasks(
+create table tasks (
   id integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title varchar(255) NOT NULL,
   done boolean DEFAULT FALSE
 );
 
-create table timeSlices(
+create table timeSlices (
   id integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  comment varchar(255) NOT NULL,
+  taskId integer,
+  type ENUM('POMODORO', 'SHORT_BREAK', 'LONG_BREAK'),
+  comment varchar(255) NOT NULL DEFAULT '',
   start datetime,
-  end datetime
+  end datetime,
+  foreign key (taskId) REFERENCES tasks(id)
 );
