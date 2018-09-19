@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Archivo');
+
+body {
+  font-family: 'Archivo', sans-serif;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h2 {
+  font-size: 30px;
+}
+
+h3 {
+  font-size: 26px;
+}
+
+h4 {
+  font-size: 22px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 16px;
+}
+
+nav {
+  height: 48px;
+  background: #5e35b1;
+  color: #fff;
+}
+
+nav ul {
+  padding: 0;
+}
+
+nav li {
+  padding: 15px;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+.timer {
+  font-size: 36px;
+}
+.task {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+.task-header {
+  display: flex;
+}
+.task-header h5 {
+  flex-grow: 1;
+}
+.page-header {
+  display: flex;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+.page-title {
+  flex-grow: 1;
+}

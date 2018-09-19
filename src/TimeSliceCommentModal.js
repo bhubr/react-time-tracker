@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Button, Header, Icon, Input, Modal } from 'semantic-ui-react'
 
 export default class TimeSliceCommentModal extends Component {
 
@@ -23,24 +22,24 @@ export default class TimeSliceCommentModal extends Component {
 
   render() {
     return (
-      <Modal
+      <div
         open={this.props.modalOpen}
         onClose={this.handleClose}
         size='small'
       >
-        <Modal.Header>
+        <div>
           Please describe what you're about to do.
-        </Modal.Header>
-        <Modal.Content>
+        </div>
+        <div>
           <form onSubmit={this.handleSubmit}>
-            <Input
+            <input
               placeholder='What are you gonna do?'
               onChange={this.handleChange}
               value={this.state.comment} />
-            <Button color='green' type="submit">Submit</Button>
+            <button color='green' type="submit">Submit</button>
           </form>
-        </Modal.Content>
-      </Modal>
+        </div>
+      </div>
     )
   }
 }

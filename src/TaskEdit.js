@@ -1,5 +1,4 @@
 import React from 'react'
-import { Input, Button } from 'semantic-ui-react'
 
 class TaskEdit extends React.Component {
   state = {
@@ -15,15 +14,16 @@ class TaskEdit extends React.Component {
     if (!this.state.title) {
       return
     }
+    this.setState({ title: '' })
     this.props.onTaskSubmit(this.state.title)
   }
   render() {
     return <form onSubmit={this.handleSubmit}>
-      <Input
+      <input
         placeholder='Task title'
         onChange={this.handleChange}
         value={this.state.title} />
-      <Button type="submit">Submit</Button>
+      <button type="submit">Submit</button>
     </form>
   }
 }

@@ -1,14 +1,13 @@
 import React from 'react'
-import { Statistic } from 'semantic-ui-react'
 import formatTime from './formatTime'
 
 const Clock = props => (
-  <Statistic>
+  <div className="timer">
     { props.timer
-      ? <Statistic.Value>{ formatTime(props.timer.remainingTime) }</Statistic.Value>
-      : <Statistic.Value>00:00</Statistic.Value>
+      ? <div>{ formatTime(props.timer.remainingTime) }</div>
+      : <div>00:00</div>
     }
-  </Statistic>
+  </div>
 )
 
 export default Clock
