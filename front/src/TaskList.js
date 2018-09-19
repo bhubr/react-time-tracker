@@ -1,19 +1,36 @@
 import React from 'react'
 import Task from './Task'
+import { connect } from 'react-redux'
+import { fetchAllTasks } from './actions'
 
-const TaskList = props => (
-  <div className="accordion">
-    {
-      props.tasks.map(
-        (task, index) => <Task
-          key={index}
-          task={task}
-          toggleDone={props.toggleDone}
-          deleteTask={props.deleteTask}
-          startTimeSlice={props.startTimeSlice} />
-      )
-    }
-  </div>
-)
+class TaskList extends React.Component {
+  componentDidMount() {
+    this.props.fetchAllTasks()
+  }
+  render() {
+    return (
+      <div className="accordion">
+      {
+        this.props.tasks.map(
+          (task, index) => <Task
+            key={index}
+            task={task}
+            toggleDone={this.props.toggleDone}
+            deleteTask={this.props.deleteTask}
+            startTimeSlice={this.props.startTimeSlice} />
+        )
+      }
+      </div>
+    )
+  }
+}
 
-export default TaskList
+const mapStateToProps = state => ({
+  tasks: state.tasks.items
+})
+
+const mapDispatchToProps = dispatch => ({
+  fetchAllTasks: () => dispatch(fetchAllTasks())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskList)

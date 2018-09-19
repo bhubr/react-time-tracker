@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { createTask } from './actions'
 
 class TaskEdit extends React.Component {
   state = {
@@ -15,7 +17,7 @@ class TaskEdit extends React.Component {
       return
     }
     this.setState({ title: '' })
-    this.props.onTaskSubmit(this.state.title)
+    this.props.createTask(this.state.title)
   }
   render() {
     return <form onSubmit={this.handleSubmit}>
@@ -28,4 +30,9 @@ class TaskEdit extends React.Component {
   }
 }
 
-export default TaskEdit
+const mapDispatchToProps = dispatch => ({
+  createTask: title => dispatch(createTask(title))
+})
+
+export default connect(null, mapDispatchToProps)(TaskEdit)
+

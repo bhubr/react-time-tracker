@@ -108,7 +108,6 @@ class App extends Component {
             <Clock timer={this.state.timer} />
           </div>
           <TaskList
-            tasks={this.state.tasks}
             toggleDone={this.toggleDone}
             deleteTask={this.deleteTask}
             startTimeSlice={this.startTimeSlice} />
