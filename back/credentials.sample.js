@@ -1,6 +1,6 @@
 module.exports = {
   host: 'localhost',
-  database: 'nodejs_pomodoro_dev',
-  user: 'pomodoroapp',
-  password: 'Pomodoro'
+  database: 'YOUR_DB',
+  user: 'YOUR_DB_USER',
+  password: 'YOUR_DB_PASSWORD'
 }
