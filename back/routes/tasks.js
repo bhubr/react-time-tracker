@@ -10,7 +10,7 @@ router.post('/', (req, res) => taskModel.create(req.body)
   .then(task => res.json(task))
 )
 
-router.put('/:id/done', (req, res) => taskModel.toggleDone(req.params.id, req.body.done)
+router.put('/:id', (req, res) => taskModel.update(req.params.id, req.body)
   .then(task => res.json(task))
 )
 

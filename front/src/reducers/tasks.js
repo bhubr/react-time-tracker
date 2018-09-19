@@ -8,10 +8,12 @@ import {
   UPDATE_TASK_REQUEST,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_FAILURE,
+  TOGGLE_TASK_TITLE_EDITING
 } from '../actions'
 
 
 const initialState = {
+  inlineEditing: 0,
   items: [],
   loading: false
 }
@@ -44,7 +46,29 @@ const tasksReducer = (state = initialState, action) => {
       return { ...state, loading: false }
     }
 
+    // Task update related
+    case UPDATE_TASK_REQUEST: {
+      return { ...state, loading: true }
+    }
+    case UPDATE_TASK_SUCCESS: {
+      const { task } = action
+      const items = state.items.map(
+        item => item.id === task.id ? { ...task } : { ...item }
+      )
+      return { items, loading: false }
+    }
+    case UPDATE_TASK_FAILURE: {
+      return { ...state, loading: false }
+    }
 
+    // Toggle task title inline editing
+    case TOGGLE_TASK_TITLE_EDITING: {
+      const { inlineEditing } = state
+      if (! inlineEditing || inlineEditing !== action.id) {
+        return { ...state, inlineEditing: action.id }
+      }
+      return { ...state, inlineEditing: 0 }
+    }
       
     default: {
       return state

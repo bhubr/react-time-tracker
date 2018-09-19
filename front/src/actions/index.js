@@ -12,6 +12,9 @@ export const UPDATE_TASK_REQUEST = 'UPDATE_TASK_REQUEST'
 export const UPDATE_TASK_SUCCESS = 'UPDATE_TASK_SUCCESS'
 export const UPDATE_TASK_FAILURE = 'UPDATE_TASK_FAILURE'
 
+export const TOGGLE_TASK_TITLE_EDITING = 'TOGGLE_TASK_TITLE_EDITING'
+
+// ----- Create -----
 const requestCreateTask = title => ({
   type: CREATE_TASK_REQUEST,
   title
@@ -27,6 +30,23 @@ const onTaskCreationFailure = error => ({
   error
 })
 
+// ----- Update -----
+const requestUpdateTask = task => ({
+  type: UPDATE_TASK_REQUEST,
+  task
+})
+
+const onTaskUpdateSuccess = task => ({
+  type: UPDATE_TASK_SUCCESS,
+  task
+})
+
+const onTaskUpdateFailure = error => ({
+  type: UPDATE_TASK_FAILURE,
+  error
+})
+
+// ----- Fetch all -----
 const requestFetchTasks = () => ({
   type: FETCH_TASKS_REQUEST
 })
@@ -56,3 +76,18 @@ export const fetchAllTasks = () => dispatch => {
   .then(tasks => dispatch(onTasksFetchSuccess(tasks)))
   .catch(error => dispatch(onTasksFetchFailure(error)))
 }
+
+export const updateTask = task => dispatch => {
+  const taskCopy = { ...task }
+  delete taskCopy.id
+  dispatch(requestUpdateTask(task))
+  return axios.put(`/api/tasks/${task.id}`, taskCopy)
+  .then(response => response.data)
+  .then(task => dispatch(onTaskUpdateSuccess(task)))
+  .catch(error => dispatch(onTaskUpdateFailure(error)))
+}
+
+export const toggleTaskTitleEditing = id => ({
+  type: TOGGLE_TASK_TITLE_EDITING,
+  id
+})

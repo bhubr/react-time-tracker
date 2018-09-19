@@ -15,7 +15,6 @@ class TaskList extends React.Component {
           (task, index) => <Task
             key={index}
             task={task}
-            toggleDone={this.props.toggleDone}
             deleteTask={this.props.deleteTask}
             startTimeSlice={this.props.startTimeSlice} />
         )

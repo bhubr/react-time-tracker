@@ -13,28 +13,8 @@ const TIMER_SLICE_DURATION = 10
 
 class App extends Component {
   state = {
-    tasks: getStoredTasks(),
     timer: null,
     modalOpen: false
-  }
-  addTask = title => {
-    const tasks = [...this.state.tasks]
-    tasks.push({
-      title,
-      done: false,
-      timeSlices: [],
-      id: tasks.length + 1
-    })
-    storeTasks(tasks)
-    this.setState({ tasks })
-  }
-  toggleDone = taskId => {
-    const tasks = [...this.state.tasks]
-    const task = tasks.find(task => task.id === taskId)
-    task.done = !task.done
-    console.log(task)
-    storeTasks(tasks)
-    this.setState({ tasks })
   }
   deleteTask = taskId => {
     const tasks = [...this.state.tasks]
@@ -108,10 +88,9 @@ class App extends Component {
             <Clock timer={this.state.timer} />
           </div>
           <TaskList
-            toggleDone={this.toggleDone}
             deleteTask={this.deleteTask}
             startTimeSlice={this.startTimeSlice} />
-          <TaskEdit onTaskSubmit={this.addTask} />
+          <TaskEdit />
           <TimeSliceCommentModal
             modalOpen={this.state.modalOpen}
             onCommentSubmit={this.onCommentSubmit} />
