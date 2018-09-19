@@ -3,8 +3,7 @@ import TaskList from './TaskList'
 import TaskEdit from './TaskEdit'
 import PageHeader from './PageHeader'
 import TimeSliceCommentModal from './TimeSliceCommentModal'
-import { getStoredTasks, storeTasks } from './storage'
-import notifyMe from './notifyMe'
+import notifyMe from './helpers/notifyMe'
 
 // Useful links
 // https://www.alsacreations.com/article/lire/1402-web-storage-localstorage-sessionstorage.html
@@ -55,7 +54,7 @@ class App extends Component {
         datetimeEnd: datetimeEnd.toString(),
         comment
       })
-      storeTasks(tasks)
+      // storeTasks(tasks)
       return { tasks, timer: null }
     })
   }
