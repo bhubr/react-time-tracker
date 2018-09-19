@@ -26,6 +26,7 @@ export const TOGGLE_TASK_TITLE_EDITING = 'TOGGLE_TASK_TITLE_EDITING'
 export const TIMER_STARTED = 'TIMER_STARTED'
 export const TIMER_STOPPED = 'TIMER_STOPPED'
 export const TIMER_TICK = 'TIMER_TICK'
+export const BREAK_STARTED = 'BREAK_STARTED'
 
 // Toggle inline task title editing
 export const toggleTaskTitleEditing = id => ({
@@ -167,4 +168,10 @@ export const timerStopped = () => ({
 export const timerTick = () => ({
   type: TIMER_TICK,
   timestamp: getNowSeconds()
+})
+
+export const startBreak = (startedAt, interval) => ({
+  type: BREAK_STARTED,
+  startedAt,
+  interval
 })
