@@ -15,9 +15,9 @@ import {
   TIMER_LONG_BREAK
 } from '../constants'
 
-const DURATION = 25 * 60
-const SB = 5
-const LB = 15
+const DURATION = 8
+const SB = 2
+const LB = 4
 
 const initialState = {
   autoStart: true,
@@ -27,7 +27,7 @@ const initialState = {
   remaining: 0,
   startedAt: 0,
   taskId: 0,
-  timerSliceId: 0,
+  timeSliceId: 0,
   consecutivePomos: 0,
   duration: 0
 }
@@ -40,8 +40,8 @@ const timerReducer = (state = initialState, action) => {
     }
 
     case CREATE_TIME_SLICE_SUCCESS: {
-      const { taskId, timerSliceId } = action.timeSlice
-      return { ...state, taskId, timerSliceId, status: TIMER_POMODORO, loading: false }
+      const { taskId, id } = action.timeSlice
+      return { ...state, taskId, timeSliceId: id, status: TIMER_POMODORO, loading: false }
     }
 
     case TIMER_STARTED: {
@@ -80,7 +80,7 @@ const timerReducer = (state = initialState, action) => {
         remaining: 0,
         status: TIMER_IDLE,
         taskId: 0,
-        timerSliceId: 0,
+        timeSliceId: 0,
         consecutivePomos
       }
     }

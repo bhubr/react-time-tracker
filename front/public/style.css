@@ -54,6 +54,9 @@ nav li {
   padding: 5px 0;
   border-bottom: 1px solid #eee;
 }
+.task.active {
+  background: #b2ebf2;
+}
 .task-header {
   display: flex;
 }

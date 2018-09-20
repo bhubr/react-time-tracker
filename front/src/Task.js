@@ -8,6 +8,7 @@ import getMySQLTimestamp from './helpers/getMySQLTimestamp'
 import {
   updateTask,
   toggleTaskTitleEditing,
+  setCurrentTask,
   deleteTask,
   startTimeSlice
 } from './actions'
@@ -17,13 +18,18 @@ const formatDatetime = datetime => {
   const time = datetime.substr(11, 5)
   return `${date} ${time}`
 }
-const Task = ({ task, startTimeSlice, deleteTask, updateTask, inlineEditing, toggleTitleEditing }) => (
-  <div className="task">
+const Task = ({ task, currentTaskId, setCurrentTask, startTimeSlice, deleteTask, updateTask, inlineEditing, toggleTitleEditing }) => (
+  <div className={ 'task' + (currentTaskId === task.id ? ' active' : '') }>
     <div className="task-header">
-      <h5 onClick={() => toggleTitleEditing(task.id)}>{inlineEditing !== task.id
-        ? task.title
-        : <TaskInlineEdit task={task} />
-      }</h5>
+      <h5
+        onClick={() => setCurrentTask(task.id)}
+        onDoubleClick={() => toggleTitleEditing(task.id)}
+      >
+        {inlineEditing !== task.id
+          ? task.title
+          : <TaskInlineEdit task={task} />
+        }
+      </h5>
       <Icon disabled={task.done} onClick={() => startTimeSlice(task.id)} name='stopwatch' />
       <Icon onClick={() => deleteTask(task.id)} name='bin' />
       <Checkbox task={task} toggleDone={ () => updateTask({ ...task, done: ! task.done }) } />
@@ -41,7 +47,8 @@ const Task = ({ task, startTimeSlice, deleteTask, updateTask, inlineEditing, tog
 )
 
 const mapStateToProps = state => ({
-  inlineEditing: state.tasks.inlineEditing
+  inlineEditing: state.tasks.inlineEditing,
+  currentTaskId: state.tasks.currentTaskId
 })
 
 const mapDispatchToProps = dispatch => ({
@@ -50,7 +57,8 @@ const mapDispatchToProps = dispatch => ({
     taskId, start: getMySQLTimestamp(), comment: '', type: 'POMODORO'
   })),
   updateTask: task => dispatch(updateTask(task)),
-  deleteTask: taskId => dispatch(deleteTask(taskId))
+  deleteTask: taskId => dispatch(deleteTask(taskId)),
+  setCurrentTask: taskId => dispatch(setCurrentTask(taskId))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Task)

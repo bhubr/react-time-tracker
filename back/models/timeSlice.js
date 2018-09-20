@@ -11,8 +11,8 @@ const create = ({ comment, type, taskId, start }) =>
     .then(timeSlices => timeSlices[0])
 
 const update = (id, payload) => {
-  const updatableFields = ['comment']
-  const { updateQuery, values } = prepareUpdateQuery(id, payload, updatableFields)
+  const updatableFields = ['comment', 'end']
+  const { updateQuery, values } = prepareUpdateQuery('timeSlices', id, payload, updatableFields)
   console.log(updateQuery, values)
   return query(updateQuery, values)
     .then(() => query('select * from timeSlices where id = ?', [id]))

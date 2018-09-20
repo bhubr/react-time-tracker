@@ -1,4 +1,4 @@
-module.exports = (id, payload, updatableFields) => {
+module.exports = (table, id, payload, updatableFields) => {
   const keys = []
   const values = []
   for (let key in payload) {
@@ -9,6 +9,6 @@ module.exports = (id, payload, updatableFields) => {
     values.push(payload[key])
   }
   values.push(id)
-  const updateQuery = `update tasks set ${ keys.join() } where id = ?`
+  const updateQuery = `update ${table} set ${ keys.join() } where id = ?`
   return { updateQuery, values }
 }

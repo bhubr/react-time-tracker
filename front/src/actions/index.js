@@ -21,7 +21,12 @@ export const CREATE_TIME_SLICE_REQUEST = 'CREATE_TIME_SLICE_REQUEST'
 export const CREATE_TIME_SLICE_SUCCESS = 'CREATE_TIME_SLICE_SUCCESS'
 export const CREATE_TIME_SLICE_FAILURE = 'CREATE_TIME_SLICE_FAILURE'
 
+export const UPDATE_TIME_SLICE_REQUEST = 'UPDATE_TIME_SLICE_REQUEST'
+export const UPDATE_TIME_SLICE_SUCCESS = 'UPDATE_TIME_SLICE_SUCCESS'
+export const UPDATE_TIME_SLICE_FAILURE = 'UPDATE_TIME_SLICE_FAILURE'
+
 export const TOGGLE_TASK_TITLE_EDITING = 'TOGGLE_TASK_TITLE_EDITING'
+export const SET_CURRENT_TASK = 'SET_CURRENT_TASK'
 
 export const TIMER_STARTED = 'TIMER_STARTED'
 export const TIMER_STOPPED = 'TIMER_STOPPED'
@@ -113,6 +118,22 @@ const onTimeSliceCreationFailure = error => ({
   error
 })
 
+// ----- Update time slice -----
+const requestUpdateTimeSlice = timeSliceId => ({
+  type: UPDATE_TIME_SLICE_REQUEST,
+  timeSliceId
+})
+
+const onTimeSliceUpdateSuccess = timeSlice => ({
+  type: UPDATE_TIME_SLICE_SUCCESS,
+  timeSlice
+})
+
+const onTimeSliceUpdateFailure = error => ({
+  type: UPDATE_TIME_SLICE_FAILURE,
+  error
+})
+
 export const createTask = title => dispatch => {
   dispatch(requestCreateTask(title))
   return axios.post('/api/tasks', { title })
@@ -155,6 +176,15 @@ export const startTimeSlice = payload => dispatch => {
   .catch(error => dispatch(onTimeSliceCreationFailure(error)))
 }
 
+export const endTimeSlice = (timeSliceId, payload) => dispatch => {
+  console.log('end time slice', timeSliceId, payload)
+  dispatch(requestUpdateTimeSlice(timeSliceId))
+  return axios.put(`/api/time-slices/${timeSliceId}`, payload)
+  .then(response => response.data)
+  .then(timeSlice => dispatch(onTimeSliceUpdateSuccess(timeSlice)))
+  .catch(error => dispatch(onTimeSliceUpdateFailure(error)))
+}
+
 export const timerStarted = (startedAt, interval) => ({
   type: TIMER_STARTED,
   startedAt,
@@ -174,4 +204,9 @@ export const startBreak = (startedAt, interval) => ({
   type: BREAK_STARTED,
   startedAt,
   interval
+})
+
+export const setCurrentTask = taskId => ({
+  type: SET_CURRENT_TASK,
+  taskId
 })

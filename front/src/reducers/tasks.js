@@ -8,14 +8,17 @@ import {
   UPDATE_TASK_REQUEST,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_FAILURE,
-  TOGGLE_TASK_TITLE_EDITING
+  TOGGLE_TASK_TITLE_EDITING,
+  SET_CURRENT_TASK,
+  CREATE_TIME_SLICE_SUCCESS
 } from '../actions'
 
 
 const initialState = {
   inlineEditing: 0,
   items: [],
-  loading: false
+  loading: false,
+  currentTaskId: 0
 }
 
 const tasksReducer = (state = initialState, action) => {
@@ -68,6 +71,16 @@ const tasksReducer = (state = initialState, action) => {
         return { ...state, inlineEditing: action.id }
       }
       return { ...state, inlineEditing: 0 }
+    }
+
+    // When timer is started, set current task id
+    case CREATE_TIME_SLICE_SUCCESS: {
+      const { taskId } = action.timeSlice
+      return { ...state, currentTaskId: taskId }
+    }
+    case SET_CURRENT_TASK: {
+      const { taskId } = action
+      return { ...state, currentTaskId: taskId }
     }
       
     default: {

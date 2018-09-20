@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import formatTime from './helpers/formatTime'
 import getMySQLTimestamp from './helpers/getMySQLTimestamp'
 import getNowSeconds from './helpers/getNowSeconds'
+import notifyMe from './helpers/notifyMe'
 import { TIMER_POMODORO, TIMER_SHORT_BREAK, TIMER_LONG_BREAK } from './constants'
 import {
   startTimeSlice,
+  endTimeSlice,
   startBreak,
   timerStarted,
   timerStopped,
@@ -23,12 +25,14 @@ class Clock extends React.Component {
     timerStarted(startedAt, interval)
   }
   componentDidUpdate() {
-    const { timer, startTimeSlice, startBreak, timerStarted, timerTick, timerStopped } = this.props
+    const { timer, startTimeSlice, endTimeSlice, startBreak, timerStarted, timerTick, timerStopped } = this.props
     if (timer.remaining === 0 && timer.startedAt) {
       console.log('timer reaches 0')
+      notifyMe(isPomodoro(timer.status) ? 'Take a break!' : 'Get back to work!')
       clearInterval(timer.interval)
       if (isPomodoro(timer.status)) {
-        console.log('was pomo, start break')
+        console.log('was pomo, start break', typeof endTimeSlice)
+        endTimeSlice(timer.timeSliceId)
         const startedAt = getNowSeconds()
         const interval = setInterval(timerTick, 1000)
         startBreak(startedAt, interval)
@@ -65,6 +69,9 @@ const mapDispatchToProps = dispatch => ({
   startBreak: (startedAt, interval) => dispatch(startBreak(startedAt, interval)),
   startTimeSlice: taskId => dispatch(startTimeSlice({
     taskId, start: getMySQLTimestamp(), comment: '', type: 'POMODORO'
+  })),
+  endTimeSlice: timeSliceId => dispatch(endTimeSlice(timeSliceId, {
+    end: getMySQLTimestamp()
   })),
   timerStarted: (startedAt, interval) => dispatch(timerStarted(startedAt, interval)),
   timerStopped: () => dispatch(timerStopped()),
