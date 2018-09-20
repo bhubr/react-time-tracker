@@ -85,10 +85,15 @@ const tasksReducer = (state = initialState, action) => {
       return { ...state, inlinePomoEditing: 0 }
     }
 
-    // When timer is started, set current task id
+    // When timer is started, set current task id, add time slice to task's slices
     case CREATE_TIME_SLICE_SUCCESS: {
-      const { taskId } = action.timeSlice
-      return { ...state, currentTaskId: taskId }
+      const { timeSlice } = action
+      const task = state.items.find(task => task.id === timeSlice.taskId)
+      const timeSlices = task.timeSlices.map(ts => ({ ...ts })).concat([{ ...timeSlice }])
+      const items = state.items.map(
+        item => item.id === task.id ? { ...task, timeSlices } : { ...item }
+      )
+      return { ...state, items, currentTaskId: timeSlice.taskId }
     }
     case UPDATE_TIME_SLICE_SUCCESS: {
       const { timeSlice } = action
