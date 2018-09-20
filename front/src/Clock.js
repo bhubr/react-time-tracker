@@ -4,6 +4,7 @@ import formatTime from './helpers/formatTime'
 import getMySQLTimestamp from './helpers/getMySQLTimestamp'
 import getNowSeconds from './helpers/getNowSeconds'
 import notifyMe from './helpers/notifyMe'
+import Icon from './Icon'
 import { TIMER_POMODORO, TIMER_SHORT_BREAK, TIMER_LONG_BREAK } from './constants'
 import {
   startTimeSlice,
@@ -51,12 +52,26 @@ class Clock extends React.Component {
   componentWillUnmount() {
     console.log('will unmount')
   }
+  handleStop = () => {
+    const { timer, timerStopped, endTimeSlice } = this.props
+    if (! timer.interval) {
+      return
+    }
+    clearInterval(timer.interval)
+    if (timer.timeSliceId) {
+      endTimeSlice(timer.timeSliceId)
+    }
+    timerStopped()
+  }
   render () {
     const { timer } = this.props
     return (
-      <span>
-      { formatTime(timer.remaining) }
-      </span>
+      <div>
+        <Icon onClick={this.handleStop} name='stop' />
+        <span>
+        { formatTime(timer.remaining) }
+        </span>
+      </div>
     )
   }
 }

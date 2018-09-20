@@ -50,6 +50,16 @@ nav li {
 .timer {
   font-size: 36px;
 }
+.timer [class^="icon-"] {
+  font-size: 24px;
+  margin-right: 8px;
+  color: #aaa;
+}
+.timer [class^="icon-"]:hover {
+  font-size: 24px;
+  margin-right: 8px;
+  color: #c00;
+}
 .task {
   padding: 5px 0;
   border-bottom: 1px solid #eee;
