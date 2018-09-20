@@ -8,7 +8,7 @@ import Icon from './Icon'
 import { TIMER_POMODORO, TIMER_SHORT_BREAK, TIMER_LONG_BREAK } from './constants'
 import {
   startTimeSlice,
-  endTimeSlice,
+  updateTimeSlice,
   startBreak,
   timerStarted,
   timerStopped,
@@ -85,7 +85,7 @@ const mapDispatchToProps = dispatch => ({
   startTimeSlice: taskId => dispatch(startTimeSlice({
     taskId, start: getMySQLTimestamp(), comment: '', type: 'POMODORO'
   })),
-  endTimeSlice: timeSliceId => dispatch(endTimeSlice(timeSliceId, {
+  endTimeSlice: timeSliceId => dispatch(updateTimeSlice(timeSliceId, {
     end: getMySQLTimestamp()
   })),
   timerStarted: (startedAt, interval) => dispatch(timerStarted(startedAt, interval)),

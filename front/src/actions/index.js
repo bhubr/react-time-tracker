@@ -27,6 +27,7 @@ export const UPDATE_TIME_SLICE_FAILURE = 'UPDATE_TIME_SLICE_FAILURE'
 
 export const TOGGLE_TASK_TITLE_EDITING = 'TOGGLE_TASK_TITLE_EDITING'
 export const SET_CURRENT_TASK = 'SET_CURRENT_TASK'
+export const TOGGLE_POMO_COMMENT_EDITING = 'TOGGLE_POMO_COMMENT_EDITING'
 
 export const TIMER_STARTED = 'TIMER_STARTED'
 export const TIMER_STOPPED = 'TIMER_STOPPED'
@@ -36,6 +37,12 @@ export const BREAK_STARTED = 'BREAK_STARTED'
 // Toggle inline task title editing
 export const toggleTaskTitleEditing = id => ({
   type: TOGGLE_TASK_TITLE_EDITING,
+  id
+})
+
+// Toggle inline pomo comment editing
+export const togglePomoCommentEditing = id => ({
+  type: TOGGLE_POMO_COMMENT_EDITING,
   id
 })
 
@@ -176,7 +183,7 @@ export const startTimeSlice = payload => dispatch => {
   .catch(error => dispatch(onTimeSliceCreationFailure(error)))
 }
 
-export const endTimeSlice = (timeSliceId, payload) => dispatch => {
+export const updateTimeSlice = (timeSliceId, payload) => dispatch => {
   console.log('end time slice', timeSliceId, payload)
   dispatch(requestUpdateTimeSlice(timeSliceId))
   return axios.put(`/api/time-slices/${timeSliceId}`, payload)

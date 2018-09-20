@@ -9,13 +9,16 @@ import {
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_FAILURE,
   TOGGLE_TASK_TITLE_EDITING,
+  TOGGLE_POMO_COMMENT_EDITING,
   SET_CURRENT_TASK,
-  CREATE_TIME_SLICE_SUCCESS
+  CREATE_TIME_SLICE_SUCCESS,
+  UPDATE_TIME_SLICE_SUCCESS
 } from '../actions'
 
 
 const initialState = {
-  inlineEditing: 0,
+  inlineTaskEditing: 0,
+  inlinePomoEditing: 0,
   items: [],
   loading: false,
   currentTaskId: 0
@@ -66,17 +69,38 @@ const tasksReducer = (state = initialState, action) => {
 
     // Toggle task title inline editing
     case TOGGLE_TASK_TITLE_EDITING: {
-      const { inlineEditing } = state
-      if (! inlineEditing || inlineEditing !== action.id) {
-        return { ...state, inlineEditing: action.id }
+      const { inlineTaskEditing } = state
+      if (! inlineTaskEditing || inlineTaskEditing !== action.id) {
+        return { ...state, inlineTaskEditing: action.id }
       }
-      return { ...state, inlineEditing: 0 }
+      return { ...state, inlineTaskEditing: 0 }
+    }
+
+    // Toggle task title inline editing
+    case TOGGLE_POMO_COMMENT_EDITING: {
+      const { inlinePomoEditing } = state
+      if (! inlinePomoEditing || inlinePomoEditing !== action.id) {
+        return { ...state, inlinePomoEditing: action.id }
+      }
+      return { ...state, inlinePomoEditing: 0 }
     }
 
     // When timer is started, set current task id
     case CREATE_TIME_SLICE_SUCCESS: {
       const { taskId } = action.timeSlice
       return { ...state, currentTaskId: taskId }
+    }
+    case UPDATE_TIME_SLICE_SUCCESS: {
+      const { timeSlice } = action
+      const task = state.items.find(task => task.id === timeSlice.taskId)
+      const timeSlices = task.timeSlices.map(
+        ts => ts.id === timeSlice.id ? { ...timeSlice } : { ...ts }
+      )
+      const items = state.items.map(
+        item => item.id === task.id ? { ...task, timeSlices } : { ...item }
+      )
+      return { items }
+
     }
     case SET_CURRENT_TASK: {
       const { taskId } = action

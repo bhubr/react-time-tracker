@@ -3,11 +3,13 @@ import { connect } from 'react-redux'
 import Icon from './Icon'
 import Checkbox from './Checkbox'
 import TaskInlineEdit from './TaskInlineEdit'
+import PomoInlineEdit from './PomoInlineEdit'
 import getMySQLTimestamp from './helpers/getMySQLTimestamp'
 
 import {
   updateTask,
   toggleTaskTitleEditing,
+  togglePomoCommentEditing,
   setCurrentTask,
   deleteTask,
   startTimeSlice
@@ -18,14 +20,25 @@ const formatDatetime = datetime => {
   const time = datetime.substr(11, 5)
   return `${date} ${time}`
 }
-const Task = ({ task, currentTaskId, setCurrentTask, startTimeSlice, deleteTask, updateTask, inlineEditing, toggleTitleEditing }) => (
+const Task = ({
+  task,
+  currentTaskId,
+  setCurrentTask,
+  startTimeSlice,
+  deleteTask,
+  updateTask,
+  inlineTaskEditing,
+  inlinePomoEditing,
+  toggleTaskTitleEditing,
+  togglePomoCommentEditing
+}) => (
   <div className={ 'task' + (currentTaskId === task.id ? ' active' : '') }>
     <div className="task-header">
       <h5
         onClick={() => setCurrentTask(task.id)}
-        onDoubleClick={() => toggleTitleEditing(task.id)}
+        onDoubleClick={() => toggleTaskTitleEditing(task.id)}
       >
-        {inlineEditing !== task.id
+        {inlineTaskEditing !== task.id
           ? task.title
           : <TaskInlineEdit task={task} />
         }
@@ -38,7 +51,14 @@ const Task = ({ task, currentTaskId, setCurrentTask, startTimeSlice, deleteTask,
     {
       task.timeSlices
       ? task.timeSlices.map((ts, tsi) =>
-        <div key={tsi}>{ formatDatetime(ts.datetimeStart) } {ts.comment}</div>
+        <div key={tsi}>{
+          formatDatetime(ts.start) }&nbsp;
+          <span onDoubleClick={() => togglePomoCommentEditing(ts.id)}>
+          {inlinePomoEditing !== ts.id
+          ? ts.comment || 'N/A'
+          : <PomoInlineEdit pomo={ts} />
+        }</span>
+        </div>
       )
       : 'no time slices'
     }
@@ -47,12 +67,14 @@ const Task = ({ task, currentTaskId, setCurrentTask, startTimeSlice, deleteTask,
 )
 
 const mapStateToProps = state => ({
-  inlineEditing: state.tasks.inlineEditing,
+  inlineTaskEditing: state.tasks.inlineTaskEditing,
+  inlinePomoEditing: state.tasks.inlinePomoEditing,
   currentTaskId: state.tasks.currentTaskId
 })
 
 const mapDispatchToProps = dispatch => ({
-  toggleTitleEditing: id => dispatch(toggleTaskTitleEditing(id)),
+  toggleTaskTitleEditing: id => dispatch(toggleTaskTitleEditing(id)),
+  togglePomoCommentEditing: id => dispatch(togglePomoCommentEditing(id)),
   startTimeSlice: taskId => dispatch(startTimeSlice({
     taskId, start: getMySQLTimestamp(), comment: '', type: 'POMODORO'
   })),

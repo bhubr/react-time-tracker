@@ -1,5 +1,6 @@
 const query = require('../query')
 const prepareUpdateQuery = require('./lib/prepareUpdateQuery')
+
 const findAll = () => query('select * from timeSlices')
 
 const create = ({ comment, type, taskId, start }) =>

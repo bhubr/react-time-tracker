@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateTask, toggleTaskTitleEditing } from './actions'
+import { updateTimeSlice, togglePomoCommentEditing } from './actions'
 
-class TaskInlineEdit extends React.Component {
+class PomoInlineEdit extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: this.props.task.title
+      value: this.props.pomo.comment
     }
   }
   componentDidMount() {
@@ -18,18 +18,17 @@ class TaskInlineEdit extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault()
-    const { id } = this.props.task
+    const { id } = this.props.pomo
     const payload = {
-      id,
-      title: this.state.value
+      comment: this.state.value
     }
-    this.props.updateTask(payload)
-    this.props.toggleTaskTitleEditing(id)
+    this.props.updateTimeSlice(id, payload)
+    this.props.togglePomoCommentEditing(id)
   }
   render() {
     const { value } = this.state
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form style={{display: 'inline'}} onSubmit={ this.handleSubmit }>
         <input
           type="text"
           ref={input => { this.nameInput = input }}
@@ -42,8 +41,8 @@ class TaskInlineEdit extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  toggleTaskTitleEditing: id => dispatch(toggleTaskTitleEditing(id)),
-  updateTask: task => dispatch(updateTask(task))
+  togglePomoCommentEditing: id => dispatch(togglePomoCommentEditing(id)),
+  updateTimeSlice: (id, payload) => dispatch(updateTimeSlice(id, payload))
 })
 
-export default connect(null, mapDispatchToProps)(TaskInlineEdit)
+export default connect(null, mapDispatchToProps)(PomoInlineEdit)
