@@ -7,7 +7,7 @@ import Checkbox from './Checkbox'
 import TaskBadge from './TaskBadge'
 import TaskInlineEdit from './TaskInlineEdit'
 import PomoInlineEdit from './PomoInlineEdit'
-import getMySQLTimestamp from './helpers/getMySQLTimestamp'
+import getMySQLTimestamp from '../helpers/getMySQLTimestamp'
 
 import {
   updateTask,
@@ -16,7 +16,7 @@ import {
   setCurrentTask,
   deleteTask,
   startTimeSlice
-} from './actions'
+} from '../actions'
 
 const formatDatetime = datetime => {
   const date = datetime.substr(0, 10)
@@ -45,6 +45,7 @@ const Task = ({
     <div className={classNames('task-header', getActiveClass(currentTaskId, task))}>
       <Icon onClick={() => toggleExpanded(! expanded)} name={ getChevronDirection(expanded) } />
       <h5
+        className="grow"
         onClick={() => setCurrentTask(task.id)}
         onDoubleClick={() => toggleTaskTitleEditing(task.id)}
       >

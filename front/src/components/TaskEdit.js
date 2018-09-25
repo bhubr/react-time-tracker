@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createTask } from './actions'
+import { createTask } from '../actions'
 
 class TaskEdit extends React.Component {
   state = {

@@ -34,6 +34,8 @@ export const TIMER_STOPPED = 'TIMER_STOPPED'
 export const TIMER_TICK = 'TIMER_TICK'
 export const BREAK_STARTED = 'BREAK_STARTED'
 
+export const TOGGLE_FILTER = 'TOGGLE_FILTER'
+
 // Toggle inline task title editing
 export const toggleTaskTitleEditing = id => ({
   type: TOGGLE_TASK_TITLE_EDITING,
@@ -44,6 +46,12 @@ export const toggleTaskTitleEditing = id => ({
 export const togglePomoCommentEditing = id => ({
   type: TOGGLE_POMO_COMMENT_EDITING,
   id
+})
+
+// Toggle filter
+export const toggleFilter = key => ({
+  type: TOGGLE_FILTER,
+  key
 })
 
 // ----- Create -----

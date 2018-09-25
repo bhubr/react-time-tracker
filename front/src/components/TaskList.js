@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import Task from './Task'
 import Icon from './Icon'
 import Checkbox from './Checkbox'
-import { fetchAllTasks } from './actions'
+import { fetchAllTasks } from '../actions'
 
 class TaskList extends React.Component {
   componentDidMount() {
     this.props.fetchAllTasks()
   }
   render() {
+    const { active, done } = this.props.filters
     return (
       <div className="accordion">
         <div className="task-header task-header-row">
@@ -19,7 +20,9 @@ class TaskList extends React.Component {
           <div className="checkbox-header">D</div>
         </div>
       {
-        this.props.tasks.map(
+        this.props.tasks
+        .filter(t => (!active || t.active) && (done || !t.done))
+        .map(
           (task, index) => <Task
             key={index}
             task={task} />
@@ -31,7 +34,8 @@ class TaskList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tasks: state.tasks.items
+  tasks: state.tasks.items,
+  filters: state.filters
 })
 
 const mapDispatchToProps = dispatch => ({

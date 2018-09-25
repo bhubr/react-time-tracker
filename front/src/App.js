@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import TaskList from './TaskList'
-import TaskEdit from './TaskEdit'
-import PageHeader from './PageHeader'
-import TimeSliceCommentModal from './TimeSliceCommentModal'
-import notifyMe from './helpers/notifyMe'
+import TaskList from './components/TaskList'
+import TaskEdit from './components/TaskEdit'
+import PageHeader from './components/PageHeader'
+import TimeSliceCommentModal from './components/TimeSliceCommentModal'
 
 // Useful links
 // https://www.alsacreations.com/article/lire/1402-web-storage-localstorage-sessionstorage.html

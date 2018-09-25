@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { updateTimeSlice, togglePomoCommentEditing } from './actions'
+import { updateTask, toggleTaskTitleEditing } from '../actions'
 
-class PomoInlineEdit extends React.Component {
+class TaskInlineEdit extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      value: this.props.pomo.comment
+      value: this.props.task.title
     }
   }
   componentDidMount() {
@@ -18,12 +18,13 @@ class PomoInlineEdit extends React.Component {
   }
   handleSubmit = e => {
     e.preventDefault()
-    const { id } = this.props.pomo
+    const { id } = this.props.task
     const payload = {
-      comment: this.state.value
+      id,
+      title: this.state.value
     }
-    this.props.updateTimeSlice(id, payload)
-    this.props.togglePomoCommentEditing(id)
+    this.props.updateTask(payload)
+    this.props.toggleTaskTitleEditing(id)
   }
   render() {
     const { value } = this.state
@@ -41,8 +42,8 @@ class PomoInlineEdit extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  togglePomoCommentEditing: id => dispatch(togglePomoCommentEditing(id)),
-  updateTimeSlice: (id, payload) => dispatch(updateTimeSlice(id, payload))
+  toggleTaskTitleEditing: id => dispatch(toggleTaskTitleEditing(id)),
+  updateTask: task => dispatch(updateTask(task))
 })
 
-export default connect(null, mapDispatchToProps)(PomoInlineEdit)
+export default connect(null, mapDispatchToProps)(TaskInlineEdit)

@@ -73,9 +73,6 @@ nav li {
   display: flex;
   padding: 5px;
 }
-.task-header h5 {
-  flex-grow: 1;
-}
 .task-header-row {
   font-weight: bold;
 }
@@ -87,7 +84,7 @@ nav li {
   padding: 10px 0;
   border-bottom: 1px solid #eee;
 }
-.page-title {
+.grow {
   flex-grow: 1;
 }
 .task-timeslices {
@@ -118,4 +115,31 @@ nav li {
 
 .hidden {
   visibility: hidden;
+}
+
+.button-group .btn:first-child {
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+.button-group .btn:not(:first-child) {
+  border-left: none;
+}
+.button-group .btn:last-child {
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+.filter-buttons {
+  margin-left: 20px;
+  vertical-align: baseline;
+}
+.btn {
+  background: #eee;
+}
+.btn-cyan {
+  background: #00acc1;
+  color: #fff;
+}
+.btn-purple {
+  background: #5e35b1;
+  color: #fff;
 }

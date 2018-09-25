@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import formatTime from './helpers/formatTime'
-import getMySQLTimestamp from './helpers/getMySQLTimestamp'
-import getNowSeconds from './helpers/getNowSeconds'
-import notifyMe from './helpers/notifyMe'
+import formatTime from '../helpers/formatTime'
+import getMySQLTimestamp from '../helpers/getMySQLTimestamp'
+import getNowSeconds from '../helpers/getNowSeconds'
+import notifyMe from '../helpers/notifyMe'
 import Icon from './Icon'
-import { TIMER_POMODORO, TIMER_SHORT_BREAK, TIMER_LONG_BREAK } from './constants'
+import { TIMER_POMODORO, TIMER_SHORT_BREAK, TIMER_LONG_BREAK } from '../constants'
 import {
   startTimeSlice,
   updateTimeSlice,
@@ -13,7 +13,7 @@ import {
   timerStarted,
   timerStopped,
   timerTick
-} from './actions'
+} from '../actions'
 
 const isBreak = status => [TIMER_SHORT_BREAK, TIMER_LONG_BREAK].includes(status)
 const isPomodoro = status => status === TIMER_POMODORO
