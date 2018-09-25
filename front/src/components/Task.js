@@ -56,6 +56,7 @@ const Task = ({
       </h5>
       <Icon disabled={task.done} onClick={() => startTimeSlice(task.id)} name='stopwatch' />
       <Icon onClick={() => deleteTask(task.id)} name='bin' />
+      <Checkbox checked={task.critical} onChange={ () => updateTask({ ...task, critical: ! task.critical }) } />
       <Checkbox checked={task.active} onChange={ () => updateTask({ ...task, active: ! task.active }) } />
       <Checkbox checked={task.done} onChange={ () => updateTask({ ...task, done: ! task.done }) } />
     </div>

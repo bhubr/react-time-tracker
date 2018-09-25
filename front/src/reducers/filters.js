@@ -4,6 +4,7 @@ import {
 
 const initialState = {
   active: true,
+  critical: false,
   done: false
 }
 

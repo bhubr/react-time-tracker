@@ -18,7 +18,7 @@ const create = ({ title }) => query('insert into tasks(title) values(?)', [title
   .then(tasks => ({ ...tasks[0], timeSlices: [] }))
 
 const update = (id, payload) => {
-  const updatableFields = ['done', 'active', 'title']
+  const updatableFields = ['done', 'active', 'critical', 'title']
   const ignoredFields = ['timeSlices']
   const { updateQuery, values } = prepareUpdateQuery('tasks', id, payload, updatableFields, ignoredFields)
   return chain(query(updateQuery, values))

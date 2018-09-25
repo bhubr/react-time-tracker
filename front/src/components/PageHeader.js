@@ -9,10 +9,15 @@ import ToggleButton from './ToggleButton'
 
 const IdleClock = () => <span>--:--</span>
 
-const PageHeader = ({ timer, toggleFilter, showActive, showDone }) => (
+const PageHeader = ({ timer, toggleFilter, showCritical, showActive, showDone }) => (
   <div className="page-header">
     <h1 className="page-title">Time Tracker</h1>
     <ButtonGroup className="grow filter-buttons">
+      <ToggleButton
+        onToggle={() => toggleFilter('critical')}
+        classOn="btn-red"
+        label="Critical"
+        on={showCritical} />
       <ToggleButton
         onToggle={() => toggleFilter('active')}
         classOn="btn-purple"
@@ -34,6 +39,7 @@ const PageHeader = ({ timer, toggleFilter, showActive, showDone }) => (
 
 const mapStateToProps = state => ({
   timer: state.timer,
+  showCritical: state.filters.critical,
   showActive: state.filters.active,
   showDone: state.filters.done
 })

@@ -1,6 +1,7 @@
 create table tasks (
   id integer NOT NULL AUTO_INCREMENT PRIMARY KEY,
   title varchar(255) NOT NULL,
+  critical boolean DEFAULT FALSE,
   active boolean DEFAULT TRUE,
   done boolean DEFAULT FALSE
 );

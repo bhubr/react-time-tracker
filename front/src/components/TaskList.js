@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Task from './Task'
 import Icon from './Icon'
-import Checkbox from './Checkbox'
 import { fetchAllTasks } from '../actions'
 
 class TaskList extends React.Component {
@@ -10,18 +9,19 @@ class TaskList extends React.Component {
     this.props.fetchAllTasks()
   }
   render() {
-    const { active, done } = this.props.filters
+    const { critical, active, done } = this.props.filters
     return (
       <div className="accordion">
         <div className="task-header task-header-row">
           <Icon name="chevron-down" className="hidden" onClick={ () => { }} />
-          <h5>Name</h5>
+          <h5 className="grow">Name</h5>
+          <div className="checkbox-header">C</div>
           <div className="checkbox-header">A</div>
           <div className="checkbox-header">D</div>
         </div>
       {
         this.props.tasks
-        .filter(t => (!active || t.active) && (done || !t.done))
+        .filter(t => (!critical || t.critical) && (!active || t.active) && (done || !t.done))
         .map(
           (task, index) => <Task
             key={index}
