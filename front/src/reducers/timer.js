@@ -15,9 +15,9 @@ import {
   TIMER_LONG_BREAK
 } from '../constants'
 
-const DURATION = 8
-const SB = 2
-const LB = 4
+const DURATION = 25 * 60
+const SB = 5 * 60
+const LB = 15 * 60
 
 const initialState = {
   autoStart: true,
@@ -42,6 +42,12 @@ const timerReducer = (state = initialState, action) => {
     case CREATE_TIME_SLICE_SUCCESS: {
       const { taskId, id } = action.timeSlice
       return { ...state, taskId, timeSliceId: id, status: TIMER_POMODORO, loading: false }
+    }
+
+    case CREATE_TIME_SLICE_FAILURE: {
+      const { error } = action
+      console.log('error', error)
+      return { ...state, loading: false }
     }
 
     case TIMER_STARTED: {
