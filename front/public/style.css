@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Archivo');
+@import url('https://fonts.googleapis.com/css?family=Archivo+Narrow');
 
 body {
-  font-family: 'Archivo', sans-serif;
+  font-family: 'Archivo Narrow', sans-serif;
 }
 
 h1 {
@@ -55,23 +55,32 @@ nav li {
   margin-right: 8px;
   color: #aaa;
 }
-.timer [class^="icon-"]:hover {
+.timer [class^="icon-"] {
   font-size: 24px;
   margin-right: 8px;
-  color: #c00;
+  color: #aaa;
 }
 .task {
-  padding: 5px 0;
   border-bottom: 1px solid #eee;
 }
-.task.active {
+.task .active {
   background: #b2ebf2;
+}
+.task-header [class^="icon-"] {
+  margin-right: 8px;
 }
 .task-header {
   display: flex;
+  padding: 5px;
 }
 .task-header h5 {
   flex-grow: 1;
+}
+.task-header-row {
+  font-weight: bold;
+}
+.task-header-row .checkbox-header {
+  margin: 3px 0.5ex;
 }
 .page-header {
   display: flex;
@@ -80,4 +89,33 @@ nav li {
 }
 .page-title {
   flex-grow: 1;
+}
+.task-timeslices {
+  padding: 0 5px;
+}
+.task-timeslices > div {
+  padding: 2px 0;
+  border-bottom: 1px solid #eee;
+}
+.inline {
+  display: inline
+}
+
+.badge {
+  margin-left: 5px;
+  font-size: 11px;
+  vertical-align: middle;
+  padding: 2px 5px;
+  border-radius: 2px;
+  background: #777;
+  color: #fff;
+}
+
+.purple {
+  background: #5e35b1;
+  color: #fff;
+}
+
+.hidden {
+  visibility: hidden;
 }
