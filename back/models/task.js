@@ -10,16 +10,17 @@ const findAll = () => chain(query('select * from tasks'))
   .then(timeSlices => _.groupBy(timeSlices, 'taskId'))
   .set('timeSlices')
   .get(({ tasks, timeSlices }) => tasks.map(
-    task => ({ ...task, timeSlices: timeSlices[`${task.id}`] })
+    task => ({ ...task, timeSlices: timeSlices[`${task.id}`] || [] })
   ))
 
 const create = ({ title }) => query('insert into tasks(title) values(?)', [title])
   .then(result => query('select * from tasks where id = ?', [result.insertId]))
-  .then(tasks => tasks[0])
+  .then(tasks => ({ ...tasks[0], timeSlices: [] }))
 
 const update = (id, payload) => {
-  const updatableFields = ['done', 'title']
-  const { updateQuery, values } = prepareUpdateQuery('tasks', id, payload, updatableFields)
+  const updatableFields = ['done', 'active', 'title']
+  const ignoredFields = ['timeSlices']
+  const { updateQuery, values } = prepareUpdateQuery('tasks', id, payload, updatableFields, ignoredFields)
   return chain(query(updateQuery, values))
     .then(() => query('select * from tasks where id = ?', [id]))
     .then(tasks => tasks[0])
