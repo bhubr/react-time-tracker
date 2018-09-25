@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withState, compose } from 'recompose'
+import classNames from 'class-names'
 import Icon from './Icon'
 import Checkbox from './Checkbox'
+import TaskBadge from './TaskBadge'
 import TaskInlineEdit from './TaskInlineEdit'
 import PomoInlineEdit from './PomoInlineEdit'
 import getMySQLTimestamp from './helpers/getMySQLTimestamp'
@@ -20,8 +23,14 @@ const formatDatetime = datetime => {
   const time = datetime.substr(11, 5)
   return `${date} ${time}`
 }
+
+const getActiveClass = (currentTaskId, { id }) => currentTaskId === id ? 'active' : ''
+const getChevronDirection = expanded => `chevron-${ expanded ? 'up' : 'down' }`
+const enhance = withState('expanded', 'toggleExpanded', false)
 const Task = ({
   task,
+  expanded,
+  toggleExpanded,
   currentTaskId,
   setCurrentTask,
   startTimeSlice,
@@ -32,25 +41,27 @@ const Task = ({
   toggleTaskTitleEditing,
   togglePomoCommentEditing
 }) => (
-  <div className={ 'task' + (currentTaskId === task.id ? ' active' : '') }>
-    <div className="task-header">
+  <div className="task">
+    <div className={classNames('task-header', getActiveClass(currentTaskId, task))}>
+      <Icon onClick={() => toggleExpanded(! expanded)} name={ getChevronDirection(expanded) } />
       <h5
         onClick={() => setCurrentTask(task.id)}
         onDoubleClick={() => toggleTaskTitleEditing(task.id)}
       >
         {inlineTaskEditing !== task.id
-          ? task.title
+          ? <TaskBadge task={task} />
           : <TaskInlineEdit task={task} />
         }
       </h5>
       <Icon disabled={task.done} onClick={() => startTimeSlice(task.id)} name='stopwatch' />
       <Icon onClick={() => deleteTask(task.id)} name='bin' />
-      <Checkbox task={task} toggleDone={ () => updateTask({ ...task, done: ! task.done }) } />
+      <Checkbox checked={task.active} onChange={ () => updateTask({ ...task, active: ! task.active }) } />
+      <Checkbox checked={task.done} onChange={ () => updateTask({ ...task, done: ! task.done }) } />
     </div>
     <div className="task-timeslices">
     {
-      task.timeSlices
-      ? task.timeSlices.map((ts, tsi) =>
+      expanded && task.timeSlices
+      && task.timeSlices.map((ts, tsi) =>
         <div key={tsi}>{
           formatDatetime(ts.start) }&nbsp;
           <span onDoubleClick={() => togglePomoCommentEditing(ts.id)}>
@@ -60,7 +71,6 @@ const Task = ({
         }</span>
         </div>
       )
-      : 'no time slices'
     }
     </div>
   </div>
@@ -83,4 +93,7 @@ const mapDispatchToProps = dispatch => ({
   setCurrentTask: taskId => dispatch(setCurrentTask(taskId))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Task)
+export default compose(
+  enhance,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Task)

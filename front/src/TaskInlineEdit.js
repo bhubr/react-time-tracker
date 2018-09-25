@@ -29,7 +29,7 @@ class TaskInlineEdit extends React.Component {
   render() {
     const { value } = this.state
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form className="inline" onSubmit={ this.handleSubmit }>
         <input
           type="text"
           ref={input => { this.nameInput = input }}

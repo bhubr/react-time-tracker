@@ -1,6 +1,8 @@
 import React from 'react'
-import Task from './Task'
 import { connect } from 'react-redux'
+import Task from './Task'
+import Icon from './Icon'
+import Checkbox from './Checkbox'
 import { fetchAllTasks } from './actions'
 
 class TaskList extends React.Component {
@@ -10,6 +12,12 @@ class TaskList extends React.Component {
   render() {
     return (
       <div className="accordion">
+        <div className="task-header task-header-row">
+          <Icon name="chevron-down" className="hidden" onClick={ () => { }} />
+          <h5>Name</h5>
+          <div className="checkbox-header">A</div>
+          <div className="checkbox-header">D</div>
+        </div>
       {
         this.props.tasks.map(
           (task, index) => <Task
