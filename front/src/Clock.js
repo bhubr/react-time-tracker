@@ -27,7 +27,7 @@ class Clock extends React.Component {
   }
   componentDidUpdate() {
     const { timer, startTimeSlice, endTimeSlice, startBreak, timerStarted, timerTick, timerStopped } = this.props
-    if (timer.remaining === 0 && timer.startedAt) {
+    if (timer.remaining <= 0 && timer.startedAt) {
       console.log('timer reaches 0')
       notifyMe(isPomodoro(timer.status) ? 'Take a break!' : 'Get back to work!')
       clearInterval(timer.interval)
@@ -37,6 +37,7 @@ class Clock extends React.Component {
         const startedAt = getNowSeconds()
         const interval = setInterval(timerTick, 1000)
         startBreak(startedAt, interval)
+        setTimeout(() => fetch('/api/lock'), 1000)
       } else if (isBreak(timer.status) && timer.autoStart) {
         console.log('was break, start pomo')
         startTimeSlice(timer.taskId)
