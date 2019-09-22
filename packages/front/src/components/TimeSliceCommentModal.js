@@ -1,23 +1,22 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 export default class TimeSliceCommentModal extends Component {
-
   state = {
-    comment: ''
+    comment: '',
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      comment: e.target.value
-    })
+      comment: e.target.value,
+    });
   }
 
-  handleSubmit = e => {
-    e.preventDefault()
+  handleSubmit = (e) => {
+    e.preventDefault();
     if (!this.state.comment) {
-      return
+      return;
     }
-    this.props.onCommentSubmit(this.state.comment)
+    this.props.onCommentSubmit(this.state.comment);
   }
 
   render() {
@@ -25,7 +24,7 @@ export default class TimeSliceCommentModal extends Component {
       <div
         open={this.props.modalOpen}
         onClose={this.handleClose}
-        size='small'
+        size="small"
       >
         <div>
           Please describe what you're about to do.
@@ -33,13 +32,14 @@ export default class TimeSliceCommentModal extends Component {
         <div>
           <form onSubmit={this.handleSubmit}>
             <input
-              placeholder='What are you gonna do?'
+              placeholder="What are you gonna do?"
               onChange={this.handleChange}
-              value={this.state.comment} />
-            <button color='green' type="submit">Submit</button>
+              value={this.state.comment}
+            />
+            <button color="green" type="submit">Submit</button>
           </form>
         </div>
       </div>
-    )
+    );
   }
 }

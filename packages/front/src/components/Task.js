@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withState, compose } from 'recompose';
 import classNames from 'class-names';
@@ -8,6 +9,7 @@ import TaskBadge from './TaskBadge';
 import TaskInlineEdit from './TaskInlineEdit';
 import PomoInlineEdit from './PomoInlineEdit';
 import getMySQLTimestamp from '../helpers/getMySQLTimestamp';
+import taskPropTypes from '../prop-types/task';
 
 import {
   updateTask,
@@ -79,6 +81,10 @@ const Task = ({
     </div>
   </div>
 );
+
+Task.propTypes = {
+  task: taskPropTypes
+};
 
 const mapStateToProps = (state) => ({
   inlineTaskEditing: state.tasks.inlineTaskEditing,

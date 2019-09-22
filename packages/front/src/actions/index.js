@@ -168,7 +168,7 @@ export const fetchAllTasks = () => (dispatch) => {
 export const updateTask = (task) => (dispatch) => {
   const { id, ...update } = task;
   dispatch(requestUpdateTask(update));
-  return axios.put(`/api/tasks/${id}`, taskCopy)
+  return axios.put(`/api/tasks/${id}`, update)
     .then((response) => response.data)
     .then((updatedTask) => dispatch(onTaskUpdateSuccess(updatedTask)))
     .catch((error) => dispatch(onTaskUpdateFailure(error)));
