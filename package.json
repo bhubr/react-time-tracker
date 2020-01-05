@@ -9,7 +9,7 @@
     "start:dev": "lerna run start:dev --stream",
     "start": "lerna run --scope react-time-tracker-back start --stream",
     "build": "lerna run build --stream",
-    "postinstall": "pnpm run build"
+    "postinstall": "npm run build"
   },
   "devDependencies": {
     "husky": "^3.0.4",
@@ -21,7 +21,7 @@
     }
   },
   "engines": {
-    "pnpm": "^4.6.0",
+    "yarn": "^1.21.1",
     "node": "^10.16.3"
   }
 }
