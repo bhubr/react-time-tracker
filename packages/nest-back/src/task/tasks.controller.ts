@@ -6,7 +6,7 @@ export class TasksController {
   @Get()
   findAll(@Req() request: Request): any {
     return [
-      { id: 1, title: 'Test' }
+      { id: 1, title: 'Test' },
     ];
   }
 }

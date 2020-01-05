@@ -18,7 +18,7 @@ describe('TasksController (e2e)', () => {
   it('/tasks (GET)', async () => {
     const res = await request(app.getHttpServer())
       .get('/api/tasks')
-      .expect(200)
+      .expect(200);
     expect(res.body).toMatchSnapshot();
   });
 });
