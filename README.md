@@ -4,6 +4,12 @@ This is yet another Pomodoro-technique-inspired app, for task&time tracking.
 
 **STATUS (2018-09)**: not stable (at all!)
 
+## Install
+
+* Clone this repo
+* Install [pnpm](https://pnpm.js.org/) globally: `npm i -g pnpm`
+* Run `pnpm install` then `npx lerna bootstrap`
+
 ## Requirements
 
 If you intend to run this on your computer or on a server, you'll need:
