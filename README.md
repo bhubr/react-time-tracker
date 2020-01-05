@@ -39,14 +39,37 @@ Sources:
 * [Dokku - Environment Variables](http://dokku.viewdocs.io/dokku~v0.19.11/configuration/environment-variables/)
 * [dokku-node-hello-world](https://github.com/amannn/dokku-node-hello-world)
 
-Create app:
+### 1. Create app
 
 ```
 dokku apps:create app-name
 ```
 
-Install [Dokky MySQL plugin](https://github.com/dokku/dokku-mysql):
+### 2. Install [Dokky MySQL plugin](https://github.com/dokku/dokku-mysql)
+
+To be done once only
 
 ```
 sudo dokku plugin:install https://github.com/dokku/dokku-mysql.git mysql
+```
+
+### 3. Create DB service
+
+```
+dokku mysql:create myappdb
+```
+
+### 4. Link DB service to app
+
+```
+dokku mysql:link myappdb app-name
+```
+
+**BEWARE**, you don't have to use the `DB_*` vars from env, but `DATABASE_URL`, e.g.: `mysql://mysql:863504e9c117e833@dokku-mysql-myappdb:3306/myappdb`
+
+### 5. Deploy
+
+```
+git remote add dokku dokku@subdomain.dokku.me:app-name
+git push dokku master
 ```
