@@ -9,7 +9,7 @@
     "start:dev": "lerna run start:dev --stream",
     "start": "lerna run --scope react-time-tracker-back start --stream",
     "build": "lerna run build --stream",
-    "postinstall": "npx lerna bootstrap && npm run build"
+    "postinstall": "cd packages/back && yarn && cd ../front && yarn && cd ../.. && yarn build"
   },
   "devDependencies": {
     "husky": "^3.0.4",
