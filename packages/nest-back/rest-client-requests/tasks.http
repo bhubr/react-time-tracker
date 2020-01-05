@@ -1,0 +1,4 @@
+POST http://localhost:5004/api/tasks
+Content-Type: application/json
+
+{"title":"My first new task"}

@@ -13,7 +13,6 @@ import settings from './settings';
     TypeOrmModule.forRoot({
       ...settings.database,
       entities: [Task],
-      synchronize: true,
     }),
     TaskModule
   ],

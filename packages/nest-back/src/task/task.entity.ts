@@ -8,12 +8,12 @@ export class Task {
   @Column({ length: 255 })
   title: string;
 
-  @Column()
+  @Column({ default: false })
   critical: boolean;
 
-  @Column()
+  @Column({ default: true })
   active: boolean;
 
-  @Column()
+  @Column({ default: false })
   done: boolean;
 }

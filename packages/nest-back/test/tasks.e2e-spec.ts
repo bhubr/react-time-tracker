@@ -6,7 +6,7 @@ import { AppModule } from './../src/app.module';
 describe('TasksController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
@@ -19,6 +19,14 @@ describe('TasksController (e2e)', () => {
     const res = await request(app.getHttpServer())
       .get('/api/tasks')
       .expect(200);
+    expect(res.body).toMatchSnapshot();
+  });
+
+  it('/tasks (POST)', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/api/tasks')
+      .send({ title: 'Test task #1' })
+      .expect(201);
     expect(res.body).toMatchSnapshot();
   });
 });
