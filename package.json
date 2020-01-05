@@ -7,7 +7,7 @@
   "scripts": {
     "lint": "lerna run lint --stream",
     "start:dev": "lerna run start:dev --stream",
-    "start": "lerna run --scope react-time-tracker-back start --stream",
+    "start": "cd packages/back && yarn start",
     "build": "lerna run build --stream",
     "postinstall": "cd packages/back && yarn --production=false && cd ../front && yarn --production=false && cd ../.. && yarn build"
   },
