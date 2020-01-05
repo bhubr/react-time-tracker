@@ -1,4 +1,5 @@
 // src/app.js
+import './env';
 import express from 'express';
 import bodyParser from 'body-parser';
 import path from 'path';

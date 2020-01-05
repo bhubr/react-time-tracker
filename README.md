@@ -24,3 +24,9 @@ That's pretty much it!
 * Start server with `npm start` from `back` (you may set `PORT` to a custom port, `5000` is the default)
 * Start client with `npm start` from `front` (change `proxy` in `package.json` if you changed the server's port)
 
+## Prepare for Dokku deployment
+
+* `build` key in `package.json`
+* `dotenv`
+* serve the front app from backend
+* Basic auth

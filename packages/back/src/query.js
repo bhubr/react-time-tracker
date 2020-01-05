@@ -1,8 +1,8 @@
 import mysql from 'mysql';
 import { promisify } from 'util';
-import credentials from './credentials';
+import settings from './settings';
 
-const connection = mysql.createConnection(credentials);
+const connection = mysql.createConnection(settings.mysql);
 const query = promisify(connection.query.bind(connection));
 
 export default query;
