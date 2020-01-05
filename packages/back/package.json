@@ -7,7 +7,8 @@
     "build": "npx babel src -d build",
     "lint": "npx eslint --fix *.js src test",
     "precommit": "lint-staged && yarn test",
-    "start": "nodemon --exec ./node_modules/@babel/node/bin/babel-node.js src/index",
+    "start:dev": "nodemon --exec ./node_modules/@babel/node/bin/babel-node.js src/index",
+    "start": "NODE_ENV=production node build/index",
     "test": "jest"
   },
   "keywords": [],
@@ -16,7 +17,9 @@
   "dependencies": {
     "app-root-path": "^2.2.1",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "express-basic-auth": "^1.2.0",
     "lodash": "^4.17.15",
     "mysql": "^2.17.1",
     "store-chain": "^2.0.3",

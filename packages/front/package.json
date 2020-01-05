@@ -18,7 +18,7 @@
   "scripts": {
     "lint": "npx eslint --fix src/**/*.js*",
     "precommit": "lint-staged && yarn test",
-    "start": "PORT=3005 react-scripts start",
+    "start:dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
