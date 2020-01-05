@@ -6,4 +6,6 @@ const envPath = path.resolve(__dirname, '../.env');
 
 dotenv.config({ path: envPath });
 
-assert.ok(!!process.env.DB_NAME);
+const { DB_NAME, DATABASE_URL } = process.env;
+const hasDbSettings = !!DB_NAME || !!DATABASE_URL;
+assert.ok(hasDbSettings);
