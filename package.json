@@ -6,7 +6,10 @@
   "license": "MIT",
   "scripts": {
     "lint": "lerna run lint --stream",
-    "start": "lerna run start --stream"
+    "start:dev": "lerna run start:dev --stream",
+    "start": "lerna run --scope react-time-tracker-back start --stream",
+    "build": "lerna run build --stream",
+    "postinstall": "yarn build"
   },
   "devDependencies": {
     "husky": "^3.0.4",
@@ -16,5 +19,9 @@
     "hooks": {
       "pre-commit": "npx lerna run --concurrency 1 --stream precommit"
     }
+  },
+  "engines": {
+    "yarn": "^1.21.1",
+    "node": "^10.16.3"
   }
 }

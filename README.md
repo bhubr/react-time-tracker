@@ -26,7 +26,8 @@ That's pretty much it!
 
 ## Prepare for Dokku deployment
 
-* `build` key in `package.json`
+* `build` script key and `engines` ([example](https://github.com/amannn/dokku-node-hello-world/blob/master/package.json)) in `package.json`
 * `dotenv`
-* serve the front app from backend
-* Basic auth
+* Serve the front app from backend (already done)
+* Scope lerna start to only start backend app in production: [lerna exec, lerna run and scoping](https://github.com/lerna/lerna/pull/152)
+* Basic auth (depending on existence of env vars)
