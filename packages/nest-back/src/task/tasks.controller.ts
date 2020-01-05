@@ -2,7 +2,7 @@ import { Controller, Get, Req } from '@nestjs/common';
 import { Request } from 'express';
 
 @Controller('api/tasks')
-export class TasksController {
+export class TaskController {
   @Get()
   findAll(@Req() request: Request): any {
     return [
