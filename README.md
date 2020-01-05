@@ -30,4 +30,4 @@ That's pretty much it!
 * `dotenv`
 * Serve the front app from backend (already done)
 * Scope lerna start to only start backend app in production: [lerna exec, lerna run and scoping](https://github.com/lerna/lerna/pull/152)
-* Basic auth (depending on existence of env vars)
+* Basic auth, depending on existence of env vars. Configure [express-basic-auth](https://www.npmjs.com/package/express-basic-auth) with [challenge](https://stackoverflow.com/questions/48770330/how-to-get-express-basic-auth-to-prompt-a-popup-for-user-and-password)
