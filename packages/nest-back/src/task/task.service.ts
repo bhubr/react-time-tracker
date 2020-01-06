@@ -11,12 +11,12 @@ export class TaskService {
     private readonly taskRepository: Repository<Task>,
   ) {}
 
-  create(taskDto: CreateTaskDto): Promise<void> {
+  create(taskDto: CreateTaskDto): Promise<Task> {
     // const task = new Task();
     // task
     return this.taskRepository.save(taskDto)
-      .then(post => console.log("Post has been saved: ", post))
-      .catch(error => console.log("Cannot save. Error: ", error));
+      // .then(post => console.log("Post has been saved: ", post))
+      // .catch(error => console.log("Cannot save. Error: ", error));
   }
 
   findAll(): Promise<Task[]> {

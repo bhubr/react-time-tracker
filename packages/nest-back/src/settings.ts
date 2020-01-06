@@ -27,7 +27,7 @@ if (isProd) {
     username: 'trakttest',
     password: 'trakttest',
     database: 'trakt_test',
-    synchronize: false,
+    synchronize: true,
   };
 } else {
   connSettings = {

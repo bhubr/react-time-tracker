@@ -2,4 +2,12 @@
 
 exports[`TasksController (e2e) /tasks (GET) 1`] = `Array []`;
 
-exports[`TasksController (e2e) /tasks (POST) 1`] = `Object {}`;
+exports[`TasksController (e2e) /tasks (POST) 1`] = `
+Object {
+  "active": true,
+  "critical": false,
+  "done": false,
+  "id": 1,
+  "title": "Test task #1",
+}
+`;
