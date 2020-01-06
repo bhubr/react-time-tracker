@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Timebox } from '../timebox/timebox.entity';
 
 @Entity()
 export class Task {
@@ -16,4 +17,9 @@ export class Task {
 
   @Column({ default: false })
   done: boolean;
+
+  @OneToMany(type => Timebox, timebox => timebox.task, {
+    eager: true
+  })
+  timeboxes: Timebox[];
 }
