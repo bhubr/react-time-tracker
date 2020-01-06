@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, DeleteResult } from 'typeorm';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { Task } from './task.entity';
 
@@ -15,12 +15,20 @@ export class TaskService {
     return this.taskRepository.save(taskDto)
   }
 
+  findAll(): Promise<Task[]> {
+    return this.taskRepository.find();
+  }
+
+  findOne(taskId): Promise<Task> {
+    return this.taskRepository.findOne(taskId);
+  }
+
   async update(taskId, taskDto: CreateTaskDto): Promise<Task> {
     await this.taskRepository.update(taskId, taskDto);
     return this.taskRepository.findOne(taskId);
   }
 
-  findAll(): Promise<Task[]> {
-    return this.taskRepository.find();
+  delete(taskId): Promise<DeleteResult> {
+    return this.taskRepository.delete(taskId);
   }
 }

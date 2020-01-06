@@ -1,8 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`TasksController (e2e) /tasks (GET) 1`] = `Array []`;
+exports[`TasksController (e2e) DELETE /api/tasks/:id SUCCESS 1`] = `Object {}`;
 
-exports[`TasksController (e2e) /tasks (POST) 1`] = `
+exports[`TasksController (e2e) GET /api/tasks SUCCESS 1`] = `Array []`;
+
+exports[`TasksController (e2e) GET /api/tasks/:id FAILURE (404) 1`] = `
+Object {
+  "message": "Not Found",
+  "statusCode": 404,
+}
+`;
+
+exports[`TasksController (e2e) GET /api/tasks/:id SUCCESS 1`] = `
+Object {
+  "active": true,
+  "critical": true,
+  "done": false,
+  "id": 1,
+  "title": "Task #3",
+}
+`;
+
+exports[`TasksController (e2e) POST /api/tasks SUCCESS 1`] = `
 Object {
   "active": true,
   "critical": false,
@@ -12,7 +31,7 @@ Object {
 }
 `;
 
-exports[`TasksController (e2e) /tasks/:id (PUT) 1`] = `
+exports[`TasksController (e2e) PUT /api/tasks/:id SUCCESS 1`] = `
 Object {
   "active": true,
   "critical": false,

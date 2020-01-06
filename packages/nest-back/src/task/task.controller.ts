@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Put, Req, Body, Param, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Res, Body, Param, HttpCode, HttpException, HttpStatus } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
 import { TaskService } from './task.service';
 import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -12,13 +13,28 @@ export class TaskController {
     return this.taskService.create(createCatDto);
   }
 
-  @Put(':id')
-  async update(@Param() params, @Body() updateCatDto: CreateTaskDto) {
-    return this.taskService.update(params.id, updateCatDto);
-  }
-
   @Get()
   findAll(): Promise<Task[]> {
     return this.taskService.findAll();
+  }
+
+  @Get(':id')
+  async findOne(@Param() params): Promise<Task> {
+    const task = await this.taskService.findOne(params.id);
+    if (!task) {
+      throw new HttpException('Not Found', HttpStatus.NOT_FOUND);
+    }
+    return task;
+  }
+
+  @Put(':id')
+  update(@Param() params, @Body() updateCatDto: CreateTaskDto) {
+    return this.taskService.update(params.id, updateCatDto);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  delete(@Param() params): Promise<DeleteResult> {
+    return this.taskService.delete(params.id);
   }
 }
