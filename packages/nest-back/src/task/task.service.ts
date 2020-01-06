@@ -12,11 +12,12 @@ export class TaskService {
   ) {}
 
   create(taskDto: CreateTaskDto): Promise<Task> {
-    // const task = new Task();
-    // task
     return this.taskRepository.save(taskDto)
-      // .then(post => console.log("Post has been saved: ", post))
-      // .catch(error => console.log("Cannot save. Error: ", error));
+  }
+
+  async update(taskId, taskDto: CreateTaskDto): Promise<Task> {
+    await this.taskRepository.update(taskId, taskDto);
+    return this.taskRepository.findOne(taskId);
   }
 
   findAll(): Promise<Task[]> {

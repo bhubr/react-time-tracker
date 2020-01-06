@@ -8,6 +8,16 @@ Object {
   "critical": false,
   "done": false,
   "id": 1,
-  "title": "Test task #1",
+  "title": "Task #1",
+}
+`;
+
+exports[`TasksController (e2e) /tasks/:id (PUT) 1`] = `
+Object {
+  "active": true,
+  "critical": false,
+  "done": true,
+  "id": 1,
+  "title": "Updated task #2",
 }
 `;
