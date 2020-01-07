@@ -184,7 +184,7 @@ export const deleteTask = (id) => (dispatch) => {
 
 export const startTimeSlice = (payload) => (dispatch) => {
   dispatch(requestCreateTimeSlice(payload.taskId));
-  return axios.post('/api/time-slices', payload)
+  return axios.post('/api/timeboxes', payload)
     .then((response) => response.data)
     .then((timeSlice) => dispatch(onTimeSliceCreationSuccess(timeSlice)))
     .catch((error) => dispatch(onTimeSliceCreationFailure(error)));
@@ -193,7 +193,7 @@ export const startTimeSlice = (payload) => (dispatch) => {
 export const updateTimeSlice = (timeSliceId, payload) => (dispatch) => {
   console.log('end time slice', timeSliceId, payload);
   dispatch(requestUpdateTimeSlice(timeSliceId));
-  return axios.put(`/api/time-slices/${timeSliceId}`, payload)
+  return axios.put(`/api/timeboxes/${timeSliceId}`, payload)
     .then((response) => response.data)
     .then((timeSlice) => dispatch(onTimeSliceUpdateSuccess(timeSlice)))
     .catch((error) => dispatch(onTimeSliceUpdateFailure(error)));

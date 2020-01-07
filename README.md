@@ -75,6 +75,20 @@ dokku mysql:link myappdb app-name
 
 ### 5. Deploy
 
+Inject a dump to populate the DB. e.g.:
+
+```
+dokku mysql:import traktdb < trakt-20200106.sql
+```
+
+Set environment variables, e.g. for Basic Auth:
+
+```
+dokku config:set trakt AUTH_USER=foo AUTH_PASS=bar
+```
+
+Push the project to Dokku
+
 ```
 git remote add dokku dokku@subdomain.dokku.me:app-name
 git push dokku master

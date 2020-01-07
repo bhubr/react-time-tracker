@@ -7,5 +7,5 @@ export default PropTypes.shape({
   active: PropTypes.bool,
   critical: PropTypes.bool,
   done: PropTypes.bool,
-  timeSlices: PropTypes.arrayOf(timeSlicePropTypes)
+  timeboxes: PropTypes.arrayOf(timeSlicePropTypes)
 });

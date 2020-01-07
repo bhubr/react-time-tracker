@@ -61,10 +61,10 @@ const Task = ({
       <Checkbox checked={task.active} onChange={() => updateTask({ ...task, active: !task.active })} />
       <Checkbox checked={task.done} onChange={() => updateTask({ ...task, done: !task.done })} />
     </div>
-    <div className="task-timeslices">
+    <div className="task-timeboxes">
       {
-      expanded && task.timeSlices
-      && task.timeSlices.map((ts, tsi) => (
+      expanded && task.timeboxes
+      && task.timeboxes.map((ts, tsi) => (
         <div key={tsi}>
           {
           formatDatetime(ts.start)
