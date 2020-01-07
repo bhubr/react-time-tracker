@@ -18,14 +18,11 @@ export class TimeboxService {
 
   async create(timeboxDto: CreateTimeboxDto): Promise<Timebox> {
     const task = await this.taskRepository.findOne(timeboxDto.taskId);
-    console.log(task);
     const timebox = new Timebox();
     timebox.comment = timeboxDto.comment;
     timebox.start = timeboxDto.start;
     timebox.type = timeboxDto.type;
     timebox.task = task;
-    console.log(timebox);
-    // return this.timeboxRepository.save(timeboxDto);
     return this.entityManager.save(timebox);
   }
 

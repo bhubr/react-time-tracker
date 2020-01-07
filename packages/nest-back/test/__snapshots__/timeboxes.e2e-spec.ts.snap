@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimeboxController (e2e) POST /api/timeboxes SUCCESS 1`] = `
+Object {
+  "comment": "Timebox #1.1",
+  "end": null,
+  "id": 1,
+  "start": "2020-01-07 08:00",
+  "task": Object {
+    "active": true,
+    "critical": false,
+    "done": false,
+    "id": 1,
+    "timeboxes": Array [],
+    "title": "Parent Task #1",
+  },
+  "type": "POMODORO",
+}
+`;

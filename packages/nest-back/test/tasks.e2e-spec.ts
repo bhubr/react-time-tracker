@@ -20,7 +20,10 @@ describe('TasksController (e2e)', () => {
   });
 
   beforeEach(async () => {
+    await connection.query('SET FOREIGN_KEY_CHECKS=0;');
+    await connection.query('TRUNCATE TABLE timebox');
     await connection.query('TRUNCATE TABLE task');
+    await connection.query('SET FOREIGN_KEY_CHECKS=1;');
   });
 
   it('GET /api/tasks SUCCESS', async () => {
