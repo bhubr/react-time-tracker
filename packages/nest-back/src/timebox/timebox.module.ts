@@ -8,7 +8,7 @@ import { Task } from '../task/task.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Timebox]),
-    TypeOrmModule.forFeature([Task], 'tasksConnection')
+    TypeOrmModule.forFeature([Task])
   ],
   providers: [TimeboxService],
   controllers: [TimeboxController],

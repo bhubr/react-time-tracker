@@ -12,8 +12,8 @@ export class TimeboxService {
     private readonly timeboxRepository: Repository<Timebox>,
     @InjectRepository(Task)
     private readonly taskRepository: Repository<Task>,
-    // @InjectEntityManager('tasksConnection')
-    // private readonly entityManager: EntityManager
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager
   ) {}
 
   async create(timeboxDto: CreateTimeboxDto): Promise<Timebox> {
@@ -25,7 +25,8 @@ export class TimeboxService {
     timebox.type = timeboxDto.type;
     timebox.task = task;
     console.log(timebox);
-    return this.timeboxRepository.save(timeboxDto);
+    // return this.timeboxRepository.save(timeboxDto);
+    return this.entityManager.save(timebox);
   }
 
   findAll(): Promise<Timebox[]> {
