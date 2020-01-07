@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository, InjectEntityManager } from '@nestjs/typeorm';
 import { Repository, DeleteResult, EntityManager } from 'typeorm';
-import { CreateTimeboxDto } from './dto/create-timebox.dto';
+import { CreateTimeboxDto, TimeboxDto } from './dto/create-timebox.dto';
 import { Timebox } from './timebox.entity';
 import { Task } from '../task/task.entity';
 
@@ -16,14 +16,17 @@ export class TimeboxService {
     private readonly entityManager: EntityManager
   ) {}
 
-  async create(timeboxDto: CreateTimeboxDto): Promise<Timebox> {
-    const task = await this.taskRepository.findOne(timeboxDto.taskId);
+  async create(createTimeboxDto: CreateTimeboxDto): Promise<TimeboxDto> {
+    const parentTask = await this.taskRepository.findOne(createTimeboxDto.taskId);
     const timebox = new Timebox();
-    timebox.comment = timeboxDto.comment;
-    timebox.start = timeboxDto.start;
-    timebox.type = timeboxDto.type;
-    timebox.task = task;
-    return this.entityManager.save(timebox);
+    timebox.comment = createTimeboxDto.comment;
+    timebox.start = createTimeboxDto.start;
+    timebox.type = createTimeboxDto.type;
+    timebox.task = parentTask;
+    const createdTimebox:Timebox = await this.entityManager.save(timebox);
+    const { task, ...rest } = createdTimebox;
+    const timeboxDto: TimeboxDto = { ...rest, taskId: task.id };
+    return timeboxDto;
   }
 
   findAll(): Promise<Timebox[]> {
