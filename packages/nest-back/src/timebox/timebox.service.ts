@@ -37,9 +37,11 @@ export class TimeboxService {
     return this.timeboxRepository.findOne(timeboxId);
   }
 
-  async update(timeboxId, timeboxDto: CreateTimeboxDto): Promise<Timebox> {
-    await this.timeboxRepository.update(timeboxId, timeboxDto);
-    return this.timeboxRepository.findOne(timeboxId);
+  async update(timeboxId, timeboxDto: TimeboxDto): Promise<TimeboxDto> {
+    const { taskId, ...ownFields } = timeboxDto;
+    await this.timeboxRepository.update(timeboxId, ownFields);
+    const timebox = await this.timeboxRepository.findOne(timeboxId);
+    return { ...timebox, taskId };
   }
 
   delete(timeboxId): Promise<DeleteResult> {

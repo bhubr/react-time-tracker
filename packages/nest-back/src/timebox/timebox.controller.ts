@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Res, Body, Param, HttpCode, HttpExc
 import { DeleteResult } from 'typeorm';
 import { TimeboxService } from './timebox.service';
 import { Timebox } from './timebox.entity';
-import { CreateTimeboxDto } from './dto/create-timebox.dto';
+import { CreateTimeboxDto, TimeboxDto } from './dto/create-timebox.dto';
 
 @Controller('api/timeboxes')
 export class TimeboxController {
@@ -32,8 +32,8 @@ export class TimeboxController {
   }
 
   @Put(':id')
-  update(@Param() params, @Body() updateCatDto: CreateTimeboxDto) {
-    return this.timeboxService.update(params.id, updateCatDto);
+  update(@Param() params, @Body() updateTimeboxDto: TimeboxDto) {
+    return this.timeboxService.update(params.id, updateTimeboxDto);
   }
 
   @Delete(':id')

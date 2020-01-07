@@ -2,6 +2,8 @@
 
 exports[`TasksController (e2e) DELETE /api/tasks/:id SUCCESS 1`] = `Object {}`;
 
+exports[`TasksController (e2e) DELETE /api/tasks/:id SUCCESS 2`] = `Array []`;
+
 exports[`TasksController (e2e) GET /api/tasks SUCCESS 1`] = `Array []`;
 
 exports[`TasksController (e2e) GET /api/tasks/:id FAILURE (404) 1`] = `

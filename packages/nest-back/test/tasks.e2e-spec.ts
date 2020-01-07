@@ -68,9 +68,15 @@ describe('TasksController (e2e)', () => {
 
   it('DELETE /api/tasks/:id SUCCESS', async () => {
     const { insertId: taskId } = await connection.query('INSERT INTO task (title, done) VALUES("Task #2", false)');
-    const res = await request(app.getHttpServer())
+    const resDelete = await request(app.getHttpServer())
       .delete(`/api/tasks/${taskId}`)
       .expect(204);
-    expect(res.body).toMatchSnapshot();
+
+    expect(resDelete.body).toMatchSnapshot();
+
+    const resGet = await request(app.getHttpServer())
+      .get('/api/tasks')
+      .expect(200);
+    expect(resGet.body).toMatchSnapshot();
   });
 });
