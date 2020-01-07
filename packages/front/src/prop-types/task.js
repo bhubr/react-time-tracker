@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import timeSlicePropTypes from './time-slice';
+import timeboxPropTypes from './time-slice';
 
 export default PropTypes.shape({
   id: PropTypes.number,
@@ -7,5 +7,5 @@ export default PropTypes.shape({
   active: PropTypes.bool,
   critical: PropTypes.bool,
   done: PropTypes.bool,
-  timeboxes: PropTypes.arrayOf(timeSlicePropTypes)
+  timeboxes: PropTypes.arrayOf(timeboxPropTypes)
 });

@@ -27,7 +27,7 @@ const initialState = {
   remaining: 0,
   startedAt: 0,
   taskId: 0,
-  timeSliceId: 0,
+  timeboxId: 0,
   consecutivePomos: 0,
   duration: 0,
 };
@@ -39,9 +39,9 @@ const timerReducer = (state = initialState, action) => {
     }
 
     case CREATE_TIME_SLICE_SUCCESS: {
-      const { taskId, id } = action.timeSlice;
+      const { taskId, id } = action.timebox;
       return {
-        ...state, taskId, timeSliceId: id, status: TIMER_POMODORO, loading: false,
+        ...state, taskId, timeboxId: id, status: TIMER_POMODORO, loading: false,
       };
     }
 
@@ -91,7 +91,7 @@ const timerReducer = (state = initialState, action) => {
         remaining: 0,
         status: TIMER_IDLE,
         taskId: 0,
-        timeSliceId: 0,
+        timeboxId: 0,
         consecutivePomos,
       };
     }
