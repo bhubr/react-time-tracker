@@ -13,6 +13,7 @@ import {
   SET_CURRENT_TASK,
   CREATE_TIME_SLICE_SUCCESS,
   UPDATE_TIME_SLICE_SUCCESS,
+  DELETE_TASK_SUCCESS,
 } from '../actions';
 
 
@@ -66,6 +67,14 @@ const tasksReducer = (state = initialState, action) => {
       return { ...state, loading: false };
     }
 
+    case DELETE_TASK_SUCCESS: {
+      const { taskId: deletedTaskId } = action;
+      return {
+        ...state,
+        items: state.items.filter((task) => task.id !== deletedTaskId),
+      };
+    }
+
     // Toggle task title inline editing
     case TOGGLE_TASK_TITLE_EDITING: {
       const { inlineTaskEditing } = state;
@@ -86,22 +95,22 @@ const tasksReducer = (state = initialState, action) => {
 
     // When timer is started, set current task id, add time slice to task's slices
     case CREATE_TIME_SLICE_SUCCESS: {
-      const { timeSlice } = action;
-      const task = state.items.find((task) => task.id === timeSlice.taskId);
-      const timeSlices = task.timeSlices.map((ts) => ({ ...ts })).concat([{ ...timeSlice }]);
+      const { timebox } = action;
+      const task = state.items.find((task) => task.id === timebox.taskId);
+      const timeboxes = task.timeboxes.map((ts) => ({ ...ts })).concat([{ ...timebox }]);
       const items = state.items.map(
-        (item) => (item.id === task.id ? { ...task, timeSlices } : { ...item }),
+        (item) => (item.id === task.id ? { ...task, timeboxes } : { ...item }),
       );
-      return { ...state, items, currentTaskId: timeSlice.taskId };
+      return { ...state, items, currentTaskId: timebox.taskId };
     }
     case UPDATE_TIME_SLICE_SUCCESS: {
-      const { timeSlice } = action;
-      const task = state.items.find((task) => task.id === timeSlice.taskId);
-      const timeSlices = task.timeSlices.map(
-        (ts) => (ts.id === timeSlice.id ? { ...timeSlice } : { ...ts }),
+      const { timebox } = action;
+      const task = state.items.find((task) => task.id === timebox.taskId);
+      const timeboxes = task.timeboxes.map(
+        (ts) => (ts.id === timebox.id ? { ...timebox } : { ...ts }),
       );
       const items = state.items.map(
-        (item) => (item.id === task.id ? { ...task, timeSlices } : { ...item }),
+        (item) => (item.id === task.id ? { ...task, timeboxes } : { ...item }),
       );
       return { items };
     }

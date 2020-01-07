@@ -1,12 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { updateTimeSlice, togglePomoCommentEditing } from '../actions';
+import {
+  updateTimeSlice as updateTimeSliceAction,
+  togglePomoCommentEditing as togglePomoCommentEditingAction
+} from '../actions';
+import timeboxPropTypes from '../prop-types/time-slice';
 
 class PomoInlineEdit extends React.Component {
   constructor(props) {
     super(props);
+    const { pomo: { comment } } = props;
     this.state = {
-      value: this.props.pomo.comment,
+      value: comment,
     };
   }
 
@@ -21,12 +27,14 @@ class PomoInlineEdit extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { id } = this.props.pomo;
+    const { pomo: { id, taskId }, updateTimeSlice, togglePomoCommentEditing } = this.props;
+    const { value } = this.state;
     const payload = {
-      comment: this.state.value,
+      comment: value,
+      taskId,
     };
-    this.props.updateTimeSlice(id, payload);
-    this.props.togglePomoCommentEditing(id);
+    updateTimeSlice(id, payload);
+    togglePomoCommentEditing(id);
   }
 
   render() {
@@ -44,9 +52,15 @@ class PomoInlineEdit extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  togglePomoCommentEditing: (id) => dispatch(togglePomoCommentEditing(id)),
-  updateTimeSlice: (id, payload) => dispatch(updateTimeSlice(id, payload)),
-});
+PomoInlineEdit.propTypes = {
+  updateTimeSlice: PropTypes.func.isRequired,
+  togglePomoCommentEditing: PropTypes.func.isRequired,
+  pomo: timeboxPropTypes.isRequired,
+};
+
+const mapDispatchToProps = {
+  updateTimeSlice: updateTimeSliceAction,
+  togglePomoCommentEditing: togglePomoCommentEditingAction,
+};
 
 export default connect(null, mapDispatchToProps)(PomoInlineEdit);

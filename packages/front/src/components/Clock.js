@@ -36,7 +36,7 @@ class Clock extends React.Component {
       clearInterval(timer.interval);
       if (isPomodoro(timer.status)) {
         console.log('was pomo, start break', typeof endTimeSlice);
-        endTimeSlice(timer.timeSliceId);
+        endTimeSlice(timer.timeboxId);
         const startedAt = getNowSeconds();
         const interval = setInterval(timerTick, 1000);
         startBreak(startedAt, interval);
@@ -64,8 +64,8 @@ class Clock extends React.Component {
       return;
     }
     clearInterval(timer.interval);
-    if (timer.timeSliceId) {
-      endTimeSlice(timer.timeSliceId);
+    if (timer.timeboxId) {
+      endTimeSlice(timer.timeboxId);
     }
     timerStopped();
   }
@@ -92,7 +92,7 @@ const mapDispatchToProps = (dispatch) => ({
   startTimeSlice: (taskId) => dispatch(startTimeSlice({
     taskId, start: getMySQLTimestamp(), comment: '', type: 'POMODORO',
   })),
-  endTimeSlice: (timeSliceId) => dispatch(updateTimeSlice(timeSliceId, {
+  endTimeSlice: (timeboxId) => dispatch(updateTimeSlice(timeboxId, {
     end: getMySQLTimestamp(),
   })),
   timerStarted: (startedAt, interval) => dispatch(timerStarted(startedAt, interval)),

@@ -123,9 +123,9 @@ const requestCreateTimeSlice = (taskId) => ({
   taskId,
 });
 
-const onTimeSliceCreationSuccess = (timeSlice) => ({
+const onTimeSliceCreationSuccess = (timebox) => ({
   type: CREATE_TIME_SLICE_SUCCESS,
-  timeSlice,
+  timebox,
 });
 
 const onTimeSliceCreationFailure = (error) => ({
@@ -134,14 +134,14 @@ const onTimeSliceCreationFailure = (error) => ({
 });
 
 // ----- Update time slice -----
-const requestUpdateTimeSlice = (timeSliceId) => ({
+const requestUpdateTimeSlice = (timeboxId) => ({
   type: UPDATE_TIME_SLICE_REQUEST,
-  timeSliceId,
+  timeboxId,
 });
 
-const onTimeSliceUpdateSuccess = (timeSlice) => ({
+const onTimeSliceUpdateSuccess = (timebox) => ({
   type: UPDATE_TIME_SLICE_SUCCESS,
-  timeSlice,
+  timebox,
 });
 
 const onTimeSliceUpdateFailure = (error) => ({
@@ -157,10 +157,20 @@ export const createTask = (title) => (dispatch) => {
     .catch((error) => dispatch(onTaskCreationFailure(error)));
 };
 
+function setTimeboxesTaskIds(tasks) {
+  return tasks.map(
+    (task) => ({
+      ...task,
+      timeboxes: task.timeboxes.map((tb) => ({ ...tb, taskId: task.id })),
+    }),
+  );
+}
+
 export const fetchAllTasks = () => (dispatch) => {
   dispatch(requestFetchTasks());
   return axios.get('/api/tasks')
     .then((response) => response.data)
+    .then(setTimeboxesTaskIds)
     .then((tasks) => dispatch(onTasksFetchSuccess(tasks)))
     .catch((error) => dispatch(onTasksFetchFailure(error)));
 };
@@ -178,24 +188,24 @@ export const deleteTask = (id) => (dispatch) => {
   dispatch(requestDeleteTask(id));
   return axios.delete(`/api/tasks/${id}`)
     .then((response) => response.data)
-    .then(({ taskId }) => dispatch(onTaskDeleteSuccess(taskId)))
+    .then(() => dispatch(onTaskDeleteSuccess(id)))
     .catch((error) => dispatch(onTaskDeleteFailure(error)));
 };
 
 export const startTimeSlice = (payload) => (dispatch) => {
   dispatch(requestCreateTimeSlice(payload.taskId));
-  return axios.post('/api/time-slices', payload)
+  return axios.post('/api/timeboxes', payload)
     .then((response) => response.data)
-    .then((timeSlice) => dispatch(onTimeSliceCreationSuccess(timeSlice)))
+    .then((timebox) => dispatch(onTimeSliceCreationSuccess(timebox)))
     .catch((error) => dispatch(onTimeSliceCreationFailure(error)));
 };
 
-export const updateTimeSlice = (timeSliceId, payload) => (dispatch) => {
-  console.log('end time slice', timeSliceId, payload);
-  dispatch(requestUpdateTimeSlice(timeSliceId));
-  return axios.put(`/api/time-slices/${timeSliceId}`, payload)
+export const updateTimeSlice = (timeboxId, payload) => (dispatch) => {
+  console.log('end time slice', timeboxId, payload);
+  dispatch(requestUpdateTimeSlice(timeboxId));
+  return axios.put(`/api/timeboxes/${timeboxId}`, payload)
     .then((response) => response.data)
-    .then((timeSlice) => dispatch(onTimeSliceUpdateSuccess(timeSlice)))
+    .then((timebox) => dispatch(onTimeSliceUpdateSuccess(timebox)))
     .catch((error) => dispatch(onTimeSliceUpdateFailure(error)));
 };
 
