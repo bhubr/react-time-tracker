@@ -7,6 +7,7 @@ import { Timebox } from './timebox/timebox.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TaskModule } from './task/task.module';
+import { TimeboxModule } from './timebox/timebox.module';
 import settings from './settings';
 
 @Module({
@@ -15,7 +16,8 @@ import settings from './settings';
       ...settings.database,
       entities: [Task, Timebox],
     }),
-    TaskModule
+    TaskModule,
+    TimeboxModule
   ],
   controllers: [AppController],
   providers: [AppService],

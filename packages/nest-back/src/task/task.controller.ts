@@ -9,8 +9,8 @@ export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  async create(@Body() createCatDto: CreateTaskDto) {
-    return this.taskService.create(createCatDto);
+  async create(@Body() createTaskDto: CreateTaskDto) {
+    return this.taskService.create(createTaskDto);
   }
 
   @Get()
