@@ -7,9 +7,9 @@
   "scripts": {
     "lint": "lerna run lint --stream",
     "start:dev": "lerna run start:dev --stream",
-    "start": "cd packages/back && yarn start",
+    "start": "cd packages/nest-back && yarn start",
     "build": "lerna run build --stream",
-    "postinstall": "cd packages/nest-back && yarn --production=false && cd ../front && yarn --production=false && cd ../.. && yarn build"
+    "postinstall": "cd packages/nest-back && yarn --production=false && cd ../front && yarn --production=false"
   },
   "devDependencies": {
     "husky": "^3.0.4",
