@@ -83,7 +83,7 @@ const Task = ({
 );
 
 Task.propTypes = {
-  task: taskPropTypes
+  task: taskPropTypes,
 };
 
 const mapStateToProps = (state) => ({

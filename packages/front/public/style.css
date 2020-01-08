@@ -147,3 +147,32 @@ nav li {
   background: #d81b60;
   color: #fff;
 }
+
+.AuthForms {
+  height: 100vh;
+  background: #fafafa;
+}
+
+.AuthForms form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1em;
+  background: #fff;
+  border: 1px solid #f8f8f8;
+}
+
+.AuthForms form label,
+.AuthForms form input,
+.AuthForms form button {
+  display: block;
+  margin-top: 5px;
+}
+
+.AuthForms form label,
+.AuthForms form input {
+  width: 80%;
+}
+
+.AuthForms-error {
+  color: #c66;
+}

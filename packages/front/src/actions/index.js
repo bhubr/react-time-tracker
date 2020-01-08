@@ -36,6 +36,11 @@ export const BREAK_STARTED = 'BREAK_STARTED';
 
 export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+export const LOGOUT = 'LOGOUT';
+
 // Toggle inline task title editing
 export const toggleTaskTitleEditing = (id) => ({
   type: TOGGLE_TASK_TITLE_EDITING,
@@ -234,3 +239,25 @@ export const setCurrentTask = (taskId) => ({
   type: SET_CURRENT_TASK,
   taskId,
 });
+
+const loginRequest = () => ({
+  type: LOGIN_REQUEST,
+});
+
+const loginSuccess = (user) => ({
+  type: LOGIN_SUCCESS,
+  user,
+});
+
+const loginFailure = (error) => ({
+  type: LOGIN_FAILURE,
+  reason: error.message,
+});
+
+export const login = (credentials) => (dispatch) => {
+  dispatch(loginRequest());
+  return axios.post('/auth/login', credentials)
+    .then((response) => response.data)
+    .then((user) => dispatch(loginSuccess(user)))
+    .catch((error) => dispatch(loginFailure(error)));
+};
