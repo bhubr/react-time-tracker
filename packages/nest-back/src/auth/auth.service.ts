@@ -1,10 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { verify } from 'argon2';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { verify, hash } from 'argon2';
 import { UserService } from '../user/user.service';
+import { UserRegisterDto } from './dto/user-register.dto';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthService {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
 
   async validateUser(email: string, pass: string): Promise<any> {
     console.log(email, pass);
@@ -14,5 +23,12 @@ export class AuthService {
       return result;
     }
     return null;
+  }
+
+  async registerUser(userRegisterDto: UserRegisterDto) {
+    const { password: clearPassword, ...rest } = userRegisterDto;
+    const password = await hash(clearPassword);
+    const userWithPassDto: UserRegisterDto = { ...rest, password };
+    return this.userRepository.save(userWithPassDto);
   }
 }

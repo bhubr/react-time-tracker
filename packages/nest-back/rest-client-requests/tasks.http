@@ -17,6 +17,18 @@ Content-Type: application/json
 {"email":"john@free.fr", "password":"password"}
 
 ### POST to /auth/login
+POST http://localhost:5004/auth/login
+Content-Type: application/json
+
+{"email":"john@free.fr", "password":"password"}
+
+### POST to /auth/register
+POST http://localhost:5004/auth/register
+Content-Type: application/json
+
+{"email":"johnanda@free.fr", "password":"password", "name": "Shri Johnanda Difool"}
+
+### POST to /auth/login
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 
