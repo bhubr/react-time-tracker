@@ -6,7 +6,7 @@ import TaskEdit from './components/TaskEdit';
 import PageHeader from './components/PageHeader';
 import TimeSliceCommentModal from './components/TimeSliceCommentModal';
 import AuthForms from './components/AuthForms';
-import { fetchProfile as fetchProfileAction } from './actions';
+import { fetchProfile as fetchProfileAction, logout as logoutAction } from './actions';
 
 // Useful links
 // https://www.alsacreations.com/article/lire/1402-web-storage-localstorage-sessionstorage.html
@@ -45,15 +45,26 @@ class App extends Component {
 
   render() {
     const { modalOpen } = this.state;
-    const { loggedIn } = this.props;
+    const { loggedIn, logout } = this.props;
     if (!loggedIn) {
       return <AuthForms />;
     }
     return (
       <div>
         <nav>
-          <ul>
+          <ul className="flex-grow">
             <li>TrakT</li>
+          </ul>
+          <ul>
+            <li>
+              <button
+                type="button"
+                className="Nav-btn"
+                onClick={logout}
+              >
+                Logout
+              </button>
+            </li>
           </ul>
         </nav>
         <div className="container">
@@ -75,12 +86,16 @@ class App extends Component {
 App.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
   fetchProfile: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ auth }) => ({
   loggedIn: !!auth.user,
 });
 
-const mapDispatchToProps = { fetchProfile: fetchProfileAction };
+const mapDispatchToProps = {
+  fetchProfile: fetchProfileAction,
+  logout: logoutAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

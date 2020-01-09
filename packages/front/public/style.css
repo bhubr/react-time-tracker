@@ -32,6 +32,7 @@ nav {
   height: 48px;
   background: #5e35b1;
   color: #fff;
+  display: flex;
 }
 
 nav ul {
@@ -40,6 +41,17 @@ nav ul {
 
 nav li {
   padding: 15px;
+}
+
+.Nav-btn {
+  background: #5e35b1;
+  color: #fff;
+  border: none;
+  font-size: 1rem;
+}
+
+.flex-grow {
+  flex-grow: 1;
 }
 
 .container {

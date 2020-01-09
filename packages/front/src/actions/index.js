@@ -267,6 +267,9 @@ export const login = (credentials) => (dispatch) => {
     .catch((error) => dispatch(loginFailure(error)));
 };
 
+export const logout = () => ({
+  type: LOGOUT,
+});
 
 const fetchProfileRequest = () => ({
   type: FETCH_PROFILE_REQUEST,
