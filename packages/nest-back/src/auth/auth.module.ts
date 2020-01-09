@@ -7,6 +7,7 @@ import { UserModule } from '../user/user.module';
 import { User } from '../user/user.entity';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
+import { BitBucketStrategy } from './bitbucket.strategy';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
 
@@ -20,7 +21,7 @@ import { jwtConstants } from './constants';
       // signOptions: { expiresIn: '60s' },
     }),
   ],
-  providers: [AuthService, LocalStrategy, JwtStrategy],
+  providers: [AuthService, LocalStrategy, JwtStrategy, BitBucketStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })

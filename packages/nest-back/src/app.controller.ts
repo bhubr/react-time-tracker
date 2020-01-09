@@ -39,4 +39,11 @@ export class AppController {
   getProfile(@Request() req) {
     return req.user;
   }
+
+  @UseGuards(AuthGuard('bitbucket'))
+  @Post('oauth/code/bitbucket')
+  bitbucketOAuth(@Request() req) {
+    console.log(req.user);
+    return req.user;
+  }
 }
