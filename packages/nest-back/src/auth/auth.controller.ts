@@ -23,4 +23,10 @@ export class AuthController {
   async register(@Body() userRegisterDto: UserRegisterDto) {
     return this.authService.registerUser(userRegisterDto);
   }
+
+  @Get('logout')
+  async logout(@Request() req) {
+    req.res.clearCookie('jwt');
+    return { ok: true };
+  }
 }

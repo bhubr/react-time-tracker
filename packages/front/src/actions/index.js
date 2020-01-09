@@ -40,7 +40,9 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-export const LOGOUT = 'LOGOUT';
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
 
 export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
 export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST';
@@ -261,15 +263,30 @@ const loginFailure = (error) => ({
 
 export const login = (credentials) => (dispatch) => {
   dispatch(loginRequest());
-  return axios.post('/auth/login', credentials, { withCredentials: true })
+  return axios.post('/auth/login', credentials)
     .then((response) => response.data)
     .then((user) => dispatch(loginSuccess(user)))
     .catch((error) => dispatch(loginFailure(error)));
 };
 
-export const logout = () => ({
-  type: LOGOUT,
+const logoutRequest = () => ({
+  type: LOGOUT_REQUEST,
 });
+
+const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
+const logoutFailure = () => ({
+  type: LOGOUT_FAILURE,
+});
+
+export const logout = () => (dispatch) => {
+  dispatch(logoutRequest());
+  return axios.get('/auth/logout')
+    .then(() => dispatch(logoutSuccess()))
+    .catch((error) => dispatch(logoutFailure(error)));
+};
 
 const fetchProfileRequest = () => ({
   type: FETCH_PROFILE_REQUEST,

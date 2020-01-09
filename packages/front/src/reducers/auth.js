@@ -2,7 +2,7 @@ import {
   LOGIN_SUCCESS,
   FETCH_PROFILE_SUCCESS,
   LOGIN_FAILURE,
-  LOGOUT,
+  LOGOUT_SUCCESS,
 } from '../actions';
 
 const initialState = {
@@ -23,7 +23,7 @@ const authReducer = (state = initialState, action) => {
       return { ...state, error: reason };
     }
 
-    case LOGOUT:
+    case LOGOUT_SUCCESS:
       return initialState;
 
     default:

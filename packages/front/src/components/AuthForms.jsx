@@ -58,7 +58,7 @@ function AuthForms({ login, error }) {
 
         <button type="submit">Go</button>
 
-        <button type="button" onClick={() => {}}>BitBucket</button>
+        {/* <button type="button" onClick={() => {}}>BitBucket</button>
 
         <button type="button" onClick={toggleForm}>
           {
@@ -66,7 +66,7 @@ function AuthForms({ login, error }) {
               ? 'No account? Register'
               : 'Have an account? Login'
           }
-        </button>
+        </button> */}
 
       </form>
 
