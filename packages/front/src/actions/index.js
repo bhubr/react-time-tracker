@@ -39,7 +39,12 @@ export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
 export const LOGOUT = 'LOGOUT';
+
+export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
+export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST';
+export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
 
 // Toggle inline task title editing
 export const toggleTaskTitleEditing = (id) => ({
@@ -256,8 +261,31 @@ const loginFailure = (error) => ({
 
 export const login = (credentials) => (dispatch) => {
   dispatch(loginRequest());
-  return axios.post('/auth/login', credentials)
+  return axios.post('/auth/login', credentials, { withCredentials: true })
     .then((response) => response.data)
     .then((user) => dispatch(loginSuccess(user)))
     .catch((error) => dispatch(loginFailure(error)));
+};
+
+
+const fetchProfileRequest = () => ({
+  type: FETCH_PROFILE_REQUEST,
+});
+
+const fetchProfileSuccess = (user) => ({
+  type: FETCH_PROFILE_SUCCESS,
+  user,
+});
+
+const fetchProfileFailure = (error) => ({
+  type: FETCH_PROFILE_FAILURE,
+  reason: error.message,
+});
+
+export const fetchProfile = (credentials) => (dispatch) => {
+  dispatch(fetchProfileRequest());
+  return axios.get('/profile', credentials)
+    .then((response) => response.data)
+    .then((user) => dispatch(fetchProfileSuccess(user)))
+    .catch((error) => dispatch(fetchProfileFailure(error)));
 };

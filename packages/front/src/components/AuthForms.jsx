@@ -1,18 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { login as loginAction } from '../actions';
+// import axios from 'axios';
+import { login as loginAction, fetchProfile as fetchProfileAction } from '../actions';
 
 const forms = {
   LOGIN: 'LOGIN',
   REGISTER: 'REGISTER',
 };
 
-function AuthForms({ login, error }) {
+function AuthForms({ login, error, fetchProfile }) {
+  // const [hello, setHello] = useState('');
   const [form, setForm] = useState(forms.LOGIN);
   const [credentials, setCredentials] = useState({
     email: '', password: '', name: '',
   });
+
+  // useEffect(() => {
+  //   console.log('fire effect', hello);
+  //   const getHello = () => axios.get('/hello')
+  //     .then((res) => res.data)
+  //     .then(({ message }) => setHello(message));
+  //   getHello();
+  // }, []);
+
   const isLogin = form === forms.LOGIN;
 
   const handleSubmit = (e) => {
@@ -65,6 +76,8 @@ function AuthForms({ login, error }) {
         </button>
 
       </form>
+
+      <button type="button" onClick={fetchProfile}>Fetch profile</button>
     </div>
   );
 }
@@ -80,6 +93,7 @@ const mapStateToProps = ({ auth }) => ({
 
 const mapDispatchToProps = {
   login: loginAction,
+  fetchProfile: fetchProfileAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthForms);

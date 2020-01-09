@@ -6,6 +6,7 @@ import TaskEdit from './components/TaskEdit';
 import PageHeader from './components/PageHeader';
 import TimeSliceCommentModal from './components/TimeSliceCommentModal';
 import AuthForms from './components/AuthForms';
+import { fetchProfile as fetchProfileAction } from './actions';
 
 // Useful links
 // https://www.alsacreations.com/article/lire/1402-web-storage-localstorage-sessionstorage.html
@@ -19,13 +20,15 @@ class App extends Component {
       timer: null,
       modalOpen: false,
     };
+    this.onCommentSubmit = this.onCommentSubmit.bind(this);
   }
 
   componentDidMount() {
     document.title = 'Pomodoro';
+    this.fetchProfile();
   }
 
-  onCommentSubmit = (comment) => {
+  onCommentSubmit(comment) {
     this.setState(({ timer }) => {
       if (!timer) return null;
       return {
@@ -35,11 +38,16 @@ class App extends Component {
     });
   }
 
+  fetchProfile() {
+    const { fetchProfile } = this.props;
+    fetchProfile();
+  }
+
   render() {
     const { modalOpen } = this.state;
     const { loggedIn } = this.props;
     if (!loggedIn) {
-      return <AuthForms />
+      return <AuthForms />;
     }
     return (
       <div>
@@ -66,10 +74,13 @@ class App extends Component {
 
 App.propTypes = {
   loggedIn: PropTypes.bool.isRequired,
+  fetchProfile: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = ({ auth }) => ({
   loggedIn: !!auth.user,
 });
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = { fetchProfile: fetchProfileAction };
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

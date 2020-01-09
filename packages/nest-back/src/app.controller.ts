@@ -10,9 +10,9 @@ export class AppController {
     private readonly authService: AuthService
   ) {}
 
-  // @Get('*')
-  // getHello(): string {
-  //   return this.appService.getHello();
+  // @Get('hello')
+  // getHello(): any {
+  //   return { message: 'Hello World!' };
   // }
 
   @UseGuards(AuthGuard('local'))
@@ -28,7 +28,7 @@ export class AppController {
     });
     req.res.cookie('jwt', jwt, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       expires: new Date(Date.now() + expiresInCookie),
     });
     return req.user;
