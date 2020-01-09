@@ -10,10 +10,12 @@ import { JwtStrategy } from './jwt.strategy';
 import { BitBucketStrategy } from './bitbucket.strategy';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
+import { BitBucketProfile } from 'src/user/bitbucket-profile.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([BitBucketProfile]),
     UserModule,
     PassportModule,
     JwtModule.register({
