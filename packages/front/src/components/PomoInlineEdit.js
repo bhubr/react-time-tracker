@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   updateTimeSlice as updateTimeSliceAction,
-  togglePomoCommentEditing as togglePomoCommentEditingAction
+  togglePomoCommentEditing as togglePomoCommentEditingAction,
 } from '../actions';
 import timeboxPropTypes from '../prop-types/time-slice';
 

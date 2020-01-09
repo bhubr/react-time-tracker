@@ -36,6 +36,18 @@ export const BREAK_STARTED = 'BREAK_STARTED';
 
 export const TOGGLE_FILTER = 'TOGGLE_FILTER';
 
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';
+export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
+export const LOGOUT_FAILURE = 'LOGOUT_FAILURE';
+
+export const FETCH_PROFILE_SUCCESS = 'FETCH_PROFILE_SUCCESS';
+export const FETCH_PROFILE_REQUEST = 'FETCH_PROFILE_REQUEST';
+export const FETCH_PROFILE_FAILURE = 'FETCH_PROFILE_FAILURE';
+
 // Toggle inline task title editing
 export const toggleTaskTitleEditing = (id) => ({
   type: TOGGLE_TASK_TITLE_EDITING,
@@ -234,3 +246,66 @@ export const setCurrentTask = (taskId) => ({
   type: SET_CURRENT_TASK,
   taskId,
 });
+
+const loginRequest = () => ({
+  type: LOGIN_REQUEST,
+});
+
+const loginSuccess = (user) => ({
+  type: LOGIN_SUCCESS,
+  user,
+});
+
+const loginFailure = (error) => ({
+  type: LOGIN_FAILURE,
+  reason: error.message,
+});
+
+export const login = (credentials) => (dispatch) => {
+  dispatch(loginRequest());
+  return axios.post('/auth/login', credentials)
+    .then((response) => response.data)
+    .then((user) => dispatch(loginSuccess(user)))
+    .catch((error) => dispatch(loginFailure(error)));
+};
+
+const logoutRequest = () => ({
+  type: LOGOUT_REQUEST,
+});
+
+const logoutSuccess = () => ({
+  type: LOGOUT_SUCCESS,
+});
+
+const logoutFailure = () => ({
+  type: LOGOUT_FAILURE,
+});
+
+export const logout = () => (dispatch) => {
+  dispatch(logoutRequest());
+  return axios.get('/auth/logout')
+    .then(() => dispatch(logoutSuccess()))
+    .catch((error) => dispatch(logoutFailure(error)));
+};
+
+const fetchProfileRequest = () => ({
+  type: FETCH_PROFILE_REQUEST,
+});
+
+const fetchProfileSuccess = (user) => ({
+  type: FETCH_PROFILE_SUCCESS,
+  user,
+});
+
+const fetchProfileFailure = (error) => ({
+  type: FETCH_PROFILE_FAILURE,
+  reason: error.message,
+});
+
+export const fetchProfile = (credentials) => (dispatch) => {
+  dispatch(fetchProfileRequest());
+  return axios.get('/profile', credentials)
+    .then((response) => response.data)
+    .then((user) => dispatch(fetchProfileSuccess(user)))
+    .catch((error) => dispatch(fetchProfileFailure(error)));
+};
