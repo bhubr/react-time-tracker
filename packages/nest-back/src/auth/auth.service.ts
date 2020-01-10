@@ -36,17 +36,20 @@ export class AuthService {
     let bitBucketProfile = await this.bitbucketProfileRepository.findOne({ where: { uuid } });
 
     console.log('### loginOrRegBB', bitBucketProfile, profileDto);
+    let user;
     // If profile not found... create it. If no user id is provided: create user
     if (!bitBucketProfile) {
       bitBucketProfile = await this.bitbucketProfileRepository.save(profileDto);
-      
-      const user = new User();
+      user = new User();
       user.name = profileDto.displayName;
       user.email = profileDto.email;
       user.bitbucket = bitBucketProfile;
       await this.connection.manager.save(user);
+    } else {
+      user = await this.userRepository.findOne({ where: { bitbucket: bitBucketProfile } });
     }
-    return bitBucketProfile;
+    const { password, ...userNoPass } = user;
+    return userNoPass;
   }
 
   async registerUser(userRegisterDto: UserRegisterDto) {
