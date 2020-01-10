@@ -2,11 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, Connection } from 'typeorm';
 import { verify, hash } from 'argon2';
+import { sign } from 'jsonwebtoken';
 import { UserService } from '../user/user.service';
 import { UserRegisterDto } from './dto/user-register.dto';
 import { User } from '../user/user.entity';
 import { BitBucketProfile } from '../user/bitbucket-profile.entity';
 import { BitBucketProfileDto } from './dto/bitbucket-profile.dto';
+import { CookieOptions } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -57,5 +59,22 @@ export class AuthService {
     const password = await hash(clearPassword);
     const userWithPassDto: UserRegisterDto = { ...rest, password };
     return this.userRepository.save(userWithPassDto);
+  }
+
+  async generateJwt(user: User): Promise<string> {
+    const expiresInJwt = process.env.DB_ENV === 'test' ? '1m' : '2d';
+    const secretKey = process.env.JWT_SECRET || 'VerySecret$$2020@@';
+    return await sign(user, secretKey, {
+      expiresIn: expiresInJwt,
+    });
+  }
+
+  getJwtCookieOptions(): CookieOptions {
+    const expiresInCookie = process.env.DB_ENV === 'test' ? 60000 : 172800000;
+    return {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      expires: new Date(Date.now() + expiresInCookie),
+    }
   }
 }
