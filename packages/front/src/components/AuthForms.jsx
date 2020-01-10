@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { login as loginAction } from '../actions';
+import {
+  login as loginAction,
+  loginSuccess as loginSuccessAction,
+} from '../actions';
 import OAuth2Login from './oauth2-signin';
 
 const forms = {
@@ -18,7 +21,7 @@ const oauth = {
   },
 };
 
-function AuthForms({ login, error }) {
+function AuthForms({ login, loginSuccess, error }) {
   const [form, setForm] = useState(forms.LOGIN);
   const [credentials, setCredentials] = useState({
     email: '', password: '', name: '',
@@ -39,15 +42,14 @@ function AuthForms({ login, error }) {
   };
 
   const postOAuthCode = ({ code }) => axios.post(`/oauth/code/bitbucket?code=${code}`)
-    .then(res => res.data)
-    .then(console.log)
-    .catch(console.error)
+    .then((res) => res.data)
+    .then(loginSuccess)
+    .catch(console.error);
 
   // const toggleForm = () => {
   //   const newForm = isLogin ? forms.REGISTER : forms.LOGIN;
   //   setForm(newForm);
   // };
-  console.log(process.env.REACT_APP_BB_AUTH_URL, window.location.search);
   const { bitbucket } = oauth;
 
   return (
@@ -100,6 +102,7 @@ function AuthForms({ login, error }) {
 
 AuthForms.propTypes = {
   login: PropTypes.func.isRequired,
+  loginSuccess: PropTypes.func.isRequired,
   error: PropTypes.string.isRequired,
 };
 
@@ -109,6 +112,7 @@ const mapStateToProps = ({ auth }) => ({
 
 const mapDispatchToProps = {
   login: loginAction,
+  loginSuccess: loginSuccessAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AuthForms);
