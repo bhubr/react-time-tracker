@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Put, Delete, Res, Body, Param, HttpCode, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Res, Body, Param, HttpCode, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
+import { AuthGuard } from '@nestjs/passport';
 import { TaskService } from './task.service';
 import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
@@ -13,6 +14,7 @@ export class TaskController {
     return this.taskService.create(createTaskDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   findAll(): Promise<Task[]> {
     return this.taskService.findAll();

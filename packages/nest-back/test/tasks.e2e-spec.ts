@@ -2,20 +2,25 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import { createConnection, Connection } from 'typeorm';
 import * as request from 'supertest';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from './../src/app.module';
+import { User } from '../src/user/user.entity';
+import { BitBucketProfile } from '../src/user/bitbucket-profile.entity';
 import settings from '../src/settings';
+import  { genCookie, genUser } from './utils';
 
 describe('TasksController (e2e)', () => {
   let app: INestApplication;
   let connection: Connection;
 
   beforeAll(async () => {
-    connection = await createConnection({ ...settings.database, name: 'testconn' });
+    connection = await createConnection({ ...settings.database, name: 'testconn', entities: [User, BitBucketProfile] });
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.use(cookieParser());
     await app.init();
   });
 
@@ -23,12 +28,24 @@ describe('TasksController (e2e)', () => {
     await connection.query('SET FOREIGN_KEY_CHECKS=0;');
     await connection.query('TRUNCATE TABLE timebox');
     await connection.query('TRUNCATE TABLE task');
+    await connection.query('TRUNCATE TABLE user');
+    await connection.query('TRUNCATE TABLE bit_bucket_profile');
     await connection.query('SET FOREIGN_KEY_CHECKS=1;');
   });
 
-  it('GET /api/tasks SUCCESS', async () => {
+  it('GET /api/tasks FAIL (No auth)', async () => {
     const res = await request(app.getHttpServer())
       .get('/api/tasks')
+      .expect(401);
+    expect(res.body).toMatchSnapshot();
+  });
+
+  it('GET /api/tasks SUCCESS', async () => {
+    const user = await genUser(connection);
+    const jwt = await genCookie(user);
+    const res = await request(app.getHttpServer())
+      .get('/api/tasks')
+      .set('Cookie', [`jwt=${jwt}`])
       .expect(200);
     expect(res.body).toMatchSnapshot();
   });
@@ -74,8 +91,12 @@ describe('TasksController (e2e)', () => {
 
     expect(resDelete.body).toMatchSnapshot();
 
+    const user = await genUser(connection);
+    const jwt = await genCookie(user);
+
     const resGet = await request(app.getHttpServer())
       .get('/api/tasks')
+      .set('Cookie', [`jwt=${jwt}`])
       .expect(200);
     expect(resGet.body).toMatchSnapshot();
   });

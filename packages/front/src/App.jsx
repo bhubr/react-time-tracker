@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import TaskList from './components/TaskList';
-import TaskEdit from './components/TaskEdit';
-import PageHeader from './components/PageHeader';
-import TimeSliceCommentModal from './components/TimeSliceCommentModal';
+import { Switch, Route } from 'react-router-dom';
 import AuthForms from './components/AuthForms';
+import Home from './components/Home';
 import { fetchProfile as fetchProfileAction, logout as logoutAction } from './actions';
 
 // Useful links
@@ -67,17 +65,16 @@ class App extends Component {
             </li>
           </ul>
         </nav>
-        <div className="container">
-          <PageHeader />
-          <TaskList
-            startTimeSlice={this.startTimeSlice}
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              // eslint-disable-next-line react/jsx-props-no-spreading
+              <Home {...props} modalOpen={modalOpen} onCommentSubmit={this.onCommentSubmit} />
+            )}
           />
-          <TaskEdit />
-          <TimeSliceCommentModal
-            modalOpen={modalOpen}
-            onCommentSubmit={this.onCommentSubmit}
-          />
-        </div>
+        </Switch>
       </div>
     );
   }
