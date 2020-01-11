@@ -10,7 +10,7 @@ import { JwtStrategy } from './jwt.strategy';
 import { BitBucketStrategy } from './bitbucket.strategy';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './constants';
-import { BitBucketProfile } from 'src/user/bitbucket-profile.entity';
+import { BitBucketProfile } from '../user/bitbucket-profile.entity';
 
 @Module({
   imports: [

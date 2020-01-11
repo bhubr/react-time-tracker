@@ -37,6 +37,6 @@ export class BitBucketStrategy extends PassportStrategy(Strategy) {
     // if (!user) {
     //   throw new UnauthorizedException();
     // }
-    return user;
+    return { ...user, accessToken, refreshToken };
   }
 }
