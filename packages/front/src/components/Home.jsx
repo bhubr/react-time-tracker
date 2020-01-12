@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from 'semantic-ui-react';
 import TaskList from './TaskList';
+import ProjectList from './ProjectList';
 import TaskEdit from './TaskEdit';
 import PageHeader from './PageHeader';
 import TimeSliceCommentModal from './TimeSliceCommentModal';

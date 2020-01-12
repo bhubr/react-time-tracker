@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProjectController (e2e) POST /api/projects FAIL (no auth) 1`] = `
+Object {
+  "error": "Unauthorized",
+  "statusCode": 401,
+}
+`;
+
+exports[`ProjectController (e2e) POST /api/projects SUCCESS 1`] = `
+Object {
+  "id": 1,
+  "status": "ACTIVE",
+  "title": "Project #1",
+}
+`;
