@@ -1,37 +1,19 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { createConnection, Connection } from 'typeorm';
+import { Connection } from 'typeorm';
 import * as request from 'supertest';
-import * as cookieParser from 'cookie-parser';
-import { AppModule } from './../src/app.module';
-import { User } from '../src/user/user.entity';
-import { BitBucketProfile } from '../src/user/bitbucket-profile.entity';
-import settings from '../src/settings';
-import  { genCookie, genUser } from './utils';
+import  { genCookie, genUser, setup, AppCo, truncateTables } from './utils';
 
 describe('TasksController (e2e)', () => {
   let app: INestApplication;
   let connection: Connection;
 
   beforeAll(async () => {
-    connection = await createConnection({ ...settings.database, name: 'testconn', entities: [User, BitBucketProfile] });
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-    app.use(cookieParser());
-    await app.init();
+    const { _app, _connection }: AppCo = await setup();
+    app = _app;
+    connection = _connection;
   });
 
-  beforeEach(async () => {
-    await connection.query('SET FOREIGN_KEY_CHECKS=0;');
-    await connection.query('TRUNCATE TABLE timebox');
-    await connection.query('TRUNCATE TABLE task');
-    await connection.query('TRUNCATE TABLE user');
-    await connection.query('TRUNCATE TABLE bit_bucket_profile');
-    await connection.query('SET FOREIGN_KEY_CHECKS=1;');
-  });
+  beforeEach(async () => truncateTables(connection));
 
   it('GET /api/tasks FAIL (No auth)', async () => {
     const res = await request(app.getHttpServer())

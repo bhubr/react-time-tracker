@@ -1,5 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany, ManyToMany } from 'typeorm';
 import { BitBucketProfile } from './bitbucket-profile.entity';
+import { Project } from '../project/project.entity';
+import { Workspace } from '../project/workspace.entity';
 
 @Entity()
 export class User {
@@ -20,4 +22,10 @@ export class User {
   })
   @JoinColumn()
   bitbucket: BitBucketProfile;
+
+  @ManyToMany(type => Project, project => project.users)
+  projects: Project[];
+
+  @OneToMany(type => Workspace, workspace => workspace.user)
+  workspaces: Workspace[];
 }

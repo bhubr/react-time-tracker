@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from 'typeorm';
 import { Timebox } from '../timebox/timebox.entity';
+import { Project } from '../project/project.entity';
 
 @Entity()
 export class Task {
@@ -22,4 +23,7 @@ export class Task {
     eager: true
   })
   timeboxes: Timebox[];
+
+  @ManyToOne(type => Project, project => project.tasks)
+  project: Project;
 }

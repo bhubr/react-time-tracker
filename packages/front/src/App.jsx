@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Link } from 'react-router-dom';
 import AuthForms from './components/AuthForms';
+import Workspaces from './components/Workspaces/Workspaces';
 import Home from './components/Home';
 import { fetchProfile as fetchProfileAction, logout as logoutAction } from './actions';
 
@@ -51,9 +52,22 @@ class App extends Component {
       <div>
         <nav>
           <ul className="flex-grow">
-            <li>TrakT</li>
+            <li>
+              <Link
+                to="/"
+              >
+                TrakT
+              </Link>
+            </li>
           </ul>
           <ul>
+            <li>
+              <Link
+                to="/workspaces"
+              >
+                Workspaces
+              </Link>
+            </li>
             <li>
               <button
                 type="button"
@@ -73,6 +87,10 @@ class App extends Component {
               // eslint-disable-next-line react/jsx-props-no-spreading
               <Home {...props} modalOpen={modalOpen} onCommentSubmit={this.onCommentSubmit} />
             )}
+          />
+          <Route
+            path="/workspaces"
+            component={Workspaces}
           />
         </Switch>
       </div>
