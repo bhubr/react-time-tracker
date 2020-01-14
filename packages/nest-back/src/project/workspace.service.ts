@@ -16,7 +16,7 @@ export class WorkspaceService {
     const workspace:Workspace = new Workspace();
     workspace.title = workspaceDto.title;
     workspace.user = workspaceDto.user;
-    return this.workspaceRepository.save(workspace)
+    return this.workspaceRepository.save(workspace);
   }
 
   findAll(user: User): Promise<Workspace[]> {

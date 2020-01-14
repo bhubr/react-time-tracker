@@ -9,6 +9,7 @@ import { User } from '../user/user.entity';
 import { BitBucketProfile } from '../user/bitbucket-profile.entity';
 import { BitBucketProfileDto } from './dto/bitbucket-profile.dto';
 import { CookieOptions } from 'express';
+import { clearScreenDown } from 'readline';
 
 @Injectable()
 export class AuthService {
