@@ -37,17 +37,31 @@ nav {
 
 nav ul {
   padding: 0;
+  display: flex;
 }
 
 nav li {
   padding: 15px;
 }
 
+nav li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+nav li a:hover,
+.Nav-btn:hover {
+  text-decoration: underline;
+}
+
 .Nav-btn {
+  font-family: 'Archivo Narrow', sans-serif;
   background: #5e35b1;
   color: #fff;
   border: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  vertical-align: baseline;
+  padding: 0;
 }
 
 .flex-grow {

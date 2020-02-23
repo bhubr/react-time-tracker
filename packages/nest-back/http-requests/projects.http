@@ -1,0 +1,24 @@
+
+### POST to /auth/register
+POST http://localhost:5004/auth/register
+Content-Type: application/json
+
+{"email":"jo@free.fr", "password":"pw", "name": "Jo"}
+
+### POST to /auth/login
+POST http://localhost:5004/auth/login
+Content-Type: application/json
+
+{"email":"jo@free.fr", "password":"pw"}
+
+### POST to /api/projects
+POST http://localhost:5004/api/projects
+Content-Type: application/json
+
+{"title":"Sample Project #3"}
+
+### POST to /api/workspaces
+POST http://localhost:5004/api/workspaces
+Content-Type: application/json
+
+{"title":"Sample Workspace #22"}

@@ -6,14 +6,14 @@ import {
   TIMER_STOPPED,
   TIMER_TICK,
   BREAK_STARTED,
-} from '../actions';
+} from '../../actions';
 
 import {
   TIMER_IDLE,
   TIMER_POMODORO,
   TIMER_SHORT_BREAK,
   TIMER_LONG_BREAK,
-} from '../constants';
+} from '../../constants';
 
 const DURATION = 25 * 60;
 const SB = 5 * 60;

@@ -1,39 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Form, Input, Button } from 'semantic-ui-react';
 import { createTask } from '../actions';
 
-class TaskEdit extends React.Component {
-  state = {
-    title: '',
-  }
+function TaskEdit({ createTask }) {
+  const [title, setTitle] = useState('');
 
-  handleChange = (e) => {
-    this.setState({
-      title: e.target.value,
-    });
-  }
+  const handleChange = ({ target }) => setTitle(target.value);
 
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (!this.state.title) {
+    if (!title) {
       return;
     }
-    this.setState({ title: '' });
-    this.props.createTask(this.state.title);
+    setTitle('');
+    createTask(title);
   }
 
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <input
+  return (
+    <Form onSubmit={handleSubmit}>
+      <Form.Group>
+        <Input
           placeholder="Task title"
-          onChange={this.handleChange}
-          value={this.state.title}
+          onChange={handleChange}
+          value={title}
         />
-        <button type="submit">Submit</button>
-      </form>
-    );
-  }
+        <Button className="ml" color="teal" type="submit">Submit</Button>
+      </Form.Group>
+    </Form>
+  );
 }
 
 const mapDispatchToProps = (dispatch) => ({

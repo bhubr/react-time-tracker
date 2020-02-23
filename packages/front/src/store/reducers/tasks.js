@@ -14,7 +14,7 @@ import {
   CREATE_TIME_SLICE_SUCCESS,
   UPDATE_TIME_SLICE_SUCCESS,
   DELETE_TASK_SUCCESS,
-} from '../actions';
+} from '../../actions';
 
 
 const initialState = {

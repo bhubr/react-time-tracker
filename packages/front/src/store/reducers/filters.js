@@ -1,6 +1,6 @@
 import {
   TOGGLE_FILTER,
-} from '../actions';
+} from '../../actions';
 
 const initialState = {
   active: true,

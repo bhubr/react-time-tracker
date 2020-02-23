@@ -3,7 +3,7 @@ import {
   FETCH_PROFILE_SUCCESS,
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
-} from '../actions';
+} from '../../actions';
 
 const initialState = {
   user: null,
