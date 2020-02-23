@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Header } from 'semantic-ui-react';
 
 import { TIMER_IDLE } from '../constants';
 import { toggleFilter } from '../actions';
@@ -12,34 +13,37 @@ const IdleClock = () => <span>--:--</span>;
 const PageHeader = ({
   timer, toggleFilter, showCritical, showActive, showDone,
 }) => (
-  <div className="page-header">
-    <h1 className="page-title">Time Tracker</h1>
-    <ButtonGroup className="grow filter-buttons">
-      <ToggleButton
-        onToggle={() => toggleFilter('critical')}
-        classOn="btn-red"
-        label="Critical"
-        on={showCritical}
-      />
-      <ToggleButton
-        onToggle={() => toggleFilter('active')}
-        classOn="btn-purple"
-        label="Active"
-        on={showActive}
-      />
-      <ToggleButton
-        onToggle={() => toggleFilter('done')}
-        classOn="btn-purple"
-        label="Done"
-        on={showDone}
-      />
-    </ButtonGroup>
-    <div className="timer">
-      {
-      timer.status === TIMER_IDLE ? <IdleClock /> : <Clock />
-    }
-    </div>
-  </div>
+  <>
+    <Grid.Row>
+      <Grid.Column width={8}>
+        <ButtonGroup className="grow filter-buttons">
+          <ToggleButton
+            onToggle={() => toggleFilter('critical')}
+            classOn="red"
+            label="Critical"
+            on={showCritical}
+          />
+          <ToggleButton
+            onToggle={() => toggleFilter('active')}
+            classOn="purple"
+            label="Active"
+            on={showActive}
+          />
+          <ToggleButton
+            onToggle={() => toggleFilter('done')}
+            classOn="purple"
+            label="Done"
+            on={showDone}
+          />
+        </ButtonGroup>
+      </Grid.Column>
+      <Grid.Column width={8}>
+        {
+          timer.status === TIMER_IDLE ? <IdleClock /> : <Clock />
+        }
+      </Grid.Column>
+    </Grid.Row>
+  </>
 );
 
 const mapStateToProps = (state) => ({

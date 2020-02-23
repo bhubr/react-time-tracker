@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react';
 import {
   login as loginAction,
   loginSuccess as loginSuccessAction,
@@ -53,50 +54,67 @@ function AuthForms({ login, loginSuccess, error }) {
   const { bitbucket } = oauth;
 
   return (
-    <div className="AuthForms">
-      <form onSubmit={handleSubmit}>
-
-        <h1>{isLogin ? 'Login' : 'Register'}</h1>
+    <Grid textAlign='center' style={{ height: '100vh' }} verticalAlign='middle'>
+      <Grid.Column style={{ maxWidth: 450 }}>
+        <Header as='h2' color='teal' textAlign='center'>
+          <span className="icon icon-small icon-stopwatch" /> TrakT
+        </Header>
+        <Header as='h3'>{isLogin ? 'Login' : 'Register'}</Header>
 
         {
           error && (
-            <p className="AuthForms-error">{error}</p>
+            <Message negative>
+              <p>{error}</p>
+            </Message>
           )
         }
 
-        <label htmlFor="email">
-          Email
-          <input id="email" name="email" type="text" onChange={handleChange} />
-        </label>
+        <Form size='large' onSubmit={handleSubmit}>
+          <Segment stacked>
+            <Form.Input
+              name="email"
+              fluid
+              icon='user'
+              iconPosition='left'
+              placeholder='E-mail address'
+              onChange={handleChange}
+            />
+            <Form.Input
+              fluid
+              name="password"
+              icon='lock'
+              iconPosition='left'
+              placeholder='Password'
+              type='password'
+              onChange={handleChange}
+            />
 
-        <label htmlFor="password">
-          Password
-          <input id="password" name="password" type="text" onChange={handleChange} />
-        </label>
+            <Button color='teal' fluid size='large'>
+              Login
+            </Button>
+            <Grid style={{ padding: '1em 0' }}>
+              <Grid.Column style={{ witdth: '50%' }}>
+                <OAuth2Login
+                  buttonText="BitBucket"
+                  className="ui large teal button"
+                  authorizationUrl={bitbucket.authUrl}
+                  clientId={bitbucket.clientId}
+                  redirectUri={bitbucket.redirectUri}
+                  onSuccess={postOAuthCode}
+                  onFailure={(err) => console.error('error', err)}
+                />
+              </Grid.Column>
+              <Grid.Column style={{ witdth: '50%' }}>
 
-        <button type="submit">Go</button>
-
-        <OAuth2Login
-          buttonText="BitBucket"
-          provider="bitbucket"
-          authorizationUrl={bitbucket.authUrl}
-          clientId={bitbucket.clientId}
-          redirectUri={bitbucket.redirectUri}
-          onSuccess={postOAuthCode}
-          onFailure={(err) => console.error('error', err)}
-        />
-
-        {/* <button type="button" onClick={toggleForm}>
-          {
-            isLogin
-              ? 'No account? Register'
-              : 'Have an account? Login'
-          }
-        </button> */}
-
-      </form>
-
-    </div>
+              </Grid.Column>
+            </Grid>
+          </Segment>
+        </Form>
+        <Message>
+          New to us? <a href='#'>Sign Up</a>
+        </Message>
+      </Grid.Column>
+    </Grid>
   );
 }
 

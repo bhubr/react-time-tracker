@@ -3,9 +3,10 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
-// import registerServiceWorker from './registerServiceWorker'
+import * as serviceWorker from './serviceWorker';
 import configureStore from './configureStore';
 import App from './App';
+import './index.css';
 
 axios.defaults.withCredentials = true;
 
@@ -20,4 +21,4 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 
-// registerServiceWorker()
+serviceWorker.unregister();
