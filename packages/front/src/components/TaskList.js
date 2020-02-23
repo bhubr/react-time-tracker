@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Grid, Header, List } from 'semantic-ui-react';
 import Task from './Task';
 import Icon from './Icon';
 import { fetchAllTasks } from '../actions';
@@ -12,27 +13,30 @@ class TaskList extends React.Component {
   render() {
     const { critical, active, done } = this.props.filters;
     return (
-      <div className="accordion">
-        <div className="task-header task-header-row">
-          <Icon name="chevron-down" className="hidden" onClick={() => { }} />
-          <h5 className="grow">Name</h5>
-          <div className="checkbox-header">C</div>
-          <div className="checkbox-header">A</div>
-          <div className="checkbox-header">D</div>
-        </div>
-        {
-        this.props.tasks
-          .filter((t) => (!critical || t.critical) && (!active || t.active) && (done || !t.done))
-          .map(
-            (task, index) => (
-              <Task
-                key={index}
-                task={task}
-              />
-            ),
-          )
-      }
-      </div>
+      <List>
+        <List.Item>
+          <List.Content floated='right'>
+            <span className="checkbox-header">C</span>
+            <span className="checkbox-header">A</span>
+            <span className="checkbox-header">D</span>
+          </List.Content>
+          <List.Content>
+            <Header as="h4">Name</Header>
+          </List.Content>
+        </List.Item>
+          {
+            this.props.tasks
+              .filter((t) => (!critical || t.critical) && (!active || t.active) && (done || !t.done))
+              .map(
+                (task, index) => (
+                  <Task
+                    key={index}
+                    task={task}
+                  />
+                ),
+              )
+          }
+      </List>
     );
   }
 }

@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import AuthForms from './components/AuthForms';
 import Home from './components/Home';
+import Navbar from './components/Navbar';
 import { fetchProfile as fetchProfileAction, logout as logoutAction } from './actions';
 
 // Useful links
@@ -49,22 +50,7 @@ class App extends Component {
     }
     return (
       <div>
-        <nav>
-          <ul className="flex-grow">
-            <li>TrakT</li>
-          </ul>
-          <ul>
-            <li>
-              <button
-                type="button"
-                className="Nav-btn"
-                onClick={logout}
-              >
-                Logout
-              </button>
-            </li>
-          </ul>
-        </nav>
+        <Navbar logout={logout} />
         <Switch>
           <Route
             exact

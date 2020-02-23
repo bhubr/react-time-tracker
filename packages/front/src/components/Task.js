@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withState, compose } from 'recompose';
 import classNames from 'class-names';
+import { List, Header } from 'semantic-ui-react';
 import Icon from './Icon';
 import Checkbox from './Checkbox';
 import TaskBadge from './TaskBadge';
@@ -26,7 +27,7 @@ const formatDatetime = (datetime) => {
   return `${date} ${time}`;
 };
 
-const getActiveClass = (currentTaskId, { id }) => (currentTaskId === id ? 'active' : '');
+const getActiveClass = (currentTaskId, { id }) => (currentTaskId === id ? 'Task--active' : '');
 const getChevronDirection = (expanded) => `chevron-${expanded ? 'up' : 'down'}`;
 const enhance = withState('expanded', 'toggleExpanded', false);
 const Task = ({
@@ -43,10 +44,17 @@ const Task = ({
   toggleTaskTitleEditing,
   togglePomoCommentEditing,
 }) => (
-  <div className="task">
-    <div className={classNames('task-header', getActiveClass(currentTaskId, task))}>
+  <List.Item className={classNames('Task', getActiveClass(currentTaskId, task))}>
+    <List.Content floated='right'>
+      <Icon disabled={task.done} onClick={() => startTimeSlice(task.id)} name="stopwatch" />
+      <Icon onClick={() => deleteTask(task.id)} name="bin" />
+      <Checkbox checked={task.critical} onChange={() => updateTask({ ...task, critical: !task.critical })} />
+      <Checkbox checked={task.active} onChange={() => updateTask({ ...task, active: !task.active })} />
+      <Checkbox checked={task.done} onChange={() => updateTask({ ...task, done: !task.done })} />
+    </List.Content>
+    <List.Content>
       <Icon onClick={() => toggleExpanded(!expanded)} name={getChevronDirection(expanded)} />
-      <h5
+      <span
         className="grow"
         onClick={() => setCurrentTask(task.id)}
         onDoubleClick={() => toggleTaskTitleEditing(task.id)}
@@ -54,32 +62,27 @@ const Task = ({
         {inlineTaskEditing !== task.id
           ? <TaskBadge task={task} />
           : <TaskInlineEdit task={task} />}
-      </h5>
-      <Icon disabled={task.done} onClick={() => startTimeSlice(task.id)} name="stopwatch" />
-      <Icon onClick={() => deleteTask(task.id)} name="bin" />
-      <Checkbox checked={task.critical} onChange={() => updateTask({ ...task, critical: !task.critical })} />
-      <Checkbox checked={task.active} onChange={() => updateTask({ ...task, active: !task.active })} />
-      <Checkbox checked={task.done} onChange={() => updateTask({ ...task, done: !task.done })} />
-    </div>
-    <div className="task-timeboxes">
-      {
-      expanded && task.timeboxes
-      && task.timeboxes.map((ts, tsi) => (
-        <div key={tsi}>
-          {
-          formatDatetime(ts.start)
-}
-&nbsp;
-          <span onDoubleClick={() => togglePomoCommentEditing(ts.id)}>
-            {inlinePomoEditing !== ts.id
-              ? ts.comment || 'N/A'
-              : <PomoInlineEdit pomo={ts} />}
-          </span>
-        </div>
-      ))
-    }
-    </div>
-  </div>
+      </span>
+      <div className="task-timeboxes">
+        {
+        expanded && task.timeboxes
+        && task.timeboxes.map((ts, tsi) => (
+          <div key={tsi}>
+            {
+            formatDatetime(ts.start)
+  }
+  &nbsp;
+            <span onDoubleClick={() => togglePomoCommentEditing(ts.id)}>
+              {inlinePomoEditing !== ts.id
+                ? ts.comment || 'N/A'
+                : <PomoInlineEdit pomo={ts} />}
+            </span>
+          </div>
+        ))
+      }
+      </div>
+    </List.Content>
+  </List.Item>
 );
 
 Task.propTypes = {

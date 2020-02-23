@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Grid } from 'semantic-ui-react';
 import TaskList from './TaskList';
 import TaskEdit from './TaskEdit';
 import PageHeader from './PageHeader';
@@ -7,15 +8,27 @@ import TimeSliceCommentModal from './TimeSliceCommentModal';
 
 function Home({ modalOpen, onCommentSubmit }) {
   return (
-    <div className="container">
+    <Grid padded>
       <PageHeader />
-      <TaskList />
-      <TaskEdit />
-      <TimeSliceCommentModal
-        modalOpen={modalOpen}
-        onCommentSubmit={onCommentSubmit}
-      />
-    </div>
+      <Grid.Row>
+        <Grid.Column>
+          <TaskList />
+        </Grid.Column>  
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <TaskEdit />
+        </Grid.Column>  
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <TimeSliceCommentModal
+            modalOpen={modalOpen}
+            onCommentSubmit={onCommentSubmit}
+          />
+        </Grid.Column>  
+      </Grid.Row>
+    </Grid>
   );
 }
 

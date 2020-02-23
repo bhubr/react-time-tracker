@@ -1,0 +1,7 @@
+.icon-small {
+  transform: scale(0.8);
+}
+
+.Task--active {
+  background: #b2ebf2;
+}
