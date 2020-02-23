@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import axios from 'axios';
 import * as serviceWorker from './serviceWorker';
-import configureStore from './configureStore';
+import configureStore from './store/configureStore';
 import App from './App';
 import './index.css';
 

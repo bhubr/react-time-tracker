@@ -1,7 +1,7 @@
 import {
-  CREATE_WORKSPACE_SUCCESS,
-  FETCH_WORKSPACES_SUCCESS,
-} from '../store/workspaces/action-types';
+  CREATE_PROJECT_SUCCESS,
+  FETCH_PROJECTS_SUCCESS,
+} from '../projects/action-types';
 
 const initialState = {
   current: null,
@@ -10,10 +10,10 @@ const initialState = {
 
 export default function workspacesReducer(state = initialState, action) {
   switch (action.type) {
-    case CREATE_WORKSPACE_SUCCESS:
+    case CREATE_PROJECT_SUCCESS:
       return { ...state, items: [...state.items, action.workspace] };
 
-    case FETCH_WORKSPACES_SUCCESS:
+    case FETCH_PROJECTS_SUCCESS:
       return { ...state, items: action.workspaces };
     default:
       return state;

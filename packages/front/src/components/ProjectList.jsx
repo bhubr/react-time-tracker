@@ -1,28 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { fetchWorkspaces as fetchWorkspacesAction } from '../store/workspaces/actions';
-import workspacePropTypes from '../prop-types/workspace';
+import { fetchProjects as fetchProjectsAction } from '../store/projects/actions';
 
 class ProjectList extends React.Component {
   componentDidMount() {
-    const { fetchWorkspaces } = this.props;
-    fetchWorkspaces();
+    const { fetchProjects } = this.props;
+    fetchProjects();
   }
 
   render() {
-    const { workspaces } = this.props;
+    const { projects } = this.props;
     return (
       <div className="ProjectList">
         {
-        workspaces.map((workspace) => (
-          <div key={workspace.id}>
-            <h4>{workspace.title}</h4>
-            <ul>
-              {workspace.projects.map((project) => (
-                <li key={project.id}>{project.title}</li>
-              ))}
-            </ul>
+        projects.map((project) => (
+          <div key={project.id}>
+            <h4>{project.title}</h4>
           </div>
         ))
       }
@@ -32,16 +26,15 @@ class ProjectList extends React.Component {
 }
 
 ProjectList.propTypes = {
-  workspaces: PropTypes.arrayOf(workspacePropTypes).isRequired,
-  fetchWorkspaces: PropTypes.func.isRequired,
+  fetchProjects: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  workspaces: state.workspaces.items,
+  projects: state.projects.items,
 });
 
 const mapDispatchToProps = {
-  fetchWorkspaces: fetchWorkspacesAction,
+  fetchProjects: fetchProjectsAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectList);

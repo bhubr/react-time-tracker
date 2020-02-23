@@ -5,3 +5,7 @@
 .Task--active {
   background: #b2ebf2;
 }
+
+.ml.ui.button {
+  margin-left: 0.5rem;
+}

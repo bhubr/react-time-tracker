@@ -1,17 +1,22 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Grid, Header, List } from 'semantic-ui-react';
 import Task from './Task';
 import Icon from './Icon';
 import { fetchAllTasks } from '../actions';
+import { fetchProjects } from '../store/projects/actions';
 
 class TaskList extends React.Component {
   componentDidMount() {
-    this.props.fetchAllTasks();
+    const { fetchAllTasks, fetchProjects } = this.props;
+    fetchAllTasks();
+    fetchProjects();
   }
 
   render() {
-    const { critical, active, done } = this.props.filters;
+    const { filters, tasks } = this.props;
+    const { critical, active, done } = filters;
     return (
       <List>
         <List.Item>
@@ -24,30 +29,33 @@ class TaskList extends React.Component {
             <Header as="h4">Name</Header>
           </List.Content>
         </List.Item>
-          {
-            this.props.tasks
-              .filter((t) => (!critical || t.critical) && (!active || t.active) && (done || !t.done))
-              .map(
-                (task, index) => (
-                  <Task
-                    key={index}
-                    task={task}
-                  />
-                ),
-              )
-          }
+        {
+          tasks
+            .filter((t) => (!critical || t.critical) && (!active || t.active) && (done || !t.done))
+            .map(
+              (task, index) => (
+                <Task
+                  key={index}
+                  task={task}
+                />
+              ),
+            )
+        }
       </List>
     );
   }
 }
+
+TaskList.propTypes = {
+  fetchAllTasks: PropTypes.func.isRequired,
+  fetchProjects: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   tasks: state.tasks.items,
   filters: state.filters,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchAllTasks: () => dispatch(fetchAllTasks()),
-});
+const mapDispatchToProps = { fetchAllTasks, fetchProjects };
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskList);

@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ProjectService } from './project.service';
 import { WorkspaceService } from './workspace.service';
 import { Project } from './project.entity';
-import { CreateProjectDto } from './dto/create-project.dto';
+import { CreateProjectBodyDto, CreateProjectDto } from './dto/create-project.dto';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 
 @Controller('api/projects')
@@ -12,17 +12,16 @@ export class ProjectController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  async createProject(@Request() req, @Body() createProjectDto: CreateProjectDto) {
-    console.log(req.user);
+  async createProject(@Request() req, @Body() createProjectDto: CreateProjectBodyDto) {
     return this.projectService.create(createProjectDto);
   }
 
-  @UseGuards(AuthGuard('jwt'))
-  @Post()
-  async createWorkspace(@Request() req, @Body() createWorkspaceDto: CreateWorkspaceDto) {
-    console.log(req.user);
-    return this.workspaceService.create(createWorkspaceDto);
-  }
+  // @UseGuards(AuthGuard('jwt'))
+  // @Post()
+  // async createWorkspace(@Request() req, @Body() createWorkspaceDto: CreateWorkspaceDto) {
+  //   console.log(req.user);
+  //   return this.workspaceService.create(createWorkspaceDto);
+  // }
 
   @UseGuards(AuthGuard('jwt'))
   @Get()

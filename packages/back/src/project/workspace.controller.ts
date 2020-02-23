@@ -21,7 +21,6 @@ export class WorkspaceController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Request() req, @Body() workspaceBodyDto: CreateWorkspaceBodyDto) {
-    console.log(req.user);
     const workspaceDto: CreateWorkspaceDto = {
       ...workspaceBodyDto, user: req.user
     }
