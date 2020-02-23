@@ -13,6 +13,6 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(cors({ credentials: true }));
   app.use(morgan('dev'));
-  await app.listen(process.env.PORT || 3000);
+  await app.listen(process.env.PORT || 5050);
 }
 bootstrap();

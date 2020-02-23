@@ -19,7 +19,7 @@
   "scripts": {
     "lint": "npx eslint --fix src/**/*.js*",
     "precommit": "lint-staged && yarn test",
-    "start:dev": "react-scripts start",
+    "start:dev": "PORT=3010 react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
@@ -80,5 +80,5 @@
       "git add"
     ]
   },
-  "proxy": "http://localhost:5004"
+  "proxy": "http://localhost:5050"
 }
