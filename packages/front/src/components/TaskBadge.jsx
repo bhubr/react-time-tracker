@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Label } from 'semantic-ui-react';
 
 function numSlices(task) {
   const { timeboxes } = task;
@@ -11,9 +12,9 @@ function numSlices(task) {
 const TaskBadge = ({ task }) => (
   <span>
     { task.title }
-    <span className={`badge${numSlices(task) ? ' purple' : ''}`}>
+    <Label className="ml" size="mini" color={numSlices(task) ? 'purple' : undefined}>
       { numSlices(task) }
-    </span>
+    </Label>
   </span>
 );
 
