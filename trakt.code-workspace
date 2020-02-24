@@ -1,0 +1,10 @@
+{
+	"folders": [
+		{
+			"path": "packages/back"
+		},
+		{
+			"path": "packages/front"
+		}
+	]
+}
