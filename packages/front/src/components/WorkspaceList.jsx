@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import classNames from 'class-names';
 import { fetchWorkspaces as fetchWorkspacesAction } from '../store/workspaces/actions';
 import workspacePropTypes from '../prop-types/workspace';
 
@@ -20,7 +21,16 @@ class WorkspaceList extends React.Component {
             <h4>{workspace.title}</h4>
             <ul>
               {workspace.projects.map((project) => (
-                <li key={project.id}>{project.title}</li>
+                <li key={`project-${project.id}`}>
+                  {project.title}
+                  <ul>
+                    {project.tasks.map((task) => (
+                      <li key={`task-${task.id}`} className={classNames({ 'task--done': task.done })}>
+                        {task.title}
+                      </li>
+                    ))}
+                  </ul>
+                </li>
               ))}
             </ul>
           </div>

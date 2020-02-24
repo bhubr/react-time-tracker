@@ -10,3 +10,7 @@
 .ml.ui.label:first-child {
   margin-left: 0.5rem;
 }
+
+.task--done {
+  text-decoration: line-through;
+}

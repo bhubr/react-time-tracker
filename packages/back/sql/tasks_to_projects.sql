@@ -1,0 +1,11 @@
+update task set projectId = 10 where id in (26, 39);
+update task set projectId = 12 where id in (37);
+update task set projectId = 5 where id = 38;
+Update task set projectId = 3 where id in (35, 36);
+update task set projectId = 9 where id in (34, 22, 9, 7);
+update task set projectId = 11 where id in (31, 32, 33, 25, 23);
+update task set projectId = 1 where id = 20;
+update task set projectId = 2 where id = 27;
+update task set projectId = 8 where projectId is null and title like '%wcs%';
+update task set projectId = 8 where id = 16;
+update task set projectId = 13 where id in (28, 30, 24);
