@@ -20,7 +20,7 @@ export class Task {
   done: boolean;
 
   @OneToMany(type => Timebox, timebox => timebox.task, {
-    eager: true
+    // eager: true
   })
   timeboxes: Timebox[];
 

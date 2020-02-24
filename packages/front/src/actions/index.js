@@ -173,7 +173,7 @@ function setTimeboxesTaskIds(tasks) {
   return tasks.map(
     (task) => ({
       ...task,
-      timeboxes: task.timeboxes.map((tb) => ({ ...tb, taskId: task.id })),
+      timeboxes: (task.timeboxes || []).map((tb) => ({ ...tb, taskId: task.id })),
     }),
   );
 }
