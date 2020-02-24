@@ -12,7 +12,7 @@ export class DailySheet {
   today: string;
 
   @ManyToMany(type => Task, task => task.dailySheets, {
-    eager: false
+    eager: true
   })
   @JoinTable({
     name: 'task_daily_sheet'

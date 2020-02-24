@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { Repository, In } from 'typeorm';
+import { Repository, In, getConnection } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateDailySheetDto, CreateDailySheetBodyDto } from './dto/create-daily-sheet.dto';
 import { DailySheet } from './daily-sheet.entity';
 import { Task } from '../task/task.entity';
+import { User } from '../user/user.entity';
+import { getToday } from './helpers/get-today';
 
 @Injectable()
 export class DailySheetService {
@@ -31,5 +33,12 @@ export class DailySheetService {
       await this.dailySheetRepository.save(dailySheet);
     }
     return dailySheet;
+  }
+
+  getTodaysTasks(user: User) {
+    return this.dailySheetRepository.findOne({
+      user: user,
+      today: getToday()
+    });
   }
 }
