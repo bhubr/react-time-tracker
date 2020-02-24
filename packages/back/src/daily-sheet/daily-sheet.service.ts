@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateDailySheetDto, CreateDailySheetBodyDto } from './dto/create-daily-sheet.dto';
 import { DailySheet } from './daily-sheet.entity';
@@ -23,8 +23,11 @@ export class DailySheetService {
     // const projectDto = { ...projectIntrinsicFields, workspaces: [workspace] };
     const dailySheet = await this.dailySheetRepository.save(createDailySheetDto);
     if (taskIds.length) {
-      const task = await this.taskRepository.findOne(taskIds[0]);
-      dailySheet.tasks = [task];
+      // const task = await this.taskRepository.findOne(taskIds[0]);
+      const tasks = await this.taskRepository.find({
+        id: In(taskIds)
+      });
+      dailySheet.tasks = tasks;
       await this.dailySheetRepository.save(dailySheet);
     }
     return dailySheet;
