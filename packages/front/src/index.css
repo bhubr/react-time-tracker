@@ -14,3 +14,7 @@
 .task--done {
   text-decoration: line-through;
 }
+
+.task--selected {
+  background: #ecd5f4;
+}
