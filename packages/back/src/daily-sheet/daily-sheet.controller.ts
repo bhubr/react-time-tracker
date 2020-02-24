@@ -10,9 +10,10 @@ export class DailySheetController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   async create(@Request() req, @Body() dailySheetBodyDto: CreateDailySheetBodyDto) {
+    const taskIds:Array<number> = dailySheetBodyDto.taskIds;
     const dailySheetDto: CreateDailySheetDto = {
-      ...dailySheetBodyDto, user: req.user, today: new Date().toISOString().substr(0, 10)
+      user: req.user, today: new Date().toISOString().substr(0, 10)
     }
-    return this.dailySheetService.create(dailySheetDto);
+    return this.dailySheetService.create(dailySheetDto, taskIds);
   }
 }

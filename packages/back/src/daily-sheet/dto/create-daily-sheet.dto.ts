@@ -1,4 +1,4 @@
-import { IsString, IsInt } from "class-validator";
+import { IsString, IsInt, IsArray } from "class-validator";
 import { User } from '../../user/user.entity';
 
 export class CreateDailySheetDto {
@@ -6,10 +6,9 @@ export class CreateDailySheetDto {
 
   @IsString()
   readonly today: string;
-
-  taskIds: number[];
 }
 
 export class CreateDailySheetBodyDto {
-  taskIds: number[];
+  @IsArray()
+  taskIds: Array<number>;
 }
