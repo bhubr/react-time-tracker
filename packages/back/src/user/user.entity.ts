@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany
 import { BitBucketProfile } from './bitbucket-profile.entity';
 import { Project } from '../project/project.entity';
 import { Workspace } from '../project/workspace.entity';
+import { DailySheet } from '../daily-sheet/daily-sheet.entity';
 
 @Entity()
 export class User {
@@ -28,4 +29,7 @@ export class User {
 
   @OneToMany(type => Workspace, workspace => workspace.user)
   workspaces: Workspace[];
+
+  @OneToMany(type => DailySheet, dailySheet => dailySheet.user)
+  dailySheets: DailySheet[];
 }
