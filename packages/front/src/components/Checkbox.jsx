@@ -1,5 +1,4 @@
 import React from 'react';
-import Task from './Task';
 
 const Checkbox = ({ onChange, checked }) => (
   <span className="custom-control custom-checkbox">
