@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -27,7 +30,7 @@ const formatDatetime = (datetime) => {
   return `${date} ${time}`;
 };
 
-const getActiveClass = (currentTaskId, { id }) => (currentTaskId === id ? 'Task--active' : '');
+const getActiveClass = (currentTaskId, { id }) => (currentTaskId === id ? 'Task__title--active' : '');
 const getChevronDirection = (expanded) => `chevron-${expanded ? 'up' : 'down'}`;
 const enhance = withState('expanded', 'toggleExpanded', false);
 const Task = ({
@@ -44,7 +47,7 @@ const Task = ({
   toggleTaskTitleEditing,
   togglePomoCommentEditing,
 }) => (
-  <List.Item className={classNames('Task', getActiveClass(currentTaskId, task))}>
+  <List.Item className="Task">
     <List.Content floated='right'>
       <Icon disabled={task.done} onClick={() => startTimeSlice(task.id)} name="stopwatch" />
       <Icon onClick={() => deleteTask(task.id)} name="bin" />
@@ -54,15 +57,15 @@ const Task = ({
     </List.Content>
     <List.Content>
       <Icon onClick={() => toggleExpanded(!expanded)} name={getChevronDirection(expanded)} />
-      <span
-        className="grow"
+      <div
         onClick={() => setCurrentTask(task.id)}
         onDoubleClick={() => toggleTaskTitleEditing(task.id)}
+        className={classNames('Task__title', getActiveClass(currentTaskId, task))}
       >
         {inlineTaskEditing !== task.id
           ? <TaskBadge task={task} />
           : <TaskInlineEdit task={task} />}
-      </span>
+      </div>
       <div className="task-timeboxes">
         {
         expanded && task.timeboxes

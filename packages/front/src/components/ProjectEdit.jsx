@@ -29,6 +29,8 @@ function ProjectEdit({ createProject, workspaces }) {
           required
         />
         <Select
+          className="ml"
+          placeholder="Workspace"
           options={workspaces}
           onChange={handleChangeWorkspace}
         />

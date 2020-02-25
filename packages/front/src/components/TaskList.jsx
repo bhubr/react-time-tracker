@@ -52,7 +52,7 @@ TaskList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  tasks: state.tasks.items,
+  tasks: state.tasks.todaysItems,
   filters: state.filters,
 });
 
