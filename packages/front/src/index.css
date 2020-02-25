@@ -2,8 +2,15 @@
   transform: scale(0.8);
 }
 
-.Task--active {
-  background: #b2ebf2;
+.Task__title--active {
+  background: #dbf5f9;
+}
+
+.Task__title {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  margin-left: 5px;
 }
 
 .ml.ui.button,
@@ -13,4 +20,8 @@
 
 .task--done {
   text-decoration: line-through;
+}
+
+.task--selected {
+  background: #ecd5f4;
 }

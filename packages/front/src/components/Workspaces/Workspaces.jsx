@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Grid, List } from 'semantic-ui-react';
+import { Grid, Form, Input, Button } from 'semantic-ui-react';
+import TaskEdit from '../TaskEdit';
+import ProjectList from '../ProjectList';
+import WorkspaceList from '../WorkspaceList';
+import ProjectEdit from '../ProjectEdit';
 import workspacePropTypes from '../../prop-types/workspace';
 import { createWorkspace as createWorkspaceAction } from '../../store/workspaces/actions';
 
@@ -19,29 +23,28 @@ function Workspaces({ workspaces, createWorkspace }) {
   };
 
   return (
-    <Grid className="Workspaces">
+    <Grid className="Workspaces" padded>
       <Grid.Row>
         <Grid.Column>
-          <List>
-            {
-              workspaces.map((workspace) => (
-                <List.Item key={workspace.id}>
-                  <List.Content>{workspace.title}</List.Content>
-                </List.Item>
-              ))
-            }
-          </List>
+          <Form onSubmit={handleSubmit}>
+            <Input id="title" name="title" placeholder="Workspace name" onChange={handleChange} />
+            <Button color="teal" type="submit">Create</Button>
+          </Form>
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
         <Grid.Column>
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="title">
-              Title
-              <input id="title" name="title" onChange={handleChange} />
-            </label>
-            <button type="submit">Create</button>
-          </form>
+          <TaskEdit />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <WorkspaceList />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <ProjectEdit />
         </Grid.Column>
       </Grid.Row>
     </Grid>
