@@ -21,9 +21,15 @@ export class DailySheetService {
   ) {}
 
   async create(
-    createDailySheetDto: CreateDailySheetDto,
-    taskIds: number[],
+    // createDailySheetDto: CreateDailySheetDto,
+    // taskIds: number[],
+    dailySheetBodyDto: CreateDailySheetBodyDto,
+    user: User
   ): Promise<DailySheet> {
+    const taskIds:Array<number> = dailySheetBodyDto.taskIds;
+    const createDailySheetDto: CreateDailySheetDto = {
+      user, today: getToday(),
+    };
     // const { workspaceId, ...projectIntrinsicFields } = createDailySheetDto;
     // const workspace = await this.workspaceRepository.findOne(workspaceId);
     // const projectDto = { ...projectIntrinsicFields, workspaces: [workspace] };
@@ -40,10 +46,15 @@ export class DailySheetService {
   }
 
   async getTodaysTasks(user: User) {
-    const dailySheet = await this.dailySheetRepository.findOne({
+    const criteria = {
       user: user,
       today: getToday()
-    });
+    };
+    let dailySheet = await this.dailySheetRepository.findOne(criteria);
+    if (!dailySheet) {
+      await this.dailySheetRepository.save(criteria);
+      dailySheet = await this.dailySheetRepository.findOne(criteria);
+    }
     // const taskIds = dailySheet.tasks.map(({ id }) => id);
     // const timeboxes = await this.timeboxRepository
     //   .createQueryBuilder('timebox')
