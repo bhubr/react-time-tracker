@@ -41,7 +41,7 @@ function WorkspaceList({ workspaces, fetchWorkspaces }) {
                       })}
                       onClick={() => toggleSelected(task.id)}
                     >
-                      {task.title}
+                      <strong>#{task.id}</strong> {task.title}
                     </li>
                   ))}
                 </ul>

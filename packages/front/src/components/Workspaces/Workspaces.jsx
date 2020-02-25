@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Grid, List } from 'semantic-ui-react';
+import TaskEdit from '../TaskEdit';
+import ProjectList from '../ProjectList';
+import WorkspaceList from '../WorkspaceList';
+import ProjectEdit from '../ProjectEdit';
 import workspacePropTypes from '../../prop-types/workspace';
 import { createWorkspace as createWorkspaceAction } from '../../store/workspaces/actions';
 
@@ -42,6 +46,26 @@ function Workspaces({ workspaces, createWorkspace }) {
             </label>
             <button type="submit">Create</button>
           </form>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <TaskEdit />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <WorkspaceList />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <ProjectList />
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column>
+          <ProjectEdit />
         </Grid.Column>
       </Grid.Row>
     </Grid>

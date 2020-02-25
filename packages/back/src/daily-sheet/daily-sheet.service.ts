@@ -4,8 +4,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CreateDailySheetDto, CreateDailySheetBodyDto } from './dto/create-daily-sheet.dto';
 import { DailySheet } from './daily-sheet.entity';
 import { Task } from '../task/task.entity';
+import { Timebox } from '../timebox/timebox.entity';
 import { User } from '../user/user.entity';
 import { getToday } from './helpers/get-today';
+import { map } from 'bluebird';
 
 @Injectable()
 export class DailySheetService {
@@ -14,6 +16,8 @@ export class DailySheetService {
     private readonly dailySheetRepository: Repository<DailySheet>,
     @InjectRepository(Task)
     private readonly taskRepository: Repository<Task>,
+    @InjectRepository(Timebox)
+    private readonly timeboxRepository: Repository<Timebox>,
   ) {}
 
   async create(
@@ -35,10 +39,26 @@ export class DailySheetService {
     return dailySheet;
   }
 
-  getTodaysTasks(user: User) {
-    return this.dailySheetRepository.findOne({
+  async getTodaysTasks(user: User) {
+    const dailySheet = await this.dailySheetRepository.findOne({
       user: user,
       today: getToday()
     });
+    // const taskIds = dailySheet.tasks.map(({ id }) => id);
+    // const timeboxes = await this.timeboxRepository
+    //   .createQueryBuilder('timebox')
+    //   .where('timebox.taskId IN(:ids)', { ids: taskIds })
+    //   .getMany();
+      
+    // // .find({
+    // //   id: In(taskIds)
+    // // });
+    // console.log(timeboxes);
+    await map(dailySheet.tasks, async(task) => {
+      console.log(task);
+      const timeboxes = await task.timeboxes;
+      console.log(timeboxes); 
+    });
+    return dailySheet;
   }
 }

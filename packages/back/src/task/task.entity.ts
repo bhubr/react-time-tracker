@@ -23,7 +23,7 @@ export class Task {
   @OneToMany(type => Timebox, timebox => timebox.task, {
     // eager: true
   })
-  timeboxes: Timebox[];
+  timeboxes: Promise<Timebox[]>;
 
   @ManyToOne(type => Project, project => project.tasks)
   project: Project;

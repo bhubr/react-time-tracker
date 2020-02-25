@@ -15,7 +15,9 @@ import {
   UPDATE_TIME_SLICE_SUCCESS,
   DELETE_TASK_SUCCESS,
 } from '../../actions';
-
+import {
+  FETCH_TODAYS_TASKS_SUCCESS,
+} from '../tasks/action-types';
 
 const initialState = {
   inlineTaskEditing: 0,
@@ -31,6 +33,7 @@ const tasksReducer = (state = initialState, action) => {
     case FETCH_TASKS_REQUEST: {
       return { ...state, loading: true };
     }
+    case FETCH_TODAYS_TASKS_SUCCESS:
     case FETCH_TASKS_SUCCESS: {
       const { tasks } = action;
       return { items: tasks, loading: false };
@@ -96,6 +99,7 @@ const tasksReducer = (state = initialState, action) => {
     // When timer is started, set current task id, add time slice to task's slices
     case CREATE_TIME_SLICE_SUCCESS: {
       const { timebox } = action;
+      console.log('Madame vous vous foutez de ma gueule', state);
       const task = state.items.find((task) => task.id === timebox.taskId);
       const timeboxes = task.timeboxes.map((ts) => ({ ...ts })).concat([{ ...timebox }]);
       const items = state.items.map(

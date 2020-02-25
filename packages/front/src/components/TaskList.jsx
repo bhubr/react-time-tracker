@@ -1,16 +1,16 @@
+/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Grid, Header, List } from 'semantic-ui-react';
+import { Header, List } from 'semantic-ui-react';
 import Task from './Task';
-import Icon from './Icon';
-import { fetchAllTasks } from '../actions';
-import { fetchProjects } from '../store/projects/actions';
+import { fetchTodaysTasks as fetchTodaysTasksAction } from '../store/tasks/actions';
+import { fetchProjects as fetchProjectsAction } from '../store/projects/actions';
 
 class TaskList extends React.Component {
   componentDidMount() {
-    const { fetchAllTasks, fetchProjects } = this.props;
-    fetchAllTasks();
+    const { fetchTodaysTasks, fetchProjects } = this.props;
+    fetchTodaysTasks();
     fetchProjects();
   }
 
@@ -20,7 +20,7 @@ class TaskList extends React.Component {
     return (
       <List>
         <List.Item>
-          <List.Content floated='right'>
+          <List.Content floated="right">
             <span className="checkbox-header">C</span>
             <span className="checkbox-header">A</span>
             <span className="checkbox-header">D</span>
@@ -47,7 +47,7 @@ class TaskList extends React.Component {
 }
 
 TaskList.propTypes = {
-  fetchAllTasks: PropTypes.func.isRequired,
+  fetchTodaysTasks: PropTypes.func.isRequired,
   fetchProjects: PropTypes.func.isRequired,
 };
 
@@ -56,6 +56,9 @@ const mapStateToProps = (state) => ({
   filters: state.filters,
 });
 
-const mapDispatchToProps = { fetchAllTasks, fetchProjects };
+const mapDispatchToProps = {
+  fetchTodaysTasks: fetchTodaysTasksAction,
+  fetchProjects: fetchProjectsAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskList);
