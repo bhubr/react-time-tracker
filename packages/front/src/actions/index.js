@@ -78,7 +78,7 @@ const onTaskCreationSuccess = (task) => ({
 });
 
 const onTaskCreationFailure = (error) => ({
-  type: CREATE_TASK_SUCCESS,
+  type: CREATE_TASK_FAILURE,
   error,
 });
 
@@ -161,9 +161,9 @@ const onTimeSliceUpdateFailure = (error) => ({
   error,
 });
 
-export const createTask = (title) => (dispatch) => {
+export const createTask = (title, projectId) => (dispatch) => {
   dispatch(requestCreateTask(title));
-  return axios.post('/api/tasks', { title })
+  return axios.post('/api/tasks', { title, projectId })
     .then((response) => response.data)
     .then((task) => dispatch(onTaskCreationSuccess(task)))
     .catch((error) => dispatch(onTaskCreationFailure(error)));

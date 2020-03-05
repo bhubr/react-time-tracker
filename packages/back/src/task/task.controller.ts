@@ -3,15 +3,15 @@ import { DeleteResult } from 'typeorm';
 import { AuthGuard } from '@nestjs/passport';
 import { TaskService } from './task.service';
 import { Task } from './task.entity';
-import { CreateTaskDto } from './dto/create-task.dto';
+import { CreateTaskDto, CreateTaskBodyDto } from './dto/create-task.dto';
 
 @Controller('api/tasks')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  async create(@Body() createTaskDto: CreateTaskDto) {
-    return this.taskService.create(createTaskDto);
+  async create(@Body() createTaskBodyDto: CreateTaskBodyDto) {
+    return this.taskService.create(createTaskBodyDto);
   }
 
   @UseGuards(AuthGuard('jwt'))

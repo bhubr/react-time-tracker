@@ -53,7 +53,7 @@ const tasksReducer = (state = initialState, action) => {
     case CREATE_TASK_SUCCESS: {
       const { task } = action;
       const items = [...state.items, task];
-      return { items, loading: false };
+      return { ...state, items, loading: false };
     }
     case CREATE_TASK_FAILURE: {
       return { ...state, loading: false };
