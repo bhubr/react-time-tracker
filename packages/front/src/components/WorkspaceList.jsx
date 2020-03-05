@@ -6,16 +6,18 @@ import { connect } from 'react-redux';
 import classNames from 'class-names';
 import { Button, Icon, Accordion } from 'semantic-ui-react';
 import { fetchWorkspaces as fetchWorkspacesAction } from '../store/workspaces/actions';
+import { fetchProjects as fetchProjectsAction } from '../store/projects/actions';
 import { updateTodaysTasks as updateTodaysTasksAction } from '../store/tasks/actions';
 import workspacePropTypes from '../prop-types/workspace';
 
-function WorkspaceList({ workspaces, fetchWorkspaces, todaysTasks, updateTodaysTasks }) {
+function WorkspaceList({ workspaces, fetchWorkspaces, todaysTasks, updateTodaysTasks, fetchProjects }) {
   const [selectedTasksIds, setSelectedTasksIds] = useState([]);
   const [openWorkspacesIds, setOpenWorkspacesIds] = useState([]);
   const [openProjectsIds, setOpenProjectsIds] = useState([]);
 
   useEffect(() => {
     fetchWorkspaces();
+    fetchProjects();
   }, []);
 
   const toggleSelected = (taskId) => {
@@ -110,6 +112,7 @@ function WorkspaceList({ workspaces, fetchWorkspaces, todaysTasks, updateTodaysT
 WorkspaceList.propTypes = {
   workspaces: PropTypes.arrayOf(workspacePropTypes).isRequired,
   fetchWorkspaces: PropTypes.func.isRequired,
+  fetchProjects: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -119,6 +122,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   fetchWorkspaces: fetchWorkspacesAction,
+  fetchProjects: fetchProjectsAction,
   updateTodaysTasks: updateTodaysTasksAction,
 };
 
