@@ -70,10 +70,14 @@ const tasksReducer = (state = initialState, action) => {
     }
     case UPDATE_TASK_SUCCESS: {
       const { task } = action;
-      const items = state.items.map(
+      const { items: prevItems, todaysItems: prevTodaysItems } = state;
+      const items = prevItems.map(
         (item) => (item.id === task.id ? { ...task } : { ...item }),
       );
-      return { ...state, items, loading: false };
+      const todaysItems = prevTodaysItems.map(
+        (item) => (item.id === task.id ? { ...item, ...task } : { ...item }),
+      );
+      return { ...state, items, todaysItems, loading: false };
     }
     case UPDATE_TASK_FAILURE: {
       return { ...state, loading: false };
