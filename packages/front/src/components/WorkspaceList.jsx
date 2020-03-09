@@ -20,6 +20,12 @@ function WorkspaceList({ workspaces, fetchWorkspaces, todaysTasks, updateTodaysT
     fetchProjects();
   }, []);
 
+  useEffect(() => {
+    const taskIds = todaysTasks.map(({ id }) => id);
+    setSelectedTasksIds(taskIds);
+    return () => {};
+  }, [todaysTasks]);
+
   const toggleSelected = (taskId) => {
     const nextSelectedTasksIds = selectedTasksIds.includes(taskId)
       ? selectedTasksIds.filter((id) => id !== taskId)

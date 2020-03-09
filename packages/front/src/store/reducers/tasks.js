@@ -17,6 +17,7 @@ import {
 } from '../../actions';
 import {
   FETCH_TODAYS_TASKS_SUCCESS,
+  UPDATE_TODAYS_TASKS_SUCCESS,
 } from '../tasks/action-types';
 
 const initialState = {
@@ -34,9 +35,13 @@ const tasksReducer = (state = initialState, action) => {
     case FETCH_TASKS_REQUEST: {
       return { ...state, loading: true };
     }
+    case UPDATE_TODAYS_TASKS_SUCCESS:
     case FETCH_TODAYS_TASKS_SUCCESS: {
       const { tasks } = action;
-      return { ...state, todaysItems: tasks, loading: false };
+      const todaysItems = tasks.map(
+        ({ __has_timeboxes__: hasTb, ...task }) => task,
+      );
+      return { ...state, todaysItems, loading: false };
     }
     case FETCH_TASKS_SUCCESS: {
       const { tasks } = action;
@@ -68,7 +73,7 @@ const tasksReducer = (state = initialState, action) => {
       const items = state.items.map(
         (item) => (item.id === task.id ? { ...task } : { ...item }),
       );
-      return { items, loading: false };
+      return { ...state, items, loading: false };
     }
     case UPDATE_TASK_FAILURE: {
       return { ...state, loading: false };
